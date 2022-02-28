@@ -11,6 +11,11 @@
 * Les attribut : monAttribut
 * Les classes : MaClasse
 
+## Convention de commit
+* Les commit lier a l'organisation : "Chore : ...."
+* Les commit lier au devloppement : "Feat : ..."
+* Les commit lier au correction de bug : "Fix : ..." 
+
 ## Organisation:
 * Backend : contient tout le code lier au backend ecrit en java avec le framework Spring
 * Frontend : contient tout le code lier au front ecrit en ReactJS
