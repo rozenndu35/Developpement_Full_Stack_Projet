@@ -1,0 +1,12 @@
+.App-body{
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+    background-color: aqua;
+}
+.App-page{
+    background-color: blueviolet;
+    height: 100%;
+    width: 85%;
+}
