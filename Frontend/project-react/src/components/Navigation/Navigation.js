@@ -16,7 +16,7 @@ import IconAjouter from '@material-ui/icons/AddCircle'
 export default function  Navigation(props) {
   const [open, setOpen] = React.useState(false)
   const categoryElements = props.categories.map(i => 
-    <ListItem button className="navItem">
+    <ListItem key={i.id} button onClick={event => props.afficherPage(event, "ArticleCategory", i.name)} className="navItem">
     <ListItemText inset primary={i.name} />
     </ListItem>
   )
@@ -26,11 +26,11 @@ export default function  Navigation(props) {
 
   return (
     <List component="nav" className="nav" disablePadding>
-      <ListItem button className="navItem">
+      <ListItem button onClick={event => props.afficherPage(event, "ListeCategory")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconList />
         </ListItemIcon>
-        <ListItemText primary="Liste Catégorie" />
+        <ListItemText button  primary="Liste Catégorie" />
       </ListItem>
       <ListItem button onClick={handleClick} className="navItem">
         <ListItemIcon className="navItemIcon">
@@ -44,14 +44,14 @@ export default function  Navigation(props) {
           {categoryElements}
         </List>
       </Collapse>
-      <ListItem button className="navItem">
+      <ListItem button onClick={event => props.afficherPage(event, "AddCategory")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconAjouter />
         </ListItemIcon>
         <ListItemText primary="Ajouter Catégorie" />
       </ListItem>
 
-      <ListItem button className="navItem">
+      <ListItem button onClick={event => props.afficherPage(event, "addArticle")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconAjouter />
         </ListItemIcon>
