@@ -1,5 +1,11 @@
 package com.esiea.blogAPI.model;
 
+
+
+
+
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,14 +18,14 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "article")
 public class Article {
-	public Article(Long id, String title, String publicationDate, String content, Author author, Article article) {
+	public Article(Long id, String title, Timestamp publicationDate, String content, Author author, Category category) {
 		super();
 		this.id = id;
 		this.title = title;
 		this.publicationDate = publicationDate;
 		this.content = content;
 		this.author = author;
-		this.article = article;
+		this.category = category;
 	}
 	public Article() {
 		super();
@@ -41,11 +47,11 @@ public class Article {
 		this.title = title;
 	}
 
-	public String getPublicationDate() {
+	public Timestamp getPublicationDate() {
 		return publicationDate;
 	}
 
-	public void setPublicationDate(String publicationDate) {
+	public void setPublicationDate(Timestamp publicationDate) {
 		this.publicationDate = publicationDate;
 	}
 
@@ -65,12 +71,12 @@ public class Article {
 		this.author = author;
 	}
 
-	public Article getArticle() {
-		return article;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setArticle(Article article) {
-		this.article = article;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	@Id
@@ -82,7 +88,7 @@ public class Article {
 	private String title;
 	
 	@Column(name= "publicationDate")
-	private String publicationDate;
+	private Timestamp publicationDate;
 	
 	@Column(name = "content")
 	private String content;
@@ -93,5 +99,5 @@ public class Article {
 	
 	@ManyToOne
 	@JoinColumn(name="id_category", nullable=false)
-	private Article article;
+	private Category category;
 }

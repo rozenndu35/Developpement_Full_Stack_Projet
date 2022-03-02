@@ -53,7 +53,7 @@ public class Author {
 		return articles;
 	}
 
-	public void setArticle(List<Article> articles) {
+	public void setArticles(List<Article> articles) {
 		this.articles = articles;
 	}
 
@@ -68,6 +68,6 @@ public class Author {
 	@Column(name = "lastName", nullable=false)
 	private String lastName;
 	
-	@OneToMany(cascade= { CascadeType.PERSIST,CascadeType.MERGE}, mappedBy="article")
+	@OneToMany(cascade= { CascadeType.PERSIST,CascadeType.MERGE}, mappedBy="author")
 	private List<Article> articles;
 }

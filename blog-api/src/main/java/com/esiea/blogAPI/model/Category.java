@@ -57,6 +57,6 @@ public class Category {
 	@Column(name = "categoryName", nullable=false)
 	private String categoryName;
 	
-	@OneToMany(cascade= { CascadeType.PERSIST,CascadeType.MERGE}, mappedBy="article")
+	@OneToMany(cascade= { CascadeType.PERSIST,CascadeType.MERGE}, mappedBy="category")
 	private List<Article> articles;
 }
