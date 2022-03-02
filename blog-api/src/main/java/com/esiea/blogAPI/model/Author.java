@@ -12,16 +12,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "category")
-public class Category {
-	public Category(Long id, String categoryName, List<Article> articles) {
+@Table(name = "author")
+public class Author {
+	public Author(Long id, String firstName, String lastName, List<Article> articles) {
 		super();
 		this.id = id;
-		this.categoryName = categoryName;
+		this.firstName = firstName;
+		this.lastName = lastName;
 		this.articles = articles;
 	}
-	
-	public Category() {
+	public Author() {
 		super();
 	}
 
@@ -33,19 +33,27 @@ public class Category {
 		this.id = id;
 	}
 
-	public String getCategoryName() {
-		return categoryName;
+	public String getFirstName() {
+		return firstName;
 	}
 
-	public void setCategoryName(String categoryName) {
-		this.categoryName = categoryName;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
 
-	public List<Article> getArticles() {
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public List <Article> getArticles() {
 		return articles;
 	}
 
-	public void setArticles(List<Article> articles) {
+	public void setArticle(List<Article> articles) {
 		this.articles = articles;
 	}
 
@@ -54,8 +62,11 @@ public class Category {
 	@Column(name = "id_article")
 	private Long id;
 	
-	@Column(name = "categoryName", nullable=false)
-	private String categoryName;
+	@Column(name = "firstName", nullable=false)
+	private String firstName;
+	
+	@Column(name = "lastName", nullable=false)
+	private String lastName;
 	
 	@OneToMany(cascade= { CascadeType.PERSIST,CascadeType.MERGE}, mappedBy="article")
 	private List<Article> articles;
