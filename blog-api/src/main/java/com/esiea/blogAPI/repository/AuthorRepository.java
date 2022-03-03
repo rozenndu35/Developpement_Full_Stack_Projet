@@ -2,9 +2,10 @@ package com.esiea.blogAPI.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
-import com.esiea.blogAPI.model.Category;
+
+import com.esiea.blogAPI.model.Author;
 
 @Repository
-public interface CategoryRepository extends CrudRepository<Category, Long> {
+public interface AuthorRepository extends CrudRepository<Author, Long> {
 
 }
