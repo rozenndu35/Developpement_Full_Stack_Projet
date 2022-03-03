@@ -5,11 +5,14 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "category")
@@ -51,12 +54,13 @@ public class Category {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name = "id_article")
+	@Column(name = "id_category")
 	private Long id;
 	
-	@Column(name = "categoryName", nullable=false)
+	@Column(name = "category_name", nullable=false)
 	private String categoryName;
 	
-	@OneToMany(cascade= { CascadeType.PERSIST,CascadeType.MERGE}, mappedBy="category")
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY, targetEntity= com.esiea.blogAPI.model.Article.class, cascade= { CascadeType.PERSIST,CascadeType.MERGE}, mappedBy="category")
 	private List<Article> articles;
 }
