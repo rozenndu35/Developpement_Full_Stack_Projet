@@ -23,5 +23,4 @@ jobs:
                   echo $JAVA_HOME
             - run: |
                   ls
-                  cd .\blog-api\
-                  mvn test
+                  mvn test -f .\blog-api\pom.xml
