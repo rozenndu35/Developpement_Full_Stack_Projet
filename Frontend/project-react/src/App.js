@@ -18,12 +18,56 @@ function App() {
     id: 10,
     name: "Meuble"
   }]
-  const allArticle =[]
+  const allArticle =[ {
+    "id": 1,
+    "title": "categoryName1",
+    "publicationDate": "2021-12-31T23:00:00.000+00:00",
+    "content": "article1",
+    "author": {
+        "id": 1,
+        "firstName": "firstName1",
+        "lastName": "lastName1"
+    }
+  },
+  {
+      "id": 2,
+      "title": "categoryName2",
+      "publicationDate": "2022-02-01T23:00:00.000+00:00",
+      "content": "article2",
+      "author": {
+          "id": 2,
+          "firstName": "firstName2",
+          "lastName": "lastName2"
+      }
+  }]
 
+  const articleUsing =[
+    {
+      "id": 2,
+      "title": "categoryName2",
+      "publicationDate": "2022-02-01T23:00:00.000+00:00",
+      "content": "article2",
+      "author": {
+          "id": 2,
+          "firstName": "firstName2",
+          "lastName": "lastName2"
+      }
+  },{
+    "id": 3,
+    "title": "categoryName3",
+    "publicationDate": "2022-02-01T23:00:00.000+00:00",
+    "content": "article3",
+    "author": {
+        "id": 2,
+        "firstName": "firstName2",
+        "lastName": "lastName2"
+    }
+}
+  ]
   return (
     <div className="App">
       <Header />
-      <Body allCategory={allCategory} allArticle={allArticle}/>
+      <Body allCategory={allCategory} allArticle={allArticle} articlesInCategory={articleUsing}/>
       <Footer />
     </div>
   );

@@ -7,7 +7,7 @@ import ListItemText from '@material-ui/core/ListItemText'
 export default function ListCategory(props) {
 
     const categoryElements = props.categories.map(i => 
-        <ListItem key={i.id}  button className="navItem">
+        <ListItem key={i.id}  button className="navItem" onClick={event => props.afficherPage(event, "ArticleCategory", i.name)}>
         <ListItemText inset primary={i.name} />
         </ListItem>
       )

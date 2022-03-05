@@ -5,6 +5,7 @@ import AddCategory from '../addCategory/AddCategory';
 import AddArticle from '../addArticle/AddArticle';
 import './body.css'
 import './formulaire.css'
+import ListArticleInCategorie from '../ListArticleInCategory/ListArticleInCategorie';
 
 
 export default function Body(props) {
@@ -13,6 +14,7 @@ export default function Body(props) {
     const [inputInvalid, setInputInvalid] = useState(false);
     const [postingCategory, setPostingCategory] = useState(false);
     const [postingArticle, setPostingArticle] = useState(false);
+    const [categorieChoice, setCategorieChoice] = useState();
 
     const [newCategory, setNewCategory] = useState({
         id: 0,
@@ -143,6 +145,7 @@ export default function Body(props) {
     function afficherPage(event, id, category) {
         event.stopPropagation();
         setPageUpdate({update: true, pageId: id });
+        setCategorieChoice(category)
     }  
     
     function initInvalidInput() {
@@ -161,7 +164,8 @@ export default function Body(props) {
         <div className='App-body'>
             <Navigation categories={props.allCategory} afficherPage={afficherPage}/>
             <section className='App-page'>
-                { pageTwo === "ListeCategory" && <ListCategory categories={props.allCategory} />}
+                { pageTwo === "ListeCategory" && <ListCategory categories={props.allCategory}  afficherPage={afficherPage}/>}
+                { pageTwo === "ArticleCategory" && <ListArticleInCategorie categorie={categorieChoice} articles={props.articlesInCategory} />}
                 { pageTwo === "AddCategory" && <AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={newCategoryChange} submitCategory={submitCategory}/>}
                 { pageTwo === "AddArticle" && <AddArticle newArticle={newArticle} categories={props.allCategory} inputInvalid={inputInvalid} handleChange={newArticleChange} submitArticle={submitArticle}/>}
             </section>
