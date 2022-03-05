@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -78,6 +79,17 @@ public class AuthorController {
 			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.CONFLICT); 
 			// Un article doit avoir un auteur, la modfification de l'auteur d'un article doit se faire via une modification de l'article
+		}
+	}
+	
+	@DeleteMapping("{id}")
+	public ResponseEntity<Object> deleteAuthor(@PathVariable("id") long id)
+	{
+		try {
+			authorService.delete(id);
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 	}
 }

@@ -2,6 +2,7 @@ package com.esiea.blogAPI.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -81,7 +82,7 @@ public class Author {
 	@Column(name = "last_name", nullable=false)
 	private String lastName;
 	
-	@OneToMany(fetch = FetchType.LAZY, targetEntity= com.esiea.blogAPI.model.Article.class, mappedBy="author")
+	@OneToMany(fetch = FetchType.LAZY, targetEntity= com.esiea.blogAPI.model.Article.class, mappedBy="author", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JsonIgnoreProperties(value="author", allowSetters = true)
 	private List<Article> articles;
 }

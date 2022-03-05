@@ -3,6 +3,7 @@ package com.esiea.blogAPI.service;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.esiea.blogAPI.exception.CantModifyItem;
@@ -52,5 +53,13 @@ public class AuthorService {
 			throw new CantModifyItem();
 		authorRepository.save(currendAuthor);
 		return currendAuthor;
+	}
+
+	public void delete(long id) throws NotFoundException {
+		try {
+			authorRepository.deleteById(id);
+		}catch(EmptyResultDataAccessException e) {
+			throw new NotFoundException();
+		}
 	}
 }
