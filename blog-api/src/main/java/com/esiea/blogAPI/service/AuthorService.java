@@ -5,8 +5,10 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esiea.blogAPI.exception.CantModifyItem;
 import com.esiea.blogAPI.exception.NotAllowedException;
 import com.esiea.blogAPI.exception.NotFoundException;
+import com.esiea.blogAPI.model.Article;
 import com.esiea.blogAPI.model.Author;
 import com.esiea.blogAPI.repository.AuthorRepository;
 
@@ -37,5 +39,18 @@ public class AuthorService {
 	public Author replace(Author author) throws NotFoundException, NotAllowedException {
 		this.getAuthor(author.getId());
 		return authorRepository.save(author);
+	}
+	
+
+	public Author patch(Author newAuthor) throws NotFoundException, CantModifyItem {
+		Author currendAuthor = this.getAuthor(newAuthor.getId());
+		if(newAuthor.getFirstName() != null && newAuthor.getFirstName() != currendAuthor.getFirstName())
+			currendAuthor.setFirstName(newAuthor.getFirstName());
+		if(newAuthor.getLastName() != null && !newAuthor.getLastName().equals(currendAuthor.getLastName()))
+			currendAuthor.setLastName(newAuthor.getLastName());
+		if(newAuthor.getArticles() != null && !newAuthor.getArticles().equals(currendAuthor.getArticles()))
+			throw new CantModifyItem();
+		authorRepository.save(currendAuthor);
+		return currendAuthor;
 	}
 }
