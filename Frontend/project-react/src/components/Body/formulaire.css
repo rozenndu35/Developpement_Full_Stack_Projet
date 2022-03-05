@@ -22,3 +22,9 @@
 .App-submitButton{
 
 }
+
+.App-FormControl{
+    padding-bottom: 20px;
+    position: relative;
+    text-align: left;
+}

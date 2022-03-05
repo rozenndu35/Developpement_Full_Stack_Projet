@@ -14,12 +14,16 @@ function App() {
   },{
     id: 2,
     name: "Meuble"
+  },{
+    id: 10,
+    name: "Meuble"
   }]
+  const allArticle =[]
 
   return (
     <div className="App">
       <Header />
-      <Body allCategory={allCategory}/>
+      <Body allCategory={allCategory} allArticle={allArticle}/>
       <Footer />
     </div>
   );

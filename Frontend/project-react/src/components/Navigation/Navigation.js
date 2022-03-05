@@ -51,7 +51,7 @@ export default function  Navigation(props) {
         <ListItemText primary="Ajouter Catégorie" />
       </ListItem>
 
-      <ListItem button onClick={event => props.afficherPage(event, "addArticle")} className="navItem">
+      <ListItem button onClick={event => props.afficherPage(event, "AddArticle")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconAjouter />
         </ListItemIcon>
