@@ -64,10 +64,21 @@ function App() {
     }
 }
   ]
+  const article ={
+    "id": 1,
+    "title": "categoryName1",
+    "publicationDate": "2021-12-31T23:00:00.000+00:00",
+    "content": "article1",
+    "author": {
+        "id": 1,
+        "firstName": "firstName1",
+        "lastName": "lastName1"
+    }
+  }
   return (
     <div className="App">
       <Header />
-      <Body allCategory={allCategory} allArticle={allArticle} articlesInCategory={articleUsing}/>
+      <Body allCategory={allCategory} allArticle={allArticle} articlesInCategory={articleUsing} article={article}/>
       <Footer />
     </div>
   );

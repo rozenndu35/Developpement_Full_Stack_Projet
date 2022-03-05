@@ -11,7 +11,7 @@ export default function ListArticleInCategorie(props) {
 
     console.log(props)
     const articleElements = props.articles.map(i => 
-        <ListItem  key={i.id}  button className="articleListItem">
+        <ListItem  key={i.id}  button className="articleListItem" onClick={event => props.afficherPage(event, "Article", i.name)}>
          <ListItemText
           primary={i.title}
           secondary={

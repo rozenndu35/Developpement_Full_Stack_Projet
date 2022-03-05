@@ -1,11 +1,12 @@
 import { useEffect, useState } from 'react';
 import Navigation from '../Navigation/Navigation';
 import ListCategory from '../ListCategory/ListCategory';
+import ListArticleInCategorie from '../ListArticleInCategory/ListArticleInCategorie';
 import AddCategory from '../addCategory/AddCategory';
 import AddArticle from '../addArticle/AddArticle';
+import Article from '../Article/Article';
 import './body.css'
 import './formulaire.css'
-import ListArticleInCategorie from '../ListArticleInCategory/ListArticleInCategorie';
 
 
 export default function Body(props) {
@@ -165,9 +166,10 @@ export default function Body(props) {
             <Navigation categories={props.allCategory} afficherPage={afficherPage}/>
             <section className='App-page'>
                 { pageTwo === "ListeCategory" && <ListCategory categories={props.allCategory}  afficherPage={afficherPage}/>}
-                { pageTwo === "ArticleCategory" && <ListArticleInCategorie categorie={categorieChoice} articles={props.articlesInCategory} />}
+                { pageTwo === "ArticleCategory" && <ListArticleInCategorie categorie={categorieChoice} articles={props.articlesInCategory} afficherPage={afficherPage}/>}
                 { pageTwo === "AddCategory" && <AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={newCategoryChange} submitCategory={submitCategory}/>}
                 { pageTwo === "AddArticle" && <AddArticle newArticle={newArticle} categories={props.allCategory} inputInvalid={inputInvalid} handleChange={newArticleChange} submitArticle={submitArticle}/>}
+                { pageTwo === "Article" && <Article article={props.article} />}
             </section>
 
         </div>
