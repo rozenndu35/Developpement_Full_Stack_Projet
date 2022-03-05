@@ -12,10 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "category")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Category {
 	public Category(Long id, String categoryName, List<Article> articles) {
 		super();
@@ -60,7 +62,7 @@ public class Category {
 	@Column(name = "category_name", nullable=false)
 	private String categoryName;
 	
-	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, targetEntity= com.esiea.blogAPI.model.Article.class, cascade= { CascadeType.PERSIST,CascadeType.MERGE}, mappedBy="category")
+	@JsonIgnoreProperties(value="category", allowSetters = true)
+	@OneToMany(fetch = FetchType.LAZY, targetEntity= com.esiea.blogAPI.model.Article.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy="category")
 	private List<Article> articles;
 }
