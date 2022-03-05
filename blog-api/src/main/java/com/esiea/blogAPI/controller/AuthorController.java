@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -43,11 +44,23 @@ public class AuthorController {
 	}
 	
 	@PostMapping("")
-	public ResponseEntity<Author> createProduct(@RequestBody Author author) {
+	public ResponseEntity<Author> createAuthor(@RequestBody Author author) {
 		try {
-			Author result =  authorService.create(author);
+			Author result =  authorService.save(author);
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		} catch (NotAllowedException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+		}
+	}
+	
+	@PutMapping("")
+	public ResponseEntity<Author>replaceAuthor(@RequestBody Author author) {
+		try {
+			Author result =  authorService.replace(author);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch (NotFoundException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}catch(NotAllowedException e) {
 			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 	}

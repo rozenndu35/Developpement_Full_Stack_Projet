@@ -28,9 +28,14 @@ public class AuthorService {
 			throw new NotFoundException();
 	}
 
-	public Author create(Author author) throws NotAllowedException {
+	public Author save(Author author) throws NotAllowedException {
 		if(author.getId() == null)
 			return authorRepository.save(author);
 		throw new NotAllowedException();
+	}
+
+	public Author replace(Author author) throws NotFoundException, NotAllowedException {
+		this.getAuthor(author.getId());
+		return authorRepository.save(author);
 	}
 }
