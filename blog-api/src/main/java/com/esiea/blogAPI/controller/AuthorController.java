@@ -6,13 +6,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.esiea.blogAPI.exception.NotAllowedException;
 import com.esiea.blogAPI.exception.NotFoundException;
 import com.esiea.blogAPI.model.Author;
 import com.esiea.blogAPI.service.AuthorService;
+
 
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
@@ -36,6 +39,16 @@ public class AuthorController {
 			return new  ResponseEntity<Author>(result, HttpStatus.OK);
 		} catch (NotFoundException e) {
 			return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+	}
+	
+	@PostMapping("")
+	public ResponseEntity<Author> createProduct(@RequestBody Author author) {
+		try {
+			Author result =  authorService.create(author);
+			return new ResponseEntity<>(result, HttpStatus.OK);
+		} catch (NotAllowedException e) {
+			return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
 		}
 	}
 }

@@ -2,7 +2,6 @@ package com.esiea.blogAPI.model;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,11 +12,11 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "author")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+
 public class Author {
 	public Author(Long id, String firstName, String lastName, List<Article> articles) {
 		super();
@@ -26,6 +25,7 @@ public class Author {
 		this.lastName = lastName;
 		this.articles = articles;
 	}
+
 	public Author() {
 		super();
 	}
@@ -61,6 +61,14 @@ public class Author {
 	public void setArticles(List<Article> articles) {
 		this.articles = articles;
 	}
+	
+	public void addArticle(Article article) {
+		this.articles.add(article);
+	}
+	
+	public void removeArticle(Article article) {
+		this.articles.remove(article);
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,7 +82,6 @@ public class Author {
 	private String lastName;
 	
 	@OneToMany(fetch = FetchType.LAZY, targetEntity= com.esiea.blogAPI.model.Article.class, mappedBy="author")
-	@JsonManagedReference
-	@JsonIgnoreProperties("author")
+	@JsonIgnoreProperties(value="author", allowSetters = true)
 	private List<Article> articles;
 }
