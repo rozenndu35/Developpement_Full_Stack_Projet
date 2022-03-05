@@ -162,9 +162,4 @@ class ArticleTest {
 		Assertions.assertEquals("true", result1.toString());
 		Assertions.assertEquals("true", result2.toString());
 	}
-	@Test
-	void Error()
-	{
-		Assertions.assertFalse(true);
-	}
 }

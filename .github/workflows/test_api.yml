@@ -22,5 +22,4 @@ jobs:
                   java -version
                   echo $JAVA_HOME
             - run: |
-                  ls
                   mvn test -f ./blog-api/pom.xml
