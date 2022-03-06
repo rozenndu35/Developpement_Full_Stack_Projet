@@ -10,7 +10,6 @@ import './formulaire.css'
 
 
 export default function Body(props) {
-    console.log.apply(props)
     const [page, setPage] = useState();
     const [pageUpdate, setPageUpdate] = useState({update: false, pageId: -1 });
 

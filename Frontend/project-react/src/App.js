@@ -65,7 +65,7 @@ function App() {
   const [inputInvalid, setInputInvalid] = useState(false);
 
 
-  const [categoryChoice, setCategoryChoice] = useState(-1); //TODO
+  const [categoryChoice, setCategoryChoice] = useState(-1);
   const [articleChoice, setArticleChoice] = useState(-1); 
   /*
   Recupere toutes les Categorys 
@@ -207,10 +207,7 @@ function App() {
       })
       .catch(e => console.log(e.toString()));
       */
-     console.log("rentre?")
-     console.log(newArticle)
       allArticle.push(newArticle)
-      console.log(allArticle)
       setPostingArticle(false);
       setNewArticle(prevState => {
         initInvalidInput();
