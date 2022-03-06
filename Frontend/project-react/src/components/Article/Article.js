@@ -4,9 +4,6 @@ import Typography from '@material-ui/core/Typography'
 import * as React from 'react';
 
 export default function Article(props) {
-
-    console.log(props)
-    console.log(props.article.author.firstName)
     return (
         <div className='App-ListArticleInCategory'>
             <h1> Article : {props.article.title}</h1>

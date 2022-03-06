@@ -7,11 +7,9 @@ import Divider from '@material-ui/core/Divider'
 
 import * as React from 'react';
 
-export default function ListArticleInCategorie(props) {
-
-    console.log(props)
+export default function ListArticleInCategory(props) {
     const articleElements = props.articles.map(i => 
-        <ListItem  key={i.id}  button className="articleListItem" onClick={event => props.afficherPage(event, "Article", i.name)}>
+        <ListItem  key={i.id}  button className="articleListItem" onClick={event => props.afficherPage(event, "Article", i.id)}>
          <ListItemText
           primary={i.title}
           secondary={
@@ -32,7 +30,7 @@ export default function ListArticleInCategorie(props) {
       )
     return (
         <div className='App-ListArticleInCategory'>
-            <h1> Categorie : {props.categorie}</h1>
+            <h1> category : {props.category.name}</h1>
             <List>
                 {articleElements}
             </List>

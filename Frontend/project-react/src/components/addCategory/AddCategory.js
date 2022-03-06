@@ -6,11 +6,11 @@ export default function AddCategory(props) {
 
     return (
         <div className='App-Formulaire'>
-            <h3 className='App-titte-Formulaire' >Ajouter une categorie</h3>
+            <h3 className='App-titte-Formulaire' >Ajouter une category</h3>
             <div className='App-champ-formulaire'>
                 <div className='App-textFieldSimple'>
                 <TextField name="name" variant="standard" 
-                            label="Nom de la categorie :" placeholder="Donne un nom..." helperText={props.inputInvalid}
+                            label="Nom de la category :" placeholder="Donne un nom..." helperText={props.inputInvalid}
                             value={props.newCategory.name} onChange={props.handleChange} 
                 />
                 </div>

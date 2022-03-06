@@ -9,6 +9,10 @@ ReactDOM.render(
     <App />
   </React.StrictMode>,
   document.getElementById('root')
+  /* pour suuprimer le warning findDOMNode qui est deprecier mais utiliser dans nos dependance
+  <App />,
+  document.getElementById('root')
+  */
 );
 
 // If you want to start measuring performance in your app, pass a function

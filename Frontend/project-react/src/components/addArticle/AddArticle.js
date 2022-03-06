@@ -27,8 +27,8 @@ champ date a modifier
                 </LocalizationProvider>
 */
 export default function AddArticle(props) {
-    const categoryElements = props.categories.map(i => 
-        <MenuItem key={i.id}  value={i.id}>{i.name}</MenuItem>
+    const categoryElements = props.categorys.map(i => 
+        <MenuItem key={i.id}  value={i.name}>{i.name}</MenuItem>
     )
 
     return (

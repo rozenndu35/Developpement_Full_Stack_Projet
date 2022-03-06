@@ -9,22 +9,14 @@ import { useEffect, useState } from 'react';
 function App() {
 
   const [postingCategory, setPostingCategory] = useState(false);
-  const [toDeleteCategory, setToDeleteCategory] = useState(false);
   const [postingArticle, setPostingArticle] = useState(false);
-  const [toDeleteArticle, setToDeleteArticle] = useState(false);
   const [allCategory, setAllCategory] = useState(
     [{
       id: 0,
-      name: "Vetement"
+      name: "categoryName1"
     }, {
       id: 1,
-      name: "Numerique"
-    },{
-      id: 2,
-      name: "Meuble"
-    },{
-      id: 10,
-      name: "Meuble"
+      name: "categoryName2"
     }]
   );
   const [allArticle, setAllArticle] = useState(
@@ -51,53 +43,16 @@ function App() {
         }
     }]
   );
-  const [getCategory, setGetCategory] = useState(false);
-  const [getArticle, setGetArticle] = useState(false);
-  const [articleInCategory, setArticleInCategory] = useState(
-    [
-      {
-        "id": 2,
-        "title": "categoryName2",
-        "publicationDate": "2022-02-01T23:00:00.000+00:00",
-        "content": "article2",
-        "author": {
-            "id": 2,
-            "firstName": "firstName2",
-            "lastName": "lastName2"
-        }
-    },{
-      "id": 3,
-      "title": "categoryName3",
-      "publicationDate": "2022-02-01T23:00:00.000+00:00",
-      "content": "article3",
-      "author": {
-          "id": 2,
-          "firstName": "firstName2",
-          "lastName": "lastName2"
-      }
-  }
-    ]
-  );
-  const [article, setArticle] = useState(
-    {
-      "id": 1,
-      "title": "categoryName1",
-      "publicationDate": "2021-12-31T23:00:00.000+00:00",
-      "content": "article1",
-      "author": {
-          "id": 1,
-          "firstName": "firstName1",
-          "lastName": "lastName1"
-      }
-    }
-  );
+  const [articleInCategory, setArticleInCategory] = useState([]);
+  const [article, setArticle] = useState({article:null});
+  const [category, setCategory] = useState({category:null});
 
   const [newCategory, setNewCategory] = useState({
-    id: 0,
+    id: -1,
     name: ""
   });
   const [newArticle, setNewArticle] = useState({
-      id: 0,
+      id: -1,
       name: "",
       author:"",
       datetime: new Date(),
@@ -110,8 +65,8 @@ function App() {
   const [inputInvalid, setInputInvalid] = useState(false);
 
 
-  const [CategoryChoice, setCategoryChoice] = useState();
-  const [articleChoice, setArticleChoice] = useState();
+  const [categoryChoice, setCategoryChoice] = useState(-1); //TODO
+  const [articleChoice, setArticleChoice] = useState(-1); 
   /*
   Recupere toutes les Categorys 
   */
@@ -123,7 +78,7 @@ function App() {
     })
     .catch(e => console.log(e.toString()));
     */
-  }, [postingCategory, toDeleteCategory]);
+  }, [postingCategory]);
 
   /*
   Recupere toutes les articles 
@@ -136,40 +91,52 @@ function App() {
     })
     .catch(e => console.log(e.toString()));
     */
-  }, [postingArticle, toDeleteArticle]);
+  }, [postingArticle]);
 
   /*
-  Recuper les articles de la Category where Category = CategoryChoice
+  Recuper les articles de la Category where Category = CategoryChoice(id)
   */
   useEffect(() => {
-    /*fetch('')
-    .then(res => res.json())
-    .then(data => {
-      setArticleInCategory(data);
-    })
-    .catch(e => console.log(e.toString()));
-    */
-  }, [getCategory]);
+    if(categoryChoice !== -1){
+      /*fetch('')
+      .then(res => res.json())
+      .then(data => {
+        setArticleInCategory(data);
+      })
+      .catch(e => console.log(e.toString()));
+      */
+      setCategory({category:allCategory.find(cat => cat.id === categoryChoice )})
+      let nameCat = allCategory.find(cat => cat.id === categoryChoice ).name;
+      setArticleInCategory(allArticle.filter(art => art.title === nameCat));
+      setCategoryChoice(-1);
+    }
+    
+  }, [categoryChoice]);
 
   /*
   Recuper l'articles saisie where article = articleChoice
   */
   useEffect(() => {
-    /*fetch('')
-    .then(res => res.json())
-    .then(data => {
-      setArticle(data);
-    })
-    .catch(e => console.log(e.toString()));
-    */
-  }, [getArticle]);
+    if(articleChoice !== -1){
+      /*fetch('')
+      .then(res => res.json())
+      .then(data => {
+        setArticle(data);
+      })
+      .catch(e => console.log(e.toString()));
+      */
+      setArticle({article:allArticle.find(art => art.id == articleChoice)});
+      setArticleChoice(-1);
+    }
+    
+  }, [articleChoice]);
 
 
   /*
   Envoie l'ajout de la Category
   */
   useEffect(() =>{
-    if (postingCategory) {
+    if (postingCategory && newCategory.id !== -1) {
       
       /*
       fetch('', {
@@ -194,13 +161,13 @@ function App() {
       })
       .catch(e => console.log(e.toString()));
       */
-      allCategory.push(newCategory)
+      allCategory.push(newCategory);
       setPostingCategory(false);
       setNewCategory(prevState => {
           initInvalidInput();
 
           return {...prevState,
-              id: 0,
+              id: -1,
               name: ""
           }
           });
@@ -211,7 +178,7 @@ function App() {
   Envoie l'ajout de l'article
   */
   useEffect(() =>{
-    if (postingArticle) {
+    if (postingArticle && newArticle.id !== -1) {
       
       /*
       fetch('', {
@@ -240,12 +207,15 @@ function App() {
       })
       .catch(e => console.log(e.toString()));
       */
+     console.log("rentre?")
+     console.log(newArticle)
       allArticle.push(newArticle)
+      console.log(allArticle)
       setPostingArticle(false);
       setNewArticle(prevState => {
         initInvalidInput();
         return {...prevState,
-          id: 0,
+          id: -1,
           name: "",
           author:"",
           datetime: new Date(),
@@ -343,11 +313,13 @@ function App() {
     <div className="App">
       <Header />
       <Body 
-        allCategory={allCategory} articlesInCategory={articleInCategory}
-        allArticle={allArticle} article={article}
-        newCategory={newCategory} submitCategory={submitCategory} handlerCategory={newCategory}
-        newArticle={newArticle} submitArticle={submitArticle} handlerArticle={newArticle}
-        setCategoryChoice={setCategoryChoice}
+        allCategory={allCategory} 
+        allArticle={allArticle} 
+        newCategory={newCategory} submitCategory={submitCategory} handlerCategory={newCategoryChange}
+        newArticle={newArticle} submitArticle={submitArticle} handlerArticle={newArticleChange}
+        setCategoryChoice={setCategoryChoice} category={category.category} articlesInCategory={articleInCategory}
+        setArticleChoice={setArticleChoice} article={article.article}
+        inputInvalid={inputInvalid}
       />
       <Footer />
     </div>

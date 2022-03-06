@@ -15,8 +15,8 @@ import IconAjouter from '@material-ui/icons/AddCircle'
 
 export default function  Navigation(props) {
   const [open, setOpen] = React.useState(false)
-  const categoryElements = props.categories.map(i => 
-    <ListItem key={i.id} button onClick={event => props.afficherPage(event, "ArticleCategory", i.name)} className="navItem">
+  const categoryElements = props.categorys.map(i => 
+    <ListItem key={i.id} button onClick={event => props.afficherPage(event, "ArticleCategory", i.id)} className="navItem">
     <ListItemText inset primary={i.name} />
     </ListItem>
   )
