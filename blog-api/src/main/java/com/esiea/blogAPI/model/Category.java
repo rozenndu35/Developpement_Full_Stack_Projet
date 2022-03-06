@@ -65,4 +65,11 @@ public class Category {
 	@JsonIgnoreProperties(value="category", allowSetters = true)
 	@OneToMany(fetch = FetchType.LAZY, targetEntity= com.esiea.blogAPI.model.Article.class, cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE}, mappedBy="category")
 	private List<Article> articles;
+	
+	public boolean equalsOrNull(Category category) {
+		if(this.getId().equals(category.getId()))
+			if(this.getCategoryName().equals(category.getCategoryName()) || category.getCategoryName() == null)
+				return true;
+		return false;
+	}
 }

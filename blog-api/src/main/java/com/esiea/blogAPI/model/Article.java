@@ -100,13 +100,14 @@ public class Article {
 	@Column(name = "content")
 	private String content;
 	
-	@ManyToOne (cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@ManyToOne (cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
 	@JoinColumn(name="id_author", nullable=false)
 	@JsonIgnoreProperties("articles")
 	private Author author;
 	
-	@ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.LAZY)
+	@ManyToOne(cascade = {CascadeType.MERGE}, fetch = FetchType.LAZY)
 	@JoinColumn(name="id_category", nullable=false)
-	@JsonBackReference
+	@JsonIgnoreProperties("articles")
 	private Category category;
+	
 }

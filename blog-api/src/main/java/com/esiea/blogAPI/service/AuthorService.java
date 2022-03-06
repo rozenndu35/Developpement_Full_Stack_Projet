@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.esiea.blogAPI.exception.AuthorNotFoundException;
 import com.esiea.blogAPI.exception.CantModifyItem;
 import com.esiea.blogAPI.exception.NotAllowedException;
 import com.esiea.blogAPI.exception.NotFoundException;
@@ -35,6 +36,17 @@ public class AuthorService {
 		if(author.getId() == null)
 			return authorRepository.save(author);
 		throw new NotAllowedException();
+	}
+	
+	public Author CreateAuthorIfNotExist(Author author) throws NotAllowedException, NotFoundException {
+		Author currentAuthor;
+		if(author.getId() == null)
+			currentAuthor = this.save(author);
+		else
+			currentAuthor = this.getAuthor(author.getId());
+			if(!currentAuthor.equalsOrNull(author))
+				throw new NotFoundException();
+		return currentAuthor;
 	}
 
 	public Author replace(Author author) throws NotFoundException, NotAllowedException {

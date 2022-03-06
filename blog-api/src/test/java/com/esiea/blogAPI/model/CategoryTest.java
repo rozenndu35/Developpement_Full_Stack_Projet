@@ -97,5 +97,4 @@ class CategoryTest {
 		Assertions.assertEquals(articles2.size(), result1.size());
 		Assertions.assertEquals(articles2.size(), result2.size());
 	}
-
 }
