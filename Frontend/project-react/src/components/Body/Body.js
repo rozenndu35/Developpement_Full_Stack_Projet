@@ -14,6 +14,9 @@ export default function Body(props) {
     const [page, setPage] = useState();
     const [pageUpdate, setPageUpdate] = useState({update: false, pageId: -1 });
     
+    /*
+        modifie l'identifiant de la page a afficher
+    */
     useEffect(() => {
         if (pageUpdate.update) {
             setPage(pageUpdate.pageId)
@@ -21,6 +24,12 @@ export default function Body(props) {
         }
     }, [pageUpdate]);
 
+    /*
+        modifie l'identifiant de la page a afficher
+        @param event : l'evenement
+        @param id ; l'identifiant de la page
+        @param categoryOrArticle : l'identifiant de la catégorie ou de l'article afficher dans la page
+    */
     function afficherPage(event, id, categoryOrArticle) {
         event.stopPropagation();
         setPageUpdate({update: true, pageId: id });
@@ -35,12 +44,12 @@ export default function Body(props) {
     
     return (
         <div className='App-body'>
-            <Navigation categorys={props.allCategory} afficherPage={afficherPage}/>
+            <Navigation categories={props.allCategory} afficherPage={afficherPage}/>
             <section className='App-page'>
-                { page === "ListeCategory" && <ListCategory categorys={props.allCategory}  afficherPage={afficherPage}/>}
+                { page === "ListeCategory" && <ListCategory categories={props.allCategory}  afficherPage={afficherPage}/>}
                 { page === "ArticleCategory" && <ListArticleInCategory category={props.category} articles={props.articlesInCategory} afficherPage={afficherPage}/>}
                 { page === "AddCategory" && <AddCategory newCategory={props.newCategory} inputInvalid={props.inputInvalid} handleChange={props.handlerCategory} submitCategory={props.submitCategory}/>}
-                { page === "AddArticle" && <AddArticle newArticle={props.newArticle} categorys={props.allCategory} inputInvalid={props.inputInvalid} handleChange={props.handlerArticle} handlerArticleDate={props.handlerArticleDate} submitArticle={props.submitArticle}/>}
+                { page === "AddArticle" && <AddArticle newArticle={props.newArticle} categories={props.allCategory} inputInvalid={props.inputInvalid} handleChange={props.handlerArticle} handlerArticleDate={props.handlerArticleDate} submitArticle={props.submitArticle}/>}
                 { page === "Article" && <Article article={props.article} />}
             </section>
 

@@ -15,11 +15,16 @@ import IconAjouter from '@material-ui/icons/AddCircle'
 
 export default function  Navigation(props) {
   const [open, setOpen] = React.useState(false)
-  const categoryElements = props.categorys.map(i => 
+  
+  const categoryElements = props.categories.map(i => 
     <ListItem key={i.id} button onClick={event => props.afficherPage(event, "ArticleCategory", i.id)} className="navItem">
     <ListItemText inset primary={i.name} />
     </ListItem>
   )
+
+  /*
+   change l'ouverture de la liste de categories
+  */
   function handleClick() {
     setOpen(!open)
   }

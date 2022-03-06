@@ -67,7 +67,7 @@ function App() {
   const [categoryChoice, setCategoryChoice] = useState(-1);
   const [articleChoice, setArticleChoice] = useState(-1); 
   /*
-  Recupere toutes les Categorys 
+  Récupere toutes les catégories avec l'API
   */
   useEffect(() => {
     /*fetch('')
@@ -80,7 +80,7 @@ function App() {
   }, [postingCategory]);
 
   /*
-  Recupere toutes les articles 
+  Recupere toutes les articles avec l'API
   */
   useEffect(() => {
     /*fetch('')
@@ -93,7 +93,7 @@ function App() {
   }, [postingArticle]);
 
   /*
-  Recuper les articles de la Category where Category = CategoryChoice(id)
+  Recuper les articles de la categorie where Category = CategoryChoice(id)
   */
   useEffect(() => {
     if(categoryChoice !== -1){
@@ -124,7 +124,7 @@ function App() {
       })
       .catch(e => console.log(e.toString()));
       */
-      setArticle({article:allArticle.find(art => art.id == articleChoice)});
+      setArticle({article:allArticle.find(art => art.id === articleChoice)});
       setArticleChoice(-1);
     }
     
@@ -173,7 +173,7 @@ function App() {
     }
   }, [postingCategory]);
 
-    /*
+  /*
   Envoie l'ajout de l'article
   */
   useEffect(() =>{
@@ -224,7 +224,7 @@ function App() {
   }, [postingArticle]);
 
   /*
-  Remet l'input a valide innitiale
+  Remet l'input invalide a ca position innitiale false
   */
   function initInvalidInput() {
     setInputInvalid(false);
@@ -298,6 +298,9 @@ function App() {
     setInputInvalid("Type non texte") 
   }
 
+  /*
+    Modifie la date du nouvelle article
+  */
   function newArticleDateChange(value){
     setNewArticle(prevState => {
       initInvalidInput();

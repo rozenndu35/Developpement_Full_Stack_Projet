@@ -16,10 +16,7 @@ champ date a modifier
 
 */
 export default function AddArticle(props) {
-
-    console.log(props)
-
-    const categoryElements = props.categorys.map(i => 
+    const categoryElements = props.categories.map(i => 
         <MenuItem key={i.id}  value={i.id}>{i.name}</MenuItem>
     )
 
