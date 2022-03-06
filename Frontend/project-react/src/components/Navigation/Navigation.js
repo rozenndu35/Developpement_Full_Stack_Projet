@@ -30,7 +30,7 @@ export default function  Navigation(props) {
         <ListItemIcon className="navItemIcon">
           <IconList />
         </ListItemIcon>
-        <ListItemText button  primary="Liste Catégorie" />
+        <ListItemText primary="Liste Catégorie" />
       </ListItem>
       <ListItem button onClick={handleClick} className="navItem">
         <ListItemIcon className="navItemIcon">
