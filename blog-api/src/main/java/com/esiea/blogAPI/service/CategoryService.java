@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.esiea.blogAPI.exception.CantModifyItem;
 import com.esiea.blogAPI.exception.NotAllowedException;
 import com.esiea.blogAPI.exception.NotFoundException;
+import com.esiea.blogAPI.model.Author;
 import com.esiea.blogAPI.model.Category;
 import com.esiea.blogAPI.repository.CategoryRepository;
 
@@ -27,6 +28,17 @@ public class CategoryService {
 			return result.get();
 		else
 			throw new NotFoundException();
+	}
+	
+	public Category CreateCategoryIfNotExist(Category category) throws NotAllowedException, NotFoundException {
+		Category currentCategory;
+		if(category.getId() == null)
+			currentCategory = this.save(category);
+		else
+			currentCategory = this.getCategory(category.getId());
+			if(!currentCategory.equalsOrNull(category))
+				throw new NotFoundException();
+		return currentCategory;
 	}
 
 	public Category save(Category author) throws NotAllowedException {

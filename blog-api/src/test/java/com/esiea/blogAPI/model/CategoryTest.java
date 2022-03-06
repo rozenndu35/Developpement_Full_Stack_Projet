@@ -98,4 +98,33 @@ class CategoryTest {
 		Assertions.assertEquals(articles2.size(), result2.size());
 	}
 
+	@Test
+	void testEqualsNull() {
+		boolean result = category2.equals(category1);
+		Assertions.assertFalse(result);
+	}
+	@Test
+	void testEqualsTrue() {
+		category1.setId(id1);
+		category1.setArticles(articles1);
+		category1.setCategoryName(categoryName1);
+		boolean result = category2.equals(category1);
+		Assertions.assertTrue(result);
+	}
+	@Test
+	void testEqualsNDifferentId() {
+		category1.setId(id2);
+		category1.setArticles(articles1);
+		category1.setCategoryName(categoryName1);
+		boolean result = category2.equals(category1);
+		Assertions.assertFalse(result);
+	}
+	@Test
+	void testEqualsNDifferentArticles() {
+		category1.setId(id1);
+		category1.setArticles(articles2);
+		category1.setCategoryName(categoryName1);
+		boolean result = category2.equals(category1);
+		Assertions.assertFalse(result);
+	}
 }

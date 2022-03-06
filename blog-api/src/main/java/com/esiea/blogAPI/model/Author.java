@@ -85,4 +85,12 @@ public class Author {
 	@OneToMany(fetch = FetchType.LAZY, targetEntity= com.esiea.blogAPI.model.Article.class, mappedBy="author", cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
 	@JsonIgnoreProperties(value="author", allowSetters = true)
 	private List<Article> articles;
+	
+	public boolean equalsOrNull(Author author) {
+		if(this.id.equals(author.id))
+			if(this.firstName.equals(author.firstName) || author.getFirstName() == null)
+				if(this.lastName.equals(author.lastName) || author.getLastName() == null)
+					return true;
+		return false;
+	}
 }
