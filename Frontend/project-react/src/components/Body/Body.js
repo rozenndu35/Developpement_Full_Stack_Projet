@@ -9,10 +9,11 @@ import './body.css'
 import './formulaire.css'
 
 
+
 export default function Body(props) {
     const [page, setPage] = useState();
     const [pageUpdate, setPageUpdate] = useState({update: false, pageId: -1 });
-
+    
     useEffect(() => {
         if (pageUpdate.update) {
             setPage(pageUpdate.pageId)
@@ -39,7 +40,7 @@ export default function Body(props) {
                 { page === "ListeCategory" && <ListCategory categorys={props.allCategory}  afficherPage={afficherPage}/>}
                 { page === "ArticleCategory" && <ListArticleInCategory category={props.category} articles={props.articlesInCategory} afficherPage={afficherPage}/>}
                 { page === "AddCategory" && <AddCategory newCategory={props.newCategory} inputInvalid={props.inputInvalid} handleChange={props.handlerCategory} submitCategory={props.submitCategory}/>}
-                { page === "AddArticle" && <AddArticle newArticle={props.newArticle} categorys={props.allCategory} inputInvalid={props.inputInvalid} handleChange={props.handlerArticle} submitArticle={props.submitArticle}/>}
+                { page === "AddArticle" && <AddArticle newArticle={props.newArticle} categorys={props.allCategory} inputInvalid={props.inputInvalid} handleChange={props.handlerArticle} handlerArticleDate={props.handlerArticleDate} submitArticle={props.submitArticle}/>}
                 { page === "Article" && <Article article={props.article} />}
             </section>
 

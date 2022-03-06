@@ -53,7 +53,6 @@ function App() {
   });
   const [newArticle, setNewArticle] = useState({
       id: -1,
-      name: "",
       author:"",
       datetime: new Date(),
       title: "",
@@ -299,6 +298,17 @@ function App() {
     setInputInvalid("Type non texte") 
   }
 
+  function newArticleDateChange(value){
+    setNewArticle(prevState => {
+      initInvalidInput();
+
+      return {...prevState,
+          id: allArticle.length + 1,
+          datetime: value
+      }
+      })
+}
+
   /*
     Verifie si c'est un string et non pas caractere correspondant un du code potentiel
   */
@@ -313,10 +323,11 @@ function App() {
         allCategory={allCategory} 
         allArticle={allArticle} 
         newCategory={newCategory} submitCategory={submitCategory} handlerCategory={newCategoryChange}
-        newArticle={newArticle} submitArticle={submitArticle} handlerArticle={newArticleChange}
+        newArticle={newArticle} submitArticle={submitArticle} handlerArticle={newArticleChange} handlerArticleDate={newArticleDateChange}
         setCategoryChoice={setCategoryChoice} category={category.category} articlesInCategory={articleInCategory}
         setArticleChoice={setArticleChoice} article={article.article}
         inputInvalid={inputInvalid}
+
       />
       <Footer />
     </div>

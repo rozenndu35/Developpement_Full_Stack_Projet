@@ -7,28 +7,20 @@ import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
 
 
-/*
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-champ date a modifier
-<LocalizationProvider dateAdapter={AdapterDateFns}>
-                    <DateTimePicker
-                        type="Date"
-                        selected={props.newArticle.datetime}
-                        renderInput={(props) => <TextField name="date" value={props.newArticle.datetime}/>}
-                        label="DateTimePicker"
-                        value={props.newArticle.datetime}
-                        onChange={props.handleChange}
-                        showTimeSelect
-                        name="date"
 
-                    />
-                </LocalizationProvider>
+/*
+champ date a modifier
+
 */
 export default function AddArticle(props) {
+
+    console.log(props)
+
     const categoryElements = props.categorys.map(i => 
-        <MenuItem key={i.id}  value={i.name}>{i.name}</MenuItem>
+        <MenuItem key={i.id}  value={i.id}>{i.name}</MenuItem>
     )
 
     return (
@@ -36,9 +28,9 @@ export default function AddArticle(props) {
             <h3 className='App-titte-Formulaire' >Ajouter un article</h3>
             <div className='App-champ-formulaire'>
                 <div className='App-textFieldSimple'>
-                <TextField name="name" variant="standard" 
-                            label="Nom de l'article :" placeholder="Donne un nom..." helperText={props.inputInvalid}
-                            value={props.newArticle.name} onChange={props.handleChange} 
+                <TextField name="title" variant="standard" 
+                            label="Titre de l'article :" placeholder="Donne un titre..." helperText={props.inputInvalid}
+                            value={props.newArticle.title} onChange={props.handleChange} 
                 />
                 </div>
                 <div className='App-textFieldSimple'>
@@ -48,15 +40,20 @@ export default function AddArticle(props) {
                 />
                 </div>
                 <div className='App-textFieldSimple'>
-                date a mettre
+                    <LocalizationProvider dateAdapter={AdapterDateFns}>
+                        <DateTimePicker
+                            label="Start Date"
+                            value={props.newArticle.datetime}
+                            onChange={(newDate) => {
+                            props.handlerArticleDate(newDate);
+                            }}
+                            renderInput={(params) => <TextField {...params} sx={{ width: 240 }}/>}
+                        />
+                    
+                    </LocalizationProvider>
 
                 </div>
-                <div className='App-textFieldSimple'>
-                <TextField name="title" variant="standard" 
-                            label="Titre de l'article :" placeholder="Donne un titre..." helperText={props.inputInvalid}
-                            value={props.newArticle.title} onChange={props.handleChange} 
-                />
-                </div>
+                
                 <div className='App-textFieldSimple'>
                 <TextField name="content" variant="standard" 
                             label="Description :" placeholder="Donne une description..." helperText={props.inputInvalid}
