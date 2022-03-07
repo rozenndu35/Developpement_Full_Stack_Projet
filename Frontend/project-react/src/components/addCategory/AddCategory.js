@@ -8,7 +8,7 @@ export default function AddCategory({ newCategory, inputInvalid, handleChange, s
 
     return (
         <div className='App-Formulaire'>
-            <h3 className='App-titte-Formulaire' >Ajouter une category</h3>
+            <h3 className='App-titte-Formulaire' >Ajouter une categorie</h3>
             <div className='App-champ-formulaire'>
                 <div className='App-textFieldSimple'>
                 <TextField name="name" variant="standard" 

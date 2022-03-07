@@ -16,6 +16,7 @@ export default function ListCategory({categories ,afficherPage}) {
 
     return (
         <div className='App-ListCategory'>
+            <h2>Liste des categorie disponible</h2>
             <List>
                 {categoryElements}
             </List>
