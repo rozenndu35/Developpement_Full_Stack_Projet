@@ -13,10 +13,10 @@ import org.mockito.Mock;
 
 class CategoryTest {
 	
-	private Long id1 = Long.valueOf(0);
-	private Long id2 = Long.valueOf(1);
-	private String categoryName1 = "categoryName1";
+	private Long id2 = Long.valueOf(0);
+	private Long id1 = Long.valueOf(1);
 	private String categoryName2 = "categoryName2";
+	private String categoryName1 = "categoryName1";
 	@Mock
 	private Article article1 = mock(Article.class);
 	@Mock
@@ -38,16 +38,16 @@ class CategoryTest {
 		articles2.add(article2);
 		articles2.add(article3);
 		category1 = new Category();
-		category2 = new Category(id1, categoryName1 ,articles1);
+		category2 = new Category(id2, categoryName2 ,articles1);
 	}
 
 	@Test
 	void testGetId() {
-		category1.setId(id1);
+		category1.setId(id2);
 		Long result1 = category1.getId();
 		Long result2 = category2.getId();
-		Assertions.assertEquals(id1, result1);
-		Assertions.assertEquals(id1, result2);
+		Assertions.assertEquals(id2, result1);
+		Assertions.assertEquals(id2, result2);
 	}
 
 	@Test
@@ -62,21 +62,21 @@ class CategoryTest {
 
 	@Test
 	void testGetCategoryName() {
-		category1.setCategoryName(categoryName1);
-		String result1 = category1.getCategoryName();
-		String result2 = category2.getCategoryName();
-		Assertions.assertEquals(categoryName1, result1);
-		Assertions.assertEquals(categoryName1, result2);
-	}
-
-	@Test
-	void testSetCategoryName() {
 		category1.setCategoryName(categoryName2);
-		category2.setCategoryName(categoryName2);
 		String result1 = category1.getCategoryName();
 		String result2 = category2.getCategoryName();
 		Assertions.assertEquals(categoryName2, result1);
 		Assertions.assertEquals(categoryName2, result2);
+	}
+
+	@Test
+	void testSetCategoryName() {
+		category1.setCategoryName(categoryName1);
+		category2.setCategoryName(categoryName1);
+		String result1 = category1.getCategoryName();
+		String result2 = category2.getCategoryName();
+		Assertions.assertEquals(categoryName1, result1);
+		Assertions.assertEquals(categoryName1, result2);
 	}
 
 	@Test
@@ -96,5 +96,43 @@ class CategoryTest {
 		List<Article> result2 = category2.getArticles();
 		Assertions.assertEquals(articles2.size(), result1.size());
 		Assertions.assertEquals(articles2.size(), result2.size());
+	}
+
+	@Test
+	void testEqualsOrNullTrue(){
+		boolean result = category2.equalsOrNull(category2);
+		Assertions.assertTrue(result);
+	}
+	@Test
+	void testEqualsOrNullReverseNotCategoryName(){
+		category1.setId(category2.getId());
+		boolean result = category1.equalsOrNull(category2);
+		Assertions.assertFalse(result);
+	}
+	@Test
+	void testEqualsOrNullReverseNotID(){
+		category1.setCategoryName(category2.getCategoryName());
+		boolean result = category1.equalsOrNull(category2);
+		Assertions.assertFalse(result);
+	}
+	@Test
+	void testEqualsOrNullFalseID(){
+		category1.setId(id1);
+		boolean result = category2.equalsOrNull(category1);
+		Assertions.assertFalse(result);
+	}
+	@Test
+	void testEqualsOrNullGood(){
+		category1.setId(id2);
+		category1.setCategoryName(categoryName2);
+		boolean result = category2.equalsOrNull(category1);
+		Assertions.assertTrue(result);
+	}
+	@Test
+	void testEqualsOrNullBadCategoryName(){
+		category1.setId(id2);
+		category1.setCategoryName(categoryName1);
+		boolean result = category2.equalsOrNull(category1);
+		Assertions.assertFalse(result);
 	}
 }
