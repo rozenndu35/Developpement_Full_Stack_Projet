@@ -13,11 +13,13 @@ import IconExpandMore from '@material-ui/icons/ExpandMore'
 import IconList from '@material-ui/icons/ListSharp'
 import IconAjouter from '@material-ui/icons/AddCircle'
 
-export default function  Navigation(props) {
+import PropTypes from 'prop-types'
+
+export default function  Navigation({categories, afficherPage}) {
   const [open, setOpen] = React.useState(false)
   
-  const categoryElements = props.categories.map(i => 
-    <ListItem key={i.id} button onClick={event => props.afficherPage(event, "ArticleCategory", i.id)} className="navItem">
+  const categoryElements = categories.map(i => 
+    <ListItem key={i.id} button onClick={event => afficherPage(event, "ArticleCategory", i.id)} className="navItem">
     <ListItemText inset primary={i.name} />
     </ListItem>
   )
@@ -31,7 +33,7 @@ export default function  Navigation(props) {
 
   return (
     <List component="nav" className="nav" disablePadding>
-      <ListItem button onClick={event => props.afficherPage(event, "ListeCategory")} className="navItem">
+      <ListItem button onClick={event => afficherPage(event, "ListeCategory")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconList />
         </ListItemIcon>
@@ -49,14 +51,14 @@ export default function  Navigation(props) {
           {categoryElements}
         </List>
       </Collapse>
-      <ListItem button onClick={event => props.afficherPage(event, "AddCategory")} className="navItem">
+      <ListItem button onClick={event => afficherPage(event, "AddCategory")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconAjouter />
         </ListItemIcon>
         <ListItemText primary="Ajouter Catégorie" />
       </ListItem>
 
-      <ListItem button onClick={event => props.afficherPage(event, "AddArticle")} className="navItem">
+      <ListItem button onClick={event => afficherPage(event, "AddArticle")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconAjouter />
         </ListItemIcon>
@@ -64,4 +66,9 @@ export default function  Navigation(props) {
       </ListItem>
     </List>
   )
+}
+
+Navigation.propTypes = {
+  categories: PropTypes.array.isRequired,
+  afficherPage: PropTypes.func.isRequired
 }

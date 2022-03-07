@@ -5,18 +5,17 @@ import MenuItem from '@material-ui/core/MenuItem'
 import FormControl from '@material-ui/core/FormControl'
 import InputLabel from '@material-ui/core/InputLabel'
 import Select from '@material-ui/core/Select'
-
-
 import DateTimePicker from '@mui/lab/DateTimePicker';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
 
+import PropTypes from 'prop-types'
 /*
 champ date a modifier
 
 */
-export default function AddArticle(props) {
-    const categoryElements = props.categories.map(i => 
+export default function AddArticle({ categories, newArticle, inputInvalid, handleChange, handlerArticleDate, submitArticle }) {
+    const categoryElements = categories.map(i => 
         <MenuItem key={i.id}  value={i.id}>{i.name}</MenuItem>
     )
 
@@ -26,23 +25,23 @@ export default function AddArticle(props) {
             <div className='App-champ-formulaire'>
                 <div className='App-textFieldSimple'>
                 <TextField name="title" variant="standard" 
-                            label="Titre de l'article :" placeholder="Donne un titre..." helperText={props.inputInvalid}
-                            value={props.newArticle.title} onChange={props.handleChange} 
+                            label="Titre de l'article :" placeholder="Donne un titre..." helperText={inputInvalid}
+                            value={newArticle.title} onChange={handleChange} 
                 />
                 </div>
                 <div className='App-textFieldSimple'>
                 <TextField name="author" variant="standard" 
-                            label="Nom de l'autheur :" placeholder="Donne un nom..." helperText={props.inputInvalid}
-                            value={props.newArticle.author} onChange={props.handleChange} 
+                            label="Nom de l'autheur :" placeholder="Donne un nom..." helperText={inputInvalid}
+                            value={newArticle.author} onChange={handleChange} 
                 />
                 </div>
                 <div className='App-textFieldSimple'>
                     <LocalizationProvider dateAdapter={AdapterDateFns}>
                         <DateTimePicker
                             label="Start Date"
-                            value={props.newArticle.datetime}
+                            value={newArticle.datetime}
                             onChange={(newDate) => {
-                            props.handlerArticleDate(newDate);
+                                handlerArticleDate(newDate);
                             }}
                             renderInput={(params) => <TextField {...params} sx={{ width: 240 }}/>}
                         />
@@ -53,21 +52,30 @@ export default function AddArticle(props) {
                 
                 <div className='App-textFieldSimple'>
                 <TextField name="content" variant="standard" 
-                            label="Description :" placeholder="Donne une description..." helperText={props.inputInvalid}
-                            value={props.newArticle.content} onChange={props.handleChange} 
+                            label="Description :" placeholder="Donne une description..." helperText={inputInvalid}
+                            value={newArticle.content} onChange={handleChange} 
                 />
                 </div>
                 <div className='App-FormControl'>
                 <FormControl variant="standard">
                     <InputLabel id="demo-simple-select-standard-label">Categorie :</InputLabel>
                     <Select label="Categorie" name='category'
-                        value={props.newArticle.category} onChange={props.handleChange} >
+                        value={newArticle.category} onChange={handleChange} >
                     {categoryElements}
                     </Select>
                 </FormControl>
                 </div>
-                <Button className='App-submitButton add-button' variant="contained" onClick={props.submitArticle} endIcon={<SendIcon />}> Envoyer </Button>
+                <Button className='App-submitButton add-button' variant="contained" onClick={submitArticle} endIcon={<SendIcon />}> Envoyer </Button>
             </div>
         </div>
     )
+}
+
+AddArticle.propTypes = {
+    categories: PropTypes.array.isRequired,
+    newArticle: PropTypes.object.isRequired,
+    inputInvalid: PropTypes.bool.isRequired,
+    handleChange :  PropTypes.func.isRequired,
+    handlerArticleDate : PropTypes.func.isRequired,
+    submitArticle: PropTypes.func.isRequired
 }

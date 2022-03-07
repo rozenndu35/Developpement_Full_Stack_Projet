@@ -6,10 +6,11 @@ import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
 
 import * as React from 'react';
+import PropTypes from 'prop-types'
 
-export default function ListArticleInCategory(props) {
-    const articleElements = props.articles.map(i => 
-        <ListItem  key={i.id}  button className="articleListItem" onClick={event => props.afficherPage(event, "Article", i.id)}>
+export default function ListArticleInCategory({articles, afficherPage, category}) {
+    const articleElements = articles.map(i => 
+        <ListItem  key={i.id}  button className="articleListItem" onClick={event => afficherPage(event, "Article", i.id)}>
          <ListItemText
           primary={i.title}
           secondary={
@@ -30,10 +31,15 @@ export default function ListArticleInCategory(props) {
       )
     return (
         <div className='App-ListArticleInCategory'>
-            <h1> category : {props.category.name}</h1>
+            <h1> category : {category.name}</h1>
             <List>
                 {articleElements}
             </List>
         </div>
     )
+}
+ListArticleInCategory.propTypes = {
+  articles: PropTypes.array.isRequired,
+  afficherPage: PropTypes.func.isRequired,
+  category: PropTypes.object.isRequired
 }

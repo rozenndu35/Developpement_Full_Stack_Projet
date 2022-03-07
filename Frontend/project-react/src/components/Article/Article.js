@@ -12,7 +12,7 @@ export default function Article(props) {
                 component="span"
                 variant="body2"
               >
-                {props.article.author.firstName} {props.article.author.lastName} - {props.article.publicationDate}
+                {props.article.author !== null ? props.article.author.firstName + " " +props.article.author.lastName : ""} - {props.article.publicationDate}
               </Typography>
               {props.article.content}
         </div>

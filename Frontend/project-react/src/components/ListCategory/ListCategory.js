@@ -4,10 +4,12 @@ import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 
-export default function ListCategory(props) {
+import PropTypes from 'prop-types'
 
-    const categoryElements = props.categories.map(i => 
-        <ListItem key={i.id}  button className="navItem" onClick={event => props.afficherPage(event, "ArticleCategory", i.id)}>
+export default function ListCategory({categories ,afficherPage}) {
+
+    const categoryElements = categories.map(i => 
+        <ListItem key={i.id}  button className="navItem" onClick={event => afficherPage(event, "ArticleCategory", i.id)}>
         <ListItemText inset primary={i.name} />
         </ListItem>
       )
@@ -20,3 +22,8 @@ export default function ListCategory(props) {
         </div>
     )
 }
+
+ListCategory.propTypes = {
+    categories: PropTypes.array.isRequired,
+    afficherPage: PropTypes.func.isRequired
+  }
