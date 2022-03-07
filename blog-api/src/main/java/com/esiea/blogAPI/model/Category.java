@@ -67,6 +67,8 @@ public class Category {
 	private List<Article> articles;
 	
 	public boolean equalsOrNull(Category category) {
+		if(this.categoryName == null ||this.getId() == null)
+			return false;
 		if(this.getId().equals(category.getId()))
 			if(this.getCategoryName().equals(category.getCategoryName()) || category.getCategoryName() == null)
 				return true;

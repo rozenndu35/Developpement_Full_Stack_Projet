@@ -1,5 +1,6 @@
 package com.esiea.blogAPI.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -64,6 +65,8 @@ public class Author {
 	}
 	
 	public void addArticle(Article article) {
+		if(this.articles == null)
+			this.articles = new ArrayList<>();
 		this.articles.add(article);
 	}
 	
@@ -87,6 +90,8 @@ public class Author {
 	private List<Article> articles;
 	
 	public boolean equalsOrNull(Author author) {
+		if(this.getFirstName() == null || this.getLastName() == null || this.getId() == null)
+			return false;
 		if(this.id.equals(author.id))
 			if(this.firstName.equals(author.firstName) || author.getFirstName() == null)
 				if(this.lastName.equals(author.lastName) || author.getLastName() == null)
