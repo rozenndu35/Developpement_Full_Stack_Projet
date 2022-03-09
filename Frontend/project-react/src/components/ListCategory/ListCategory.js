@@ -10,7 +10,7 @@ export default function ListCategory({categories ,afficherPage}) {
 
     const categoryElements = categories.map(i => 
         <ListItem key={i.id}  button className="navItem" onClick={event => afficherPage(event, "ArticleCategory", i.id)}>
-        <ListItemText inset primary={i.name} />
+        <ListItemText inset primary={i.categoryName} />
         </ListItem>
       )
 

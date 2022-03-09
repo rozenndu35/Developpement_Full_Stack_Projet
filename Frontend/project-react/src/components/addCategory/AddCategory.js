@@ -11,9 +11,9 @@ export default function AddCategory({ newCategory, inputInvalid, handleChange, s
             <h3 className='App-titte-Formulaire' >Ajouter une categorie</h3>
             <div className='App-champ-formulaire'>
                 <div className='App-textFieldSimple'>
-                <TextField name="name" variant="standard" 
+                <TextField name="categoryName" variant="standard" 
                             label="Nom de la category :" placeholder="Donne un nom..." helperText={inputInvalid}
-                            value={newCategory.name} onChange={handleChange} 
+                            value={newCategory.categoryName} onChange={handleChange} 
                 />
                 </div>
                 

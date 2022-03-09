@@ -13,10 +13,10 @@ function App() {
   const [allCategory, setAllCategory] = useState(
     [{
       id: 0,
-      name: "categoryName1"
+      categoryName: "categoryName1"
     }, {
       id: 1,
-      name: "categoryName2"
+      categoryName: "categoryName2"
     }]
   );
   const [allArticle, setAllArticle] = useState(
@@ -49,7 +49,7 @@ function App() {
 
   const [newCategory, setNewCategory] = useState({
     id: -1,
-    name: ""
+    categoryName: ""
   });
   const [newArticle, setNewArticle] = useState({
       id: -1,
