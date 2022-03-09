@@ -105,7 +105,7 @@ function App() {
       .catch(e => console.log(e.toString()));
       */
       setCategory({category:allCategory.find(cat => cat.id === categoryChoice )})
-      let nameCat = allCategory.find(cat => cat.id === categoryChoice ).name;
+      let nameCat = allCategory.find(cat => cat.id === categoryChoice ).categoryName;
       setArticleInCategory(allArticle.filter(art => art.title === nameCat));
       setCategoryChoice(-1);
     }
@@ -154,7 +154,7 @@ function App() {
 
           return {...prevState,
               id: 0,
-              name: ""
+              categoryName: ""
           }
           });
       })
@@ -167,7 +167,7 @@ function App() {
 
           return {...prevState,
               id: -1,
-              name: ""
+              categoryName: ""
           }
           });
     }

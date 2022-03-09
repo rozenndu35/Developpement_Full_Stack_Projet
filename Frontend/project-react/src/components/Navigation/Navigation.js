@@ -20,7 +20,7 @@ export default function  Navigation({categories, afficherPage}) {
   
   const categoryElements = categories.map(i => 
     <ListItem key={i.id} button onClick={event => afficherPage(event, "ArticleCategory", i.id)} className="navItem">
-    <ListItemText inset primary={i.name} />
+    <ListItemText inset primary={i.categoryName} />
     </ListItem>
   )
 
