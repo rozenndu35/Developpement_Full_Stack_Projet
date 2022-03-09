@@ -104,7 +104,7 @@ public class ArticleService {
 	 * @return L'article patché
 	 * @throws NotFoundException Si l'article n'éxiste pas
 	 * @throws NotAllowedException Echec de la sauvegarde dans la base de données
-	 * @throws AuthorNotFoundExceptionSi un ID est défini, mais que le nom/prenom de l'auteur ne correspond pas et ne sont pas nul, lève cette exception
+	 * @throws AuthorNotFoundException un ID est défini, mais que le nom/prenom de l'auteur ne correspond pas et ne sont pas nul, lève cette exception
 	 * @throws CategoryNotFoundException Si un ID est défini, mais que le nom de la catégorie ne correspond pas et n'est pas nul, lève cette exception
 	 */
 	public Article patch(Article newArticle) throws NotFoundException, NotAllowedException, AuthorNotFoundException, CategoryNotFoundException {
