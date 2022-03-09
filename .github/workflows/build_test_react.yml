@@ -32,6 +32,5 @@ jobs:
         run: |
           cd ./Frontend/project-react
           npm ci
-          npm run build --if-present
           npm test
           
