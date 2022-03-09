@@ -9,7 +9,6 @@ import * as React from 'react';
 import PropTypes from 'prop-types'
 
 export default function ListArticleInCategory({articles, afficherPage, category}) {
-  console.log(articles)
     const articleElements = articles.map(i => 
         <ListItem  key={i.id}  button className="articleListItem" onClick={event => afficherPage(event, "Article", i.id)}>
          <ListItemText
