@@ -4,7 +4,7 @@ import Navigation from './Navigation';
 const categoriesMockedData = [
     {
         "id": 2,
-        "name": "categoryName2",
+        "categoryName": "categoryName2",
         "articles": [
             {
                 "id": 2,
@@ -21,7 +21,7 @@ const categoriesMockedData = [
     },
     {
         "id": 3,
-        "name": "patchcategoryName",
+        "categoryName": "patchcategoryName",
         "articles": [
             {
                 "id": 3,
