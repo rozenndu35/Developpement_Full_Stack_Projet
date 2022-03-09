@@ -39,11 +39,6 @@ const categoriesMockedData = [
               }
           }
       ]
-  },
-  {
-      "id": 4,
-      "categoryName": "updateCategoryName",
-      "articles": []
   }
 ]
 const server = setupServer(
@@ -91,26 +86,10 @@ it ("should test de l'api get categorie dans le cas d'une erreur de notre part T
     })
   )
 });
-it('should Changer page vers liste categorie', () => {
+it('should Ouvrir la page vers liste categorie', () => {
   render(<App />);
   fireEvent.click(screen.getByText("Liste Catégorie"))
   expect(screen.getByText(/Liste des categorie disponible/)).toBeTruthy()
-})
-it('should Ouvrir le liste de categorie dans la navigation TODO', () => {
-  render(<App />);
-  //TODO
-  //screen.debug()
-  //fireEvent.click(screen.getByText("Liste par Catégorie"))
-  //expect(screen.getByText(/Liste des categorie disponible/)).toBeTruthy()
-  //screen.debug()
-})
-it('should Fermer le liste de categorie dans la navigation TODO', () => {
-  render(<App />);
-  //TODO
-  //fireEvent.click(screen.getByText("Liste par Catégorie"))
-  //expect(screen.getByText(/Liste des categorie disponible/)).toBeTruthy()
-  //fireEvent.click(screen.getByText("Liste par Catégorie"))
-  //expect(screen.getByText(/Liste des categorie disponible/)).toBeTruthy()
 })
 it('should Ouvrir une categorie depui la navigation TODO', () => {
   render(<App />);
