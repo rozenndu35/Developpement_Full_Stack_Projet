@@ -8,8 +8,10 @@ import Divider from '@material-ui/core/Divider'
 import * as React from 'react';
 import PropTypes from 'prop-types'
 
-export default function ListArticleInCategory({articles, afficherPage, category}) {
-    const articleElements = articles.map(i => 
+export default function ListArticleInCategory({afficherPage, category}) {
+    let articleElements = [];
+    if(category.articles){
+      articleElements = category.articles.map(i => 
         <ListItem  key={i.id}  button className="articleListItem" onClick={event => afficherPage(event, "Article", i.id)}>
          <ListItemText
           primary={i.title}
@@ -29,6 +31,8 @@ export default function ListArticleInCategory({articles, afficherPage, category}
         <Divider variant="inset" component="li" />
         </ListItem>
       )
+    }
+
     return (
         <div className='App-ListArticleInCategory'>
             <h1> category : {category.categoryName}</h1>
@@ -39,7 +43,6 @@ export default function ListArticleInCategory({articles, afficherPage, category}
     )
 }
 ListArticleInCategory.propTypes = {
-  articles: PropTypes.array.isRequired,
   afficherPage: PropTypes.func.isRequired,
   category: PropTypes.object.isRequired
 }

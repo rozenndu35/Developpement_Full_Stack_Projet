@@ -47,7 +47,7 @@ export default function Body({setArticleChoice, setCategoryChoice, allCategory, 
             <Navigation categories={allCategory} afficherPage={afficherPage}/>
             <section className='App-page'>
                 { page === "ListeCategory" && <ListCategory categories={allCategory}  afficherPage={afficherPage}/>}
-                { page === "ArticleCategory" && <ListArticleInCategory category={category} articles={articlesInCategory} afficherPage={afficherPage}/>}
+                { page === "ArticleCategory" && <ListArticleInCategory category={category} afficherPage={afficherPage}/>}
                 { page === "AddCategory" && <AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={handlerCategory} submitCategory={submitCategory}/>}
                 { page === "AddArticle" && <AddArticle newArticle={newArticle} categories={allCategory} inputInvalid={inputInvalid} handleChange={handlerArticle} handlerArticleDate={handlerArticleDate} submitArticle={submitArticle}/>}
                 { page === "Article" && <Article article={article} />}
@@ -65,7 +65,6 @@ Body.propTypes = {
     newCategory:PropTypes.object.isRequired,
     handlerCategory:PropTypes.func.isRequired,
     submitCategory: PropTypes.func.isRequired,
-    articlesInCategory: PropTypes.array,
     article: PropTypes.object,
     newArticle:PropTypes.object.isRequired,
     handlerArticle:PropTypes.func.isRequired,

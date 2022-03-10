@@ -11,13 +11,64 @@ function App() {
   const [postingCategory, setPostingCategory] = useState(false);
   const [postingArticle, setPostingArticle] = useState(false);
   const [allCategory, setAllCategory] = useState(
-    [{
-      id: 0,
-      categoryName: "categoryName1"
-    }, {
-      id: 1,
-      categoryName: "categoryName2"
-    }]
+    [
+      {
+          "id": 1,
+          "categoryName": "categoryName1",
+          "articles": [
+              {
+                  "id": 1,
+                  "title": "title1",
+                  "publicationDate": "2021-12-31T23:00:00.000+00:00",
+                  "content": "article1",
+                  "author": {
+                      "id": 1,
+                      "firstName": "firstName1",
+                      "lastName": "lastName1"
+                  }
+              }
+          ]
+      },
+      {
+          "id": 2,
+          "categoryName": "categoryName2",
+          "articles": [
+              {
+                  "id": 2,
+                  "title": "title2",
+                  "publicationDate": "2022-02-01T23:00:00.000+00:00",
+                  "content": "article2",
+                  "author": {
+                      "id": 2,
+                      "firstName": "firstName2",
+                      "lastName": "lastName2"
+                  }
+              }
+          ]
+      },
+      {
+          "id": 3,
+          "categoryName": "categoryName3",
+          "articles": [
+              {
+                  "id": 3,
+                  "title": "title3",
+                  "publicationDate": "2022-03-02T23:00:00.000+00:00",
+                  "content": "article3",
+                  "author": {
+                      "id": 3,
+                      "firstName": "firstName3",
+                      "lastName": "lastName3"
+                  }
+              }
+          ]
+      },
+      {
+          "id": 4,
+          "categoryName": "newCategory",
+          "articles": []
+      }
+  ]
   );
   const [allArticle, setAllArticle] = useState(
     [ {
@@ -43,7 +94,6 @@ function App() {
         }
     }]
   );
-  const [articleInCategory, setArticleInCategory] = useState([]);
   const [article, setArticle] = useState({article:null});
   const [category, setCategory] = useState({category:null});
 
@@ -70,7 +120,8 @@ function App() {
   Récupere toutes les catégories avec l'API
   */
   useEffect(() => {
-    /*fetch('')
+    /* OK TODO where merge backend
+    fetch('http://localhost:9000/api/private/category')
     .then(res => res.json())
     .then(data => {
       setAllCategory(data);
@@ -83,7 +134,8 @@ function App() {
   Recupere toutes les articles avec l'API
   */
   useEffect(() => {
-    /*fetch('')
+    /* OK TODO where merge backend
+    fetch('http://localhost:9000/api/private/article')
     .then(res => res.json())
     .then(data => {
       setAllArticle(data);
@@ -100,13 +152,11 @@ function App() {
       /*fetch('')
       .then(res => res.json())
       .then(data => {
-        setArticleInCategory(data);
+        setCategory(data);
       })
       .catch(e => console.log(e.toString()));
       */
       setCategory({category:allCategory.find(cat => cat.id === categoryChoice )})
-      let nameCat = allCategory.find(cat => cat.id === categoryChoice ).categoryName;
-      setArticleInCategory(allArticle.filter(art => art.title === nameCat));
       setCategoryChoice(-1);
     }
     
@@ -327,7 +377,7 @@ function App() {
         allArticle={allArticle} 
         newCategory={newCategory} submitCategory={submitCategory} handlerCategory={newCategoryChange}
         newArticle={newArticle} submitArticle={submitArticle} handlerArticle={newArticleChange} handlerArticleDate={newArticleDateChange}
-        setCategoryChoice={setCategoryChoice} category={category.category} articlesInCategory={articleInCategory}
+        setCategoryChoice={setCategoryChoice} category={category.category}
         setArticleChoice={setArticleChoice} article={article.article}
         inputInvalid={inputInvalid}
 

@@ -64,7 +64,8 @@ it('should Ouvrir le liste de categorie', () => {
     fireEvent.click(screen.getByText("Liste par Catégorie"));
     expect(screen.getByText(/categoryName2/)).toBeTruthy();
   })
-//TODO test fermer liste categorie
+
+// TODO test fermer liste categorie
 
 it('should Ouvrir une category', () => {
     render(<Navigation categories={categoriesMockedData} afficherPage={afficherPage}/>);
@@ -80,6 +81,7 @@ it('should Ouvrir ajouter article', () => {
     fireEvent.click(screen.getByText("Ajouter Article"));
     expect(page).toEqual("AddArticle")
   })
+  
 it('should Ouvrir ajouter categorie', () => {
     render(<Navigation categories={categoriesMockedData} afficherPage={afficherPage}/>);
     fireEvent.click(screen.getByText("Ajouter Catégorie"));
