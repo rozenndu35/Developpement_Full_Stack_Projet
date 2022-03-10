@@ -98,7 +98,6 @@ function App() {
   const [category, setCategory] = useState({category:null});
 
   const [newCategory, setNewCategory] = useState({
-    id: -1,
     categoryName: ""
   });
   const [newArticle, setNewArticle] = useState({
@@ -149,7 +148,7 @@ function App() {
   */
   useEffect(() => {
     if(categoryChoice !== -1){
-      /*fetch('')
+      /*fetch('http://localhost:9000/api/private/category/1' + categoryChoice)
       .then(res => res.json())
       .then(data => {
         setCategory(data);
@@ -167,7 +166,7 @@ function App() {
   */
   useEffect(() => {
     if(articleChoice !== -1){
-      /*fetch('')
+      /*fetch('http://localhost:9000/api/private/article/'+articleChoice)
       .then(res => res.json())
       .then(data => {
         setArticle(data);
@@ -185,16 +184,16 @@ function App() {
   Envoie l'ajout de la Category
   */
   useEffect(() =>{
-    if (postingCategory && newCategory.id !== -1) {
+    if (postingCategory ) {
       
-      /*
-      fetch('', {
+      /* OK TODO where merge backend
+      fetch('http://localhost:9000/api/private/category', {
           method: "POST",
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify(newArticle)
+          body: JSON.stringify(newCategory)
       })
       .then(res => res.json())
       .then(data => {
@@ -203,7 +202,6 @@ function App() {
           initInvalidInput();
 
           return {...prevState,
-              id: 0,
               categoryName: ""
           }
           });
@@ -307,7 +305,6 @@ function App() {
               initInvalidInput();
 
               return {...prevState,
-                  id: allCategory.length + 1,
                   [name]: value
               }
             });
