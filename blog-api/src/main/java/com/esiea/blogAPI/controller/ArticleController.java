@@ -31,7 +31,7 @@ public class ArticleController {
 	
 	@GetMapping("")
 	public Iterable <Article> getArticles(){
-		return articleService.getArticle();
+		return articleService.getArticles();
 	}
 	@GetMapping("{id}")
 	public ResponseEntity<Article> getArticle(@PathVariable("id") long id)

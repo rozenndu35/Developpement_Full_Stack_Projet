@@ -17,7 +17,7 @@ import com.esiea.blogAPI.repository.CategoryRepository;
 public class CategoryService {
 	@Autowired
 	private CategoryRepository categoryRepository;
-	
+
 	public Iterable<Category> getCategories(){
 		return categoryRepository.findAll();
 	}
@@ -34,10 +34,11 @@ public class CategoryService {
 		Category currentCategory;
 		if(category.getId() == null)
 			currentCategory = this.save(category);
-		else
+		else {
 			currentCategory = this.getCategory(category.getId());
-			if(!currentCategory.equalsOrNull(category))
+			if (!currentCategory.equalsOrNull(category))
 				throw new NotFoundException();
+		}
 		return currentCategory;
 	}
 
@@ -47,20 +48,19 @@ public class CategoryService {
 		throw new NotAllowedException();
 	}
 
-	public Category replace(Category author) throws NotFoundException, NotAllowedException {
-		this.getCategory(author.getId());
-		return categoryRepository.save(author);
+	public Category replace(Category category) throws NotFoundException, NotAllowedException {
+		this.getCategory(category.getId());
+		return categoryRepository.save(category);
 	}
 	
 
 	public Category patch(Category newCategory) throws NotFoundException, CantModifyItem {
-		Category currendAuthor = this.getCategory(newCategory.getId());
-		if(newCategory.getCategoryName() != null && newCategory.getCategoryName() != currendAuthor.getCategoryName())
-			currendAuthor.setCategoryName(newCategory.getCategoryName());
-		if(newCategory.getArticles() != null && !newCategory.getArticles().equals(currendAuthor.getArticles()))
+		Category currentCategory = this.getCategory(newCategory.getId());
+		if(newCategory.getCategoryName() != null && !newCategory.getCategoryName().equals(currentCategory.getCategoryName()))
+			currentCategory.setCategoryName(newCategory.getCategoryName());
+		if(newCategory.getArticles() != null && !newCategory.getArticles().equals(currentCategory.getArticles()))
 			throw new CantModifyItem();
-		categoryRepository.save(currendAuthor);
-		return currendAuthor;
+		return categoryRepository.save(currentCategory);
 	}
 
 	public void delete(long id) throws NotFoundException {

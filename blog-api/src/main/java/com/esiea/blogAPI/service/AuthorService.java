@@ -42,10 +42,11 @@ public class AuthorService {
 		Author currentAuthor;
 		if(author.getId() == null)
 			currentAuthor = this.save(author);
-		else
+		else {
 			currentAuthor = this.getAuthor(author.getId());
-			if(!currentAuthor.equalsOrNull(author))
+			if (!currentAuthor.equalsOrNull(author))
 				throw new NotFoundException();
+		}
 		return currentAuthor;
 	}
 
@@ -56,15 +57,15 @@ public class AuthorService {
 	
 
 	public Author patch(Author newAuthor) throws NotFoundException, CantModifyItem {
-		Author currendAuthor = this.getAuthor(newAuthor.getId());
-		if(newAuthor.getFirstName() != null && newAuthor.getFirstName() != currendAuthor.getFirstName())
-			currendAuthor.setFirstName(newAuthor.getFirstName());
-		if(newAuthor.getLastName() != null && !newAuthor.getLastName().equals(currendAuthor.getLastName()))
-			currendAuthor.setLastName(newAuthor.getLastName());
-		if(newAuthor.getArticles() != null && !newAuthor.getArticles().equals(currendAuthor.getArticles()))
+		Author currentAuthor = this.getAuthor(newAuthor.getId());
+		if(newAuthor.getFirstName() != null && newAuthor.getFirstName() != currentAuthor.getFirstName())
+			currentAuthor.setFirstName(newAuthor.getFirstName());
+		if(newAuthor.getLastName() != null && !newAuthor.getLastName().equals(currentAuthor.getLastName()))
+			currentAuthor.setLastName(newAuthor.getLastName());
+		if(newAuthor.getArticles() != null && !newAuthor.getArticles().equals(currentAuthor.getArticles()))
 			throw new CantModifyItem();
-		authorRepository.save(currendAuthor);
-		return currendAuthor;
+		authorRepository.save(currentAuthor);
+		return currentAuthor;
 	}
 
 	public void delete(long id) throws NotFoundException {
