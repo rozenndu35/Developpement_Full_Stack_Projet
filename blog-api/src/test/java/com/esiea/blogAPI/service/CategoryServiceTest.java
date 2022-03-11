@@ -12,6 +12,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.dao.EmptyResultDataAccessException;
 
@@ -143,76 +144,147 @@ class CategoryServiceTest {
         Assertions.assertThrowsExactly(NotFoundException.class, ()->{ categoryService.replace(category1);});
     }
 
+    /**
+     * Test du non-remplacement des attributs de la catégorie dans le cas où les valeurs seraient nulls
+     * @throws NotFoundException
+     * @throws CantModifyItem
+     */
     @Test
     void testPatchWithoutChangeByNull() throws NotFoundException, CantModifyItem {
+        // Récupération de la catégorie
         when(category1.getId()).thenReturn(Long.valueOf(1));
         when(categoryRepository.findById(Long.valueOf(1))).thenReturn(Optional.of(category2));
+
+        // Absence de remplacement de la catégorie
         when(category1.getCategoryName()).thenReturn(null);
-        //when(category2.getCategoryName()).thenReturn("categoryName");
+
+        // Absence de remplacement des articles
         when(category1.getArticles()).thenReturn(null);
-        //when(category2.getArticles()).thenReturn(articles1);
+
+        // Sauvegarde de la catégorie
         when(categoryRepository.save(category2)).thenReturn(category2);
         when(category2.toString()).thenReturn("category2");
 
+        // Test de la mise à jour
         Category result = categoryService.patch(category1);
         Assertions.assertEquals(category2.toString(), result.toString());
+
+        // Vérification
+        Mockito.verify(category2, Mockito.times(0)).setCategoryName("category2");
     }
 
+    /**
+     * Test de l'absence de la mise à jour du nom de la catégorie de l'article
+     * @throws NotFoundException
+     * @throws CantModifyItem
+     */
     @Test
     void testPatchWithoutChangeBySameCategoryName() throws NotFoundException, CantModifyItem {
+        // Récupération de la catégorie
         when(category1.getId()).thenReturn(Long.valueOf(1));
         when(categoryRepository.findById(Long.valueOf(1))).thenReturn(Optional.of(category2));
+
+        // Absence de remplacement de la catégorie
         when(category1.getCategoryName()).thenReturn("categoryName");
         when(category2.getCategoryName()).thenReturn("categoryName");
+
+        // Absence de remplacement des articles
         when(category1.getArticles()).thenReturn(null);
-        //when(category2.getArticles()).thenReturn(articles1);
+
+        // Sauvegarde de la catégorie
         when(categoryRepository.save(category2)).thenReturn(category2);
         when(category2.toString()).thenReturn("category2");
 
+        // Test de la mise à jour
         Category result = categoryService.patch(category1);
         Assertions.assertEquals(category2.toString(), result.toString());
+
+        // Vérification
+        Mockito.verify(category2, Mockito.times(0)).setCategoryName("category2");
     }
 
+    /**
+     * Test de l'absence de la mise à jour du nom de la catégorie de l'article
+     * @throws NotFoundException
+     * @throws CantModifyItem
+     */
     @Test
     void testPatchWithCategoryNameChange() throws NotFoundException, CantModifyItem {
+        // Récupération de la catégorie
         when(category1.getId()).thenReturn(Long.valueOf(1));
         when(categoryRepository.findById(Long.valueOf(1))).thenReturn(Optional.of(category2));
+
+        // Remplacement de la catégorie
         when(category1.getCategoryName()).thenReturn("CategoryName1");
         when(category2.getCategoryName()).thenReturn("CategoryName2");
         doNothing().when(category2).setCategoryName("CategoryName1");
+
+        // Absence de remplacement des articles
         when(category1.getArticles()).thenReturn(null);
-        //when(category2.getArticles()).thenReturn(articles1);
+
+        // Sauvegarde de la catégorie
         when(categoryRepository.save(category2)).thenReturn(category2);
         when(category2.toString()).thenReturn("category2");
 
+        // Test de la mise à jour
         Category result = categoryService.patch(category1);
         Assertions.assertEquals(category2.toString(), result.toString());
+
+        // Vérification
+        Mockito.verify(category2, Mockito.times(1)).setCategoryName("CategoryName1");
     }
 
+    /**
+     * Test du non-remplacement des articles dans le cas où les articles n'auraient pas changés
+     * @throws NotFoundException
+     * @throws CantModifyItem
+     */
     @Test
     void testPatchWithoutChangeBySameGetArticles() throws NotFoundException, CantModifyItem {
+        // Récupération de la catégorie
         when(category1.getId()).thenReturn(Long.valueOf(1));
         when(categoryRepository.findById(Long.valueOf(1))).thenReturn(Optional.of(category2));
+
+        // Absence de remplacement de la catégorie
         when(category1.getCategoryName()).thenReturn(null);
-        //when(category2.getCategoryName()).thenReturn("categoryName");
+
+        // Absence de remplacement des articles
         when(category1.getArticles()).thenReturn(articles1);
         when(category2.getArticles()).thenReturn(articles1);
+
+        // Sauvegarde de la catégorie
         when(categoryRepository.save(category2)).thenReturn(category2);
         when(category2.toString()).thenReturn("category2");
 
+        // Test de la mise à jour
         Category result = categoryService.patch(category1);
         Assertions.assertEquals(category2.toString(), result.toString());
+
+        // Vérification
+        Mockito.verify(category2, Mockito.times(0)).setArticles(articles1);
+        Mockito.verify(category2, Mockito.times(0)).setCategoryName("category2");
     }
 
+    /**
+     * Test de l'échec de la mise à jour de la liste des articles.
+     * La liaison doit être modifiée depuis l'article
+     * @throws NotFoundException
+     * @throws CantModifyItem
+     */
     @Test
     void testPatchWithChangeGetArticles() throws NotFoundException, CantModifyItem {
+        // Récupération de la catégorie
         when(category1.getId()).thenReturn(Long.valueOf(1));
         when(categoryRepository.findById(Long.valueOf(1))).thenReturn(Optional.of(category2));
+
+        // Absence de remplacement de la catégorie
         when(category1.getCategoryName()).thenReturn(null);
-        //when(category2.getCategoryName()).thenReturn("categoryName");
+
+        // Absence de remplacement des articles
         when(category1.getArticles()).thenReturn(articles1);
         when(category2.getArticles()).thenReturn(articles2);
 
+        // Test de la mise à jour
         Assertions.assertThrowsExactly(CantModifyItem.class, ()->{categoryService.patch(category1);}); ;
     }
 
