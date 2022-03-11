@@ -75,7 +75,7 @@ public class CategoryController {
 		} catch (CantModifyItem e) {
 			// TODO Auto-generated catch block
 			return new ResponseEntity<>(HttpStatus.CONFLICT); 
-			// Un article doit avoir un auteur, la modfification de l'auteur d'un article doit se faire via une modification de l'article
+			// Un article doit avoir un auteur, la modification de l'auteur d'un article doit se faire via une modification de l'article
 		}
 	}
 	
