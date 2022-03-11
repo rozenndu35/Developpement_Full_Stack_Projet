@@ -71,7 +71,6 @@ class CategoryServiceTest {
     @Test
     void getCategoryGood() throws NotFoundException {
         Long id = Long.valueOf(1);
-        List<Category> categories1 = new ArrayList<>();
         when(categoryRepository.findById(id)).thenReturn(Optional.of(category1));
         when(category1.toString()).thenReturn("category1");
         Category result = categoryService.getCategory(id);

@@ -29,11 +29,11 @@ public class ArticleService {
 	private CategoryService categoryService;
 	
 
-	public Iterable<Article> getArticle(){
+	public Iterable<Article> getArticles(){
 		return articleRepository.findAll();
 	}
 	
-	public Article getArticle(long id) throws NotFoundException {
+	public Article getArticle(Long id) throws NotFoundException {
 		Optional<Article> result = articleRepository.findById(id);
 		if(result.isPresent())
 			return result.get();
@@ -75,7 +75,7 @@ public class ArticleService {
 	 * @throws CategoryNotFoundException Si un ID est défini, mais que le nom de la catégorie ne correspond pas et n'est pas nul, lève cette exception
 	 */
 	private void setAuthorAndCategory(Article RepoArticle, Article newArticle, boolean force) throws NotAllowedException, AuthorNotFoundException, CategoryNotFoundException {
-		if(force || newArticle.getAuthor() != null && !RepoArticle.getAuthor().equalsOrNull(newArticle.getAuthor()))
+		if(force || newArticle.getAuthor() != null && (!RepoArticle.getAuthor().equalsOrNull(newArticle.getAuthor())))
 		{
 			try {
 				Author author = this.authorService.CreateAuthorIfNotExist(newArticle.getAuthor());
@@ -84,7 +84,7 @@ public class ArticleService {
 				throw new AuthorNotFoundException();
 			}
 		}
-		if(force || newArticle.getCategory() != null && !RepoArticle.getCategory().equalsOrNull(newArticle.getCategory()))
+		if(force || newArticle.getCategory() != null && (!RepoArticle.getCategory().equalsOrNull(newArticle.getCategory())))
 		{
 			try {
 				Category category = this.categoryService.CreateCategoryIfNotExist(newArticle.getCategory());
@@ -109,15 +109,14 @@ public class ArticleService {
 	 */
 	public Article patch(Article newArticle) throws NotFoundException, NotAllowedException, AuthorNotFoundException, CategoryNotFoundException {
 		Article currentArticle = this.getArticle(newArticle.getId());
-		if(newArticle.getTitle() != null && newArticle.getTitle() != currentArticle.getTitle())
+		if(newArticle.getTitle() != null && !newArticle.getTitle().equals(currentArticle.getTitle()))
 			currentArticle.setTitle(newArticle.getTitle());
-		if(newArticle.getContent() != null && newArticle.getContent() != currentArticle.getContent())
+		if(newArticle.getContent() != null && !newArticle.getContent().equals(currentArticle.getContent()))
 			currentArticle.setContent(newArticle.getContent());
 		if(newArticle.getPublicationDate() != null && !newArticle.getPublicationDate().equals(currentArticle.getPublicationDate()))
 			currentArticle.setPublicationDate(newArticle.getPublicationDate());
 		setAuthorAndCategory(currentArticle, newArticle, false);
-		articleRepository.save(currentArticle);
-		return currentArticle;
+		return articleRepository.save(currentArticle);
 	}
 
 	public void delete(long id) throws NotFoundException {
