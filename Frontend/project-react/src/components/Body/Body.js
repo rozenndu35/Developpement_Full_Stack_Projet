@@ -39,15 +39,26 @@ export default function Body({setArticleChoice, setCategoryChoice, allCategory, 
             setCategoryChoice(categoryOrArticle);
         }
         
-    }  
+    }
+
+    function giveArticleCategory(page, category){
+        if(page === "ArticleCategory"){
+            if(category != null){
+                console.log("test")
+                return(
+                    <ListArticleInCategory category={category} afficherPage={afficherPage}/>
+                )
+            }
+        }
+    }
     
     
     return (
         <div className='App-body'>
             <Navigation categories={allCategory} afficherPage={afficherPage}/>
             <section className='App-page'>
-                { page === "ListeCategory" && <ListCategory categories={allCategory}  afficherPage={afficherPage}/>}
                 { page === "ArticleCategory" && <ListArticleInCategory category={category} afficherPage={afficherPage}/>}
+                { page === "ListeCategory" && <ListCategory categories={allCategory}  afficherPage={afficherPage}/>}
                 { page === "AddCategory" && <AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={handlerCategory} submitCategory={submitCategory}/>}
                 { page === "AddArticle" && <AddArticle newArticle={newArticle} categories={allCategory} inputInvalid={inputInvalid} handleChange={handlerArticle} handlerArticleDate={handlerArticleDate} submitArticle={submitArticle}/>}
                 { page === "Article" && <Article article={article} />}

@@ -146,20 +146,37 @@ function App() {
   /*
   Recuper les articles de la categorie where Category = CategoryChoice(id)
   */
+ /*
   useEffect(() => {
     if(categoryChoice !== -1){
-      /*fetch('http://localhost:9000/api/private/category/1' + categoryChoice)
+      setCategoryChoice(-1);
+      fetch('http://localhost:9000/api/private/category/' + categoryChoice)
       .then(res => res.json())
       .then(data => {
+        console.log(data)
         setCategory(data);
       })
       .catch(e => console.log(e.toString()));
-      */
+      
       setCategory({category:allCategory.find(cat => cat.id === categoryChoice )})
-      setCategoryChoice(-1);
+      
     }
     
-  }, [categoryChoice]);
+  }, [categoryChoice]);*/
+
+  const setCategory2 = (id) => {
+      if(id>=0)
+      {
+        fetch('http://localhost:9000/api/private/category/' + id)
+        .then(res => res.json())
+        .then(data => {
+          console.log(data)
+          setCategory(data);
+        })
+        .catch(e => console.log(e.toString()));
+      }
+
+  }
 
   /*
   Recuper l'articles saisie where article = articleChoice
@@ -374,8 +391,8 @@ function App() {
         allArticle={allArticle} 
         newCategory={newCategory} submitCategory={submitCategory} handlerCategory={newCategoryChange}
         newArticle={newArticle} submitArticle={submitArticle} handlerArticle={newArticleChange} handlerArticleDate={newArticleDateChange}
-        setCategoryChoice={setCategoryChoice} category={category.category}
-        setArticleChoice={setArticleChoice} article={article.article}
+        setCategoryChoice={setCategory2} category={category}
+        setArticleChoice={setArticleChoice} article={article}
         inputInvalid={inputInvalid}
 
       />
