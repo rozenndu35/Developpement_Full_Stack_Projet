@@ -51,6 +51,18 @@ export default function Body({setArticleChoice, setCategoryChoice, allCategory, 
             }
         }
     }
+
+    function giveArticle(article, page){
+        if(page ==="Article")
+        {
+            if(article != null)
+            {
+                return(
+                    page === "Article" && <Article article={article} />
+                )
+            }
+        }
+    }
     
     
     return (
@@ -61,7 +73,7 @@ export default function Body({setArticleChoice, setCategoryChoice, allCategory, 
                 { page === "ListeCategory" && <ListCategory categories={allCategory}  afficherPage={afficherPage}/>}
                 { page === "AddCategory" && <AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={handlerCategory} submitCategory={submitCategory}/>}
                 { page === "AddArticle" && <AddArticle newArticle={newArticle} categories={allCategory} inputInvalid={inputInvalid} handleChange={handlerArticle} handlerArticleDate={handlerArticleDate} submitArticle={submitArticle}/>}
-                { page === "Article" && <Article article={article} />}
+                { giveArticle(article, page)}
             </section>
 
         </div>
