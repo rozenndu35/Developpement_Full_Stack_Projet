@@ -112,9 +112,6 @@ function App() {
 
   const [inputInvalid, setInputInvalid] = useState(false);
 
-
-  const [categoryChoice, setCategoryChoice] = useState(-1);
-  const [articleChoice, setArticleChoice] = useState(-1); 
   /*
   Récupere toutes les catégories avec l'API
   */
@@ -144,8 +141,7 @@ function App() {
   }, [postingArticle]);
 
   const getCategoryInAPI = (id) => {
-      if(id>=0)
-      {
+      if(id>=0){
         /*
         fetch('http://localhost:9000/api/private/category/' + id)
         .then(res => res.json())
@@ -154,33 +150,28 @@ function App() {
         })
         .catch(e => console.log(e.toString()));
         */
-        setCategory({category:allCategory.find(cat => cat.id === id )})
-        setCategoryChoice(-1);
+       let categCherch = allCategory.find(cat => cat.id === id);
+        setCategory(categCherch);
       }
-
-
-
   }
 
-  /*
-  Recuper l'articles saisie where article = articleChoice
-  */
-  useEffect(() => {
-    if(articleChoice !== -1){
-      /*fetch('http://localhost:9000/api/private/article/'+articleChoice)
+  const getArticle = (id) => {
+    if(id>=0){
+      /*
+      fetch('http://localhost:9000/api/private/article/' + id)
       .then(res => res.json())
       .then(data => {
+        console.log("---------------resultat-----------")
+        console.log(data)
         setArticle(data);
       })
       .catch(e => console.log(e.toString()));
       */
-     let articleCherch = allArticle.find(art => art.id === articleChoice);
+      let articleCherch = allArticle.find(art => art.id === id);
       setArticle(articleCherch);
-      setArticleChoice(-1);
+      
     }
-    
-  }, [articleChoice]);
-
+  }
 
   /*
   Envoie l'ajout de la Category
@@ -377,7 +368,7 @@ function App() {
         newCategory={newCategory} submitCategory={submitCategory} handlerCategory={newCategoryChange}
         newArticle={newArticle} submitArticle={submitArticle} handlerArticle={newArticleChange} handlerArticleDate={newArticleDateChange}
         setCategoryChoice={getCategoryInAPI} category={category}
-        setArticleChoice={setArticleChoice} article={article}
+        setArticleChoice={getArticle} article={article}
         inputInvalid={inputInvalid}
 
       />
