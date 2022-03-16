@@ -10,91 +10,10 @@ function App() {
 
   const [postingCategory, setPostingCategory] = useState(false);
   const [postingArticle, setPostingArticle] = useState(false);
-  const [allCategory, setAllCategory] = useState(
-    [
-      {
-          "id": 1,
-          "categoryName": "categoryName1",
-          "articles": [
-              {
-                  "id": 1,
-                  "title": "title1",
-                  "publicationDate": "2021-12-31T23:00:00.000+00:00",
-                  "content": "article1",
-                  "author": {
-                      "id": 1,
-                      "firstName": "firstName1",
-                      "lastName": "lastName1"
-                  }
-              }
-          ]
-      },
-      {
-          "id": 2,
-          "categoryName": "categoryName2",
-          "articles": [
-              {
-                  "id": 2,
-                  "title": "title2",
-                  "publicationDate": "2022-02-01T23:00:00.000+00:00",
-                  "content": "article2",
-                  "author": {
-                      "id": 2,
-                      "firstName": "firstName2",
-                      "lastName": "lastName2"
-                  }
-              }
-          ]
-      },
-      {
-          "id": 3,
-          "categoryName": "categoryName3",
-          "articles": [
-              {
-                  "id": 3,
-                  "title": "title3",
-                  "publicationDate": "2022-03-02T23:00:00.000+00:00",
-                  "content": "article3",
-                  "author": {
-                      "id": 3,
-                      "firstName": "firstName3",
-                      "lastName": "lastName3"
-                  }
-              }
-          ]
-      },
-      {
-          "id": 4,
-          "categoryName": "newCategory",
-          "articles": []
-      }
-  ]
-  );
-  const [allArticle, setAllArticle] = useState(
-    [ {
-      "id": 1,
-      "title": "categoryName1",
-      "publicationDate": "2021-12-31T23:00:00.000+00:00",
-      "content": "article1",
-      "author": {
-          "id": 1,
-          "firstName": "firstName1",
-          "lastName": "lastName1"
-      }
-    },
-    {
-        "id": 2,
-        "title": "categoryName2",
-        "publicationDate": "2022-02-01T23:00:00.000+00:00",
-        "content": "article2",
-        "author": {
-            "id": 2,
-            "firstName": "firstName2",
-            "lastName": "lastName2"
-        }
-    }]
-  );
-  const [article, setArticle] = useState({article:null});
+  const [allCategory, setAllCategory] = useState([]);
+
+  const [allArticle, setAllArticle] = useState([]);
+  const [article, setArticle] = useState();
   const [category, setCategory] = useState({category:null});
 
   const [newCategory, setNewCategory] = useState({
@@ -119,28 +38,24 @@ function App() {
   Récupere toutes les catégories avec l'API
   */
   useEffect(() => {
-    /* OK TODO where merge backend
     fetch('http://localhost:9000/api/private/category')
     .then(res => res.json())
     .then(data => {
       setAllCategory(data);
     })
     .catch(e => console.log(e.toString()));
-    */
   }, [postingCategory]);
 
   /*
   Recupere toutes les articles avec l'API
   */
   useEffect(() => {
-    /* OK TODO where merge backend
     fetch('http://localhost:9000/api/private/article')
     .then(res => res.json())
     .then(data => {
       setAllArticle(data);
     })
     .catch(e => console.log(e.toString()));
-    */
   }, [postingArticle]);
 
   /*
@@ -179,18 +94,18 @@ function App() {
   }
 
   /*
-  Recuper l'articles saisie where article = articleChoice
+  Recuper l'article saisie where article = articleChoice
   */
   useEffect(() => {
     if(articleChoice !== -1){
-      /*fetch('http://localhost:9000/api/private/article/'+articleChoice)
+      fetch('http://localhost:9000/api/private/article/'+articleChoice)
       .then(res => res.json())
       .then(data => {
         setArticle(data);
       })
       .catch(e => console.log(e.toString()));
-      */
-      setArticle({article:allArticle.find(art => art.id === articleChoice)});
+      
+      //setArticle({article:allArticle.find(art => art.id === articleChoice)});
       setArticleChoice(-1);
     }
     
