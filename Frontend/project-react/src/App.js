@@ -94,8 +94,8 @@ function App() {
         }
     }]
   );
-  const [article, setArticle] = useState({article:null});
-  const [category, setCategory] = useState({category:null});
+  const [article, setArticle] = useState({});
+  const [category, setCategory] = useState({});
 
   const [newCategory, setNewCategory] = useState({
     categoryName: ""
@@ -143,23 +143,24 @@ function App() {
     */
   }, [postingArticle]);
 
-  /*
-  Recuper les articles de la categorie where Category = CategoryChoice(id)
-  */
-  useEffect(() => {
-    if(categoryChoice !== -1){
-      /*fetch('http://localhost:9000/api/private/category/1' + categoryChoice)
-      .then(res => res.json())
-      .then(data => {
-        setCategory(data);
-      })
-      .catch(e => console.log(e.toString()));
-      */
-      setCategory({category:allCategory.find(cat => cat.id === categoryChoice )})
-      setCategoryChoice(-1);
-    }
-    
-  }, [categoryChoice]);
+  const getCategoryInAPI = (id) => {
+      if(id>=0)
+      {
+        /*
+        fetch('http://localhost:9000/api/private/category/' + id)
+        .then(res => res.json())
+        .then(data => {
+          setCategory(data);
+        })
+        .catch(e => console.log(e.toString()));
+        */
+        setCategory({category:allCategory.find(cat => cat.id === id )})
+        setCategoryChoice(-1);
+      }
+
+
+
+  }
 
   /*
   Recuper l'articles saisie where article = articleChoice
@@ -173,7 +174,8 @@ function App() {
       })
       .catch(e => console.log(e.toString()));
       */
-      setArticle({article:allArticle.find(art => art.id === articleChoice)});
+     let articleCherch = allArticle.find(art => art.id === articleChoice);
+      setArticle(articleCherch);
       setArticleChoice(-1);
     }
     
@@ -374,8 +376,8 @@ function App() {
         allArticle={allArticle} 
         newCategory={newCategory} submitCategory={submitCategory} handlerCategory={newCategoryChange}
         newArticle={newArticle} submitArticle={submitArticle} handlerArticle={newArticleChange} handlerArticleDate={newArticleDateChange}
-        setCategoryChoice={setCategoryChoice} category={category.category}
-        setArticleChoice={setArticleChoice} article={article.article}
+        setCategoryChoice={getCategoryInAPI} category={category}
+        setArticleChoice={setArticleChoice} article={article}
         inputInvalid={inputInvalid}
 
       />
