@@ -11,6 +11,7 @@ function App() {
 
   const [postingCategory, setPostingCategory] = useState(false);
   const [postingArticle, setPostingArticle] = useState(false);
+  const [deleteArticle, setDeleteArticle] = useState(false);
   const [allCategory, setAllCategory] = useState([]);
 
   const [allArticle, setAllArticle] = useState([]);
@@ -39,12 +40,12 @@ function App() {
   const [inputInvalid, setInputInvalid] = useState(false);
   const [messageInfo, setMessageInfo] = useState("");
   const [openInfo, setOpenInfo] = useState(false);
-  const [severityInfo, setSeverityInfo] = useState("");
+  const [severityInfo, setSeverityInfo] = useState("success");
 
   function handleCloseInfo(){
     setOpenInfo(false);
     setMessageInfo("");
-    setSeverityInfo("");
+    setSeverityInfo("success");
   }
   /*
   Récupere toutes les catégories avec l'API
@@ -230,6 +231,35 @@ function App() {
     }
   }, [postingArticle]);
 
+
+  /*
+    supprime l'article selectionner 
+    @param id l'id de la categorie
+  */
+  useEffect(() =>{
+    if(deleteArticle){
+      fetch('http://localhost:9000/api/private/article/' + article.id, {
+        method: "DELETE",
+        headers: {
+          'Content-Type':'application/json',
+        },
+      })
+      .then(res => {
+        setDeleteArticle(false);
+        setMessageInfo("Article supprimer");
+        setOpenInfo(true);
+        setSeverityInfo("success");
+      })
+      .catch(e => {
+        console.log()
+        setMessageInfo("Erreur : " + e.toString());
+        setOpenInfo(true);
+        setSeverityInfo("error");
+      });
+    }
+  }, [deleteArticle]);
+  
+
   /*
     Remet l'input invalide a ca position innitiale false
   */
@@ -251,6 +281,12 @@ function App() {
   */
   function submitArticle() {
       setPostingArticle(true);
+  }
+  /*
+    valide l'envoie de la supression de l'article
+  */
+  function deleteSubmitArticle() {
+    setDeleteArticle(true);
   }
 
   /*
@@ -327,7 +363,7 @@ function App() {
           datetime: value
       }
       })
-}
+  }
 
   /*
     Verifie si c'est un string et non pas caractere correspondant un du code potentiel
@@ -346,7 +382,7 @@ function App() {
         newArticle={newArticle} author={authorForNewArticle} submitArticle={submitArticle} handlerArticle={newArticleChange} handlerArticleDate={newArticleDateChange}
         setCategoryChoice={getCategoryInAPI} category={category}
         setArticleChoice={setArticleChoice} article={article}
-        inputInvalid={inputInvalid}
+        inputInvalid={inputInvalid} deleteSubmitArticle={deleteSubmitArticle}
 
       />
       <Snackbar open={openInfo} autoHideDuration={6000} onClose={handleCloseInfo}>

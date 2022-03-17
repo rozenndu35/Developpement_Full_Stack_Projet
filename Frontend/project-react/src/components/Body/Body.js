@@ -10,7 +10,7 @@ import './formulaire.css'
 
 import PropTypes from 'prop-types'
 
-export default function Body({setArticleChoice, setCategoryChoice, allCategory, category, newCategory, handlerCategory, submitCategory, articlesInCategory, article, newArticle, author, handlerArticle,handlerArticleDate, submitArticle, inputInvalid}) {
+export default function Body({setArticleChoice, setCategoryChoice, allCategory, category, newCategory, handlerCategory, submitCategory, articlesInCategory, article, newArticle, author, handlerArticle,handlerArticleDate, submitArticle, inputInvalid, deleteSubmitArticle}) {
     const [page, setPage] = useState();
     const [pageUpdate, setPageUpdate] = useState({update: false, pageId: -1 });
     
@@ -41,27 +41,20 @@ export default function Body({setArticleChoice, setCategoryChoice, allCategory, 
         
     }
 
-    function giveArticleCategory(page, category){
-        if(page === "ArticleCategory"){
-            if(category != null){
-                console.log("test")
-                return(
-                    <ListArticleInCategory category={category} afficherPage={afficherPage}/>
-                )
-            }
-        }
-    }
-
     function giveArticle(article, page){
         if(page ==="Article")
         {
             if(article != null)
             {
                 return(
-                    page === "Article" && <Article article={article} />
+                    page === "Article" && <Article article={article} deleteSubmitArticle={dellArticle}/>
                 )
             }
         }
+    }
+    function dellArticle(){
+        setPage("");
+        deleteSubmitArticle();
     }
     
     
@@ -94,6 +87,6 @@ Body.propTypes = {
     handlerArticle:PropTypes.func.isRequired,
     handlerArticleDate: PropTypes.func.isRequired,
     submitArticle: PropTypes.func.isRequired,
-    inputInvalid: PropTypes.bool.isRequired
-
+    inputInvalid: PropTypes.bool.isRequired,
+    deleteSubmitArticle: PropTypes.func.isRequired
 }

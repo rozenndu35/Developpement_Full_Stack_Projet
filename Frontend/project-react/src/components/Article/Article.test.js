@@ -18,7 +18,7 @@ const articleMoc ={
 }
 it ("should Affichage de l'article",() => {
     render(<Article article={articleMoc}/>);
-    expect(screen.getByText("Article : title2")).toBeTruthy();
-    expect(screen.getByText("firstName2 lastName2 - 2022-02-01T23:00:00.000+00:00")).toBeTruthy();
+    expect(screen.getByText("title2")).toBeTruthy();
+    expect(screen.getByText("firstName2 lastName2 - 2022-02-01")).toBeTruthy();
     expect(screen.getByText("article2")).toBeTruthy();
 });
