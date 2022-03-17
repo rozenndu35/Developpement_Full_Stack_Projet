@@ -10,5 +10,5 @@ import java.util.Optional;
 @Repository
 public interface AuthorRepository extends CrudRepository<Author, Long> {
 
-    public Iterable<Author> findByLastNameAndFirstName(String lastName, String firstName);
+    public Optional<Author> findByLastNameAndFirstName(String lastName, String firstName);
 }

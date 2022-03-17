@@ -38,11 +38,11 @@ public class AuthorController {
 	}
 
 	@GetMapping(params ={"lastName", "firstName"})
-	public ResponseEntity<Iterable<Author>> getAuthor(@RequestParam("lastName") String lastname, @RequestParam("firstName") String firstname)
+	public ResponseEntity<Author> getAuthor(@RequestParam("lastName") String lastname, @RequestParam("firstName") String firstname)
 	{
 		try {
-			Iterable<Author> result = authorService.getAuhtorByName(lastname, firstname);
-			return new  ResponseEntity<Iterable<Author>>(result, HttpStatus.OK);
+			Author result = authorService.getAuhtorByName(lastname, firstname);
+			return new  ResponseEntity<Author>(result, HttpStatus.OK);
 		} catch (NotFoundException e) {
 			return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
