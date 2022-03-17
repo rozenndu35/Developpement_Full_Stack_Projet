@@ -11,11 +11,12 @@ export default function AddCategory({ newCategory, inputInvalid, handleChange, s
             <h3 className='App-titte-Formulaire' >Ajouter une categorie</h3>
             <div className='App-champ-formulaire'>
                 <div className='App-textFieldSimple'>
-                <TextField name="categoryName" variant="standard" 
+                <TextField id="categoryName" name="categoryName" variant="standard" 
                             label="Nom de la category :" placeholder="Donne un nom..." helperText={inputInvalid}
                             value={newCategory.categoryName} onChange={handleChange} 
                 />
                 </div>
+
                 
                 <Button className='App-submitButton add-button' variant="contained" onClick={submitCategory} endIcon={<SendIcon />}> Envoyer </Button>
             </div>
