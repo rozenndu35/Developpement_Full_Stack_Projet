@@ -14,9 +14,9 @@ import PropTypes from 'prop-types'
 champ date a modifier
 
 */
-export default function AddArticle({ categories, newArticle, inputInvalid, handleChange, handlerArticleDate, submitArticle }) {
+export default function AddArticle({ categories, newArticle, author, inputInvalid, handleChange, handlerArticleDate, submitArticle }) {
     const categoryElements = categories.map(i => 
-        <MenuItem key={i.id}  value={i.id}>{i.name}</MenuItem>
+        <MenuItem key={i.id}  value={i.id}>{i.categoryName}</MenuItem>
     )
 
     return (
@@ -30,9 +30,15 @@ export default function AddArticle({ categories, newArticle, inputInvalid, handl
                 />
                 </div>
                 <div className='App-textFieldSimple'>
-                <TextField name="author" variant="standard" 
+                <TextField name="author.firstName" variant="standard" 
                             label="Nom de l'autheur :" placeholder="Donne un nom..." helperText={inputInvalid}
-                            value={newArticle.author} onChange={handleChange} 
+                            value={author.firstName} onChange={handleChange} 
+                />
+                </div>
+                <div className='App-textFieldSimple'>
+                <TextField name="author.lastName" variant="standard" 
+                            label="Prenom de l'autheur :" placeholder="Donne un prenom..." helperText={inputInvalid}
+                            value={author.lastName} onChange={handleChange} 
                 />
                 </div>
                 <div className='App-textFieldSimple'>
@@ -74,6 +80,7 @@ export default function AddArticle({ categories, newArticle, inputInvalid, handl
 AddArticle.propTypes = {
     categories: PropTypes.array.isRequired,
     newArticle: PropTypes.object.isRequired,
+    author: PropTypes.object.isRequired,
     inputInvalid: PropTypes.bool.isRequired,
     handleChange :  PropTypes.func.isRequired,
     handlerArticleDate : PropTypes.func.isRequired,

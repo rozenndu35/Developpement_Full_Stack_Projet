@@ -11,88 +11,10 @@ function App() {
   const [postingCategory, setPostingCategory] = useState(false);
   const [postingArticle, setPostingArticle] = useState(false);
   const [allCategory, setAllCategory] = useState(
-    [
-      {
-          "id": 1,
-          "categoryName": "categoryName1",
-          "articles": [
-              {
-                  "id": 1,
-                  "title": "title1",
-                  "publicationDate": "2021-12-31T23:00:00.000+00:00",
-                  "content": "article1",
-                  "author": {
-                      "id": 1,
-                      "firstName": "firstName1",
-                      "lastName": "lastName1"
-                  }
-              }
-          ]
-      },
-      {
-          "id": 2,
-          "categoryName": "categoryName2",
-          "articles": [
-              {
-                  "id": 2,
-                  "title": "title2",
-                  "publicationDate": "2022-02-01T23:00:00.000+00:00",
-                  "content": "article2",
-                  "author": {
-                      "id": 2,
-                      "firstName": "firstName2",
-                      "lastName": "lastName2"
-                  }
-              }
-          ]
-      },
-      {
-          "id": 3,
-          "categoryName": "categoryName3",
-          "articles": [
-              {
-                  "id": 3,
-                  "title": "title3",
-                  "publicationDate": "2022-03-02T23:00:00.000+00:00",
-                  "content": "article3",
-                  "author": {
-                      "id": 3,
-                      "firstName": "firstName3",
-                      "lastName": "lastName3"
-                  }
-              }
-          ]
-      },
-      {
-          "id": 4,
-          "categoryName": "newCategory",
-          "articles": []
-      }
-  ]
+    []
   );
   const [allArticle, setAllArticle] = useState(
-    [ {
-      "id": 1,
-      "title": "categoryName1",
-      "publicationDate": "2021-12-31T23:00:00.000+00:00",
-      "content": "article1",
-      "author": {
-          "id": 1,
-          "firstName": "firstName1",
-          "lastName": "lastName1"
-      }
-    },
-    {
-        "id": 2,
-        "title": "categoryName2",
-        "publicationDate": "2022-02-01T23:00:00.000+00:00",
-        "content": "article2",
-        "author": {
-            "id": 2,
-            "firstName": "firstName2",
-            "lastName": "lastName2"
-        }
-    }]
+    []
   );
   const [article, setArticle] = useState({});
   const [category, setCategory] = useState({});
@@ -102,12 +24,16 @@ function App() {
   });
   const [newArticle, setNewArticle] = useState({
       id: -1,
-      author:"",
+      author:{},
       datetime: new Date(),
       title: "",
       content: "",
-      category: ""
+      category: {}
 
+  });
+  let [authorForNewArticle, setauthorForNewArticle] = useState({
+    firstName: "", 
+    lastName: ""
   });
 
   const [inputInvalid, setInputInvalid] = useState(false);
@@ -116,42 +42,39 @@ function App() {
   Récupere toutes les catégories avec l'API
   */
   useEffect(() => {
-    /* OK TODO where merge backend
     fetch('http://localhost:9000/api/private/category')
     .then(res => res.json())
     .then(data => {
       setAllCategory(data);
     })
     .catch(e => console.log(e.toString()));
-    */
   }, [postingCategory]);
 
   /*
   Recupere toutes les articles avec l'API
   */
   useEffect(() => {
-    /* OK TODO where merge backend
     fetch('http://localhost:9000/api/private/article')
     .then(res => res.json())
     .then(data => {
       setAllArticle(data);
     })
     .catch(e => console.log(e.toString()));
-    */
   }, [postingArticle]);
 
   const getCategoryInAPI = (id) => {
       if(id>=0){
-        /*
+        
         fetch('http://localhost:9000/api/private/category/' + id)
         .then(res => res.json())
         .then(data => {
           setCategory(data);
         })
         .catch(e => console.log(e.toString()));
-        */
+      /*
        let categCherch = allCategory.find(cat => cat.id === id);
         setCategory(categCherch);
+      */
       }
   }
 
@@ -167,6 +90,7 @@ function App() {
       })
       .catch(e => console.log(e.toString()));
       */
+
       let articleCherch = allArticle.find(art => art.id === id);
       setArticle(articleCherch);
       
@@ -178,14 +102,12 @@ function App() {
   */
   useEffect(() =>{
     if (postingCategory ) {
-      
-      /* OK TODO where merge backend
       fetch('http://localhost:9000/api/private/category', {
           method: "POST",
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-          },
+          },          
           body: JSON.stringify(newCategory)
       })
       .then(res => res.json())
@@ -200,7 +122,7 @@ function App() {
           });
       })
       .catch(e => console.log(e.toString()));
-      */
+      /*
       allCategory.push(newCategory);
       setPostingCategory(false);
       setNewCategory(prevState => {
@@ -210,7 +132,8 @@ function App() {
               id: -1,
               categoryName: ""
           }
-          });
+      });
+          */
     }
   }, [postingCategory]);
 
@@ -247,6 +170,7 @@ function App() {
       })
       .catch(e => console.log(e.toString()));
       */
+      //TODO : recuperer l'id de l'autheur avant de l'ajouter attend que le backend soit pret
       allArticle.push(newArticle)
       setPostingArticle(false);
       setNewArticle(prevState => {
@@ -254,12 +178,21 @@ function App() {
         return {...prevState,
           id: -1,
           name: "",
-          author:"",
+          author:{},
           datetime: new Date(),
           title: "",
           content: "",
-          category: ""
+          category: {}
         }
+        
+      });
+      setauthorForNewArticle(prevState => {
+        initInvalidInput();
+        return {...prevState,
+          firstName:"",
+          lastName: ""
+        }
+        
       });
     }
   }, [postingArticle]);
@@ -308,7 +241,7 @@ function App() {
   */
   function newArticleChange(event) {
     const {type, name, value} = event.target;
-    name === 'category'?
+    if(name === 'category'){
         setNewArticle(prevState => {
             initInvalidInput();
 
@@ -317,27 +250,34 @@ function App() {
                 [name]: value
             }
         })
-    :
-    type === 'text' ?
-
-    isString(value) ?
-        setInputInvalid("Vous ne pouvez pas inserer de caractere speciaux") 
-        :value.length > 255 ?
-            setInputInvalid("Le nombre maximum est de 255 caractere")
-            :
-            setNewArticle(prevState => {
-            initInvalidInput();
-
-            return {...prevState,
-                id: allArticle.length + 1,
-                [name]: value
+      }else if (type === 'text' ){
+        if (isString(value)) setInputInvalid("Vous ne pouvez pas inserer de caractere speciaux") 
+        else{
+          if (value.length > 255) setInputInvalid("Le nombre maximum est de 255 caractere")
+          else{
+            if(name.startsWith("author")){
+              setauthorForNewArticle(prevState => {
+                initInvalidInput();
+  
+                return {...prevState,
+                    id: allArticle.length + 1,
+                    [name.split(".")[1]]: value
+                }
+              });
+            }else{
+              setNewArticle(prevState => {
+                initInvalidInput();
+  
+                return {...prevState,
+                    id: allArticle.length + 1,
+                    [name]: value
+                }
+              });
             }
-            })
-        
-    :
-    setInputInvalid("Type non texte") 
-  }
-
+          }
+        }
+      }
+    }
   /*
     Modifie la date du nouvelle article
   */
@@ -366,9 +306,9 @@ function App() {
         allCategory={allCategory} 
         allArticle={allArticle} 
         newCategory={newCategory} submitCategory={submitCategory} handlerCategory={newCategoryChange}
-        newArticle={newArticle} submitArticle={submitArticle} handlerArticle={newArticleChange} handlerArticleDate={newArticleDateChange}
+        newArticle={newArticle} author={authorForNewArticle} submitArticle={submitArticle} handlerArticle={newArticleChange} handlerArticleDate={newArticleDateChange}
         setCategoryChoice={getCategoryInAPI} category={category}
-        setArticleChoice={getArticle} article={article}
+        setArticleChoice={getArticle} article={article} 
         inputInvalid={inputInvalid}
 
       />

@@ -10,7 +10,7 @@ import './formulaire.css'
 
 import PropTypes from 'prop-types'
 
-export default function Body({setArticleChoice, setCategoryChoice, allCategory, category, newCategory, handlerCategory, submitCategory, articlesInCategory, article, newArticle, handlerArticle,handlerArticleDate, submitArticle, inputInvalid}) {
+export default function Body({setArticleChoice, setCategoryChoice, allCategory, category, newCategory, handlerCategory, submitCategory, articlesInCategory, article, newArticle, author, handlerArticle,handlerArticleDate, submitArticle, inputInvalid}) {
     const [page, setPage] = useState();
     const [pageUpdate, setPageUpdate] = useState({update: false, pageId: -1 });
     
@@ -39,18 +39,41 @@ export default function Body({setArticleChoice, setCategoryChoice, allCategory, 
             setCategoryChoice(categoryOrArticle);
         }
         
-    }  
+    }
+
+    function giveArticleCategory(page, category){
+        if(page === "ArticleCategory"){
+            if(category != null){
+                console.log("test")
+                return(
+                    <ListArticleInCategory category={category} afficherPage={afficherPage}/>
+                )
+            }
+        }
+    }
+
+    function giveArticle(article, page){
+        if(page ==="Article")
+        {
+            if(article != null)
+            {
+                return(
+                    page === "Article" && <Article article={article} />
+                )
+            }
+        }
+    }
     
     
     return (
         <div className='App-body'>
             <Navigation categories={allCategory} afficherPage={afficherPage}/>
             <section className='App-page'>
-                { page === "ListeCategory" && <ListCategory categories={allCategory}  afficherPage={afficherPage}/>}
                 { page === "ArticleCategory" && <ListArticleInCategory category={category} afficherPage={afficherPage}/>}
+                { page === "ListeCategory" && <ListCategory categories={allCategory}  afficherPage={afficherPage}/>}
                 { page === "AddCategory" && <AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={handlerCategory} submitCategory={submitCategory}/>}
-                { page === "AddArticle" && <AddArticle newArticle={newArticle} categories={allCategory} inputInvalid={inputInvalid} handleChange={handlerArticle} handlerArticleDate={handlerArticleDate} submitArticle={submitArticle}/>}
-                { page === "Article" && <Article article={article} />}
+                { page === "AddArticle" && <AddArticle newArticle={newArticle} author={author} categories={allCategory} inputInvalid={inputInvalid} handleChange={handlerArticle} handlerArticleDate={handlerArticleDate} submitArticle={submitArticle}/>}
+                { giveArticle(article, page)}
             </section>
 
         </div>
@@ -67,6 +90,7 @@ Body.propTypes = {
     submitCategory: PropTypes.func.isRequired,
     article: PropTypes.object,
     newArticle:PropTypes.object.isRequired,
+    author: PropTypes.object.isRequired,
     handlerArticle:PropTypes.func.isRequired,
     handlerArticleDate: PropTypes.func.isRequired,
     submitArticle: PropTypes.func.isRequired,

@@ -7,6 +7,5 @@
 }
 .App-page{
     background-color: blueviolet;
-    height: 100%;
-    width: 85%;
+    flex: 1;
 }
