@@ -3,7 +3,8 @@ import './App.css';
 import Header from './components/Header/Header';
 import Body from './components/Body/Body';
 import Footer from './components/Footer/Footer';
-
+import Snackbar from '@material-ui/core/Snackbar';
+import Alert from '@mui/material/Alert';
 import { useEffect, useState } from 'react';
 
 function App() {
@@ -36,7 +37,15 @@ function App() {
   });
 
   const [inputInvalid, setInputInvalid] = useState(false);
+  const [messageInfo, setMessageInfo] = useState("");
+  const [openInfo, setOpenInfo] = useState(false);
+  const [severityInfo, setSeverityInfo] = useState("");
 
+  function handleCloseInfo(){
+    setOpenInfo(false);
+    setMessageInfo("");
+    setSeverityInfo("");
+  }
   /*
   Récupere toutes les catégories avec l'API
   */
@@ -46,7 +55,11 @@ function App() {
     .then(data => {
       setAllCategory(data);
     })
-    .catch(e => console.log(e.toString()));
+    .catch(e => {
+      setMessageInfo("Erreur : " + e.toString());
+      setOpenInfo(true);
+      setSeverityInfo("error");
+    });
   }, [postingCategory]);
 
   /*
@@ -58,7 +71,11 @@ function App() {
     .then(data => {
       setAllArticle(data);
     })
-    .catch(e => console.log(e.toString()));
+    .catch(e => {
+      setMessageInfo("Erreur : " + e.toString());
+      setOpenInfo(true);
+      setSeverityInfo("error");
+    });
   }, [postingArticle]);
 
   /*
@@ -73,7 +90,11 @@ function App() {
         .then(data => {
           setCategory(data);
         })
-        .catch(e => console.log(e.toString()));
+        .catch(e => {
+          setMessageInfo("Erreur : " + e.toString());
+          setOpenInfo(true);
+          setSeverityInfo("error");
+        });
       }
   }
   /*
@@ -86,7 +107,11 @@ function App() {
       .then(data => {
         setArticle(data);
       })
-      .catch(e => console.log(e.toString()));
+      .catch(e => {
+        setMessageInfo("Erreur : " + e.toString());
+        setOpenInfo(true);
+        setSeverityInfo("error");
+      });
       setArticleChoice(-1);
     }
     
@@ -107,7 +132,10 @@ function App() {
       })
       .then(res => res.json())
       .then(data => {
-        setPostingArticle(false);
+        setPostingCategory(false);
+        setMessageInfo("Ajout de la categorie");
+        setOpenInfo(true);
+        setSeverityInfo("success");
         setNewCategory(prevState => {
           initInvalidInput();
 
@@ -116,7 +144,11 @@ function App() {
           }
           });
       })
-      .catch(e => console.log(e.toString()));
+      .catch(e => {
+        setMessageInfo("Erreur : " + e.toString());
+        setOpenInfo(true);
+        setSeverityInfo("error");
+      });
     }
   }, [postingCategory]);
 
@@ -138,8 +170,10 @@ function App() {
       .then(res => res.json())
       .then(data => {
         setPostingCategory(false);
-        setNewArticle(prevState => {
         initInvalidInput();
+        setMessageInfo("Ajout de l'article");
+        setOpenInfo(true);
+        setNewArticle(prevState => {
         return {...prevState,
           id: 0,
           name: "",
@@ -149,13 +183,29 @@ function App() {
           content: "",
           category: ""
         }
-      });
+
+        });
+        setauthorForNewArticle(prevState => {
+        initInvalidInput();
+        return {...prevState,
+          firstName:"",
+          lastName: ""
+        }
+        
+        });
       })
-      .catch(e => console.log(e.toString()));
+      .catch(e => {
+        setMessageInfo("Erreur : " + e.toString());
+        setOpenInfo(true);
+        setSeverityInfo("error");
+      });
       */
       //TODO : recuperer l'id de l'autheur avant de l'ajouter attend que le backend soit pret
       allArticle.push(newArticle)
       setPostingArticle(false);
+      setMessageInfo("Ajout de l'article");
+      setOpenInfo(true);
+      setSeverityInfo("success");
       setNewArticle(prevState => {
         initInvalidInput();
         return {...prevState,
@@ -190,7 +240,11 @@ function App() {
     valide l'envoie de la Category
   */
   function submitCategory() {
-    setPostingCategory(true);
+    if (newCategory.categoryName !== ""){
+      setPostingCategory(true);
+    }else{
+      setInputInvalid("Vous devez remplir les champs");
+  }
   }
   /*
     valide l'envoie de l'article
@@ -295,6 +349,11 @@ function App() {
         inputInvalid={inputInvalid}
 
       />
+      <Snackbar open={openInfo} autoHideDuration={6000} onClose={handleCloseInfo}>
+        <Alert onClose={handleCloseInfo} severity={severityInfo} sx={{ width: '100%' }}>
+          {messageInfo}
+        </Alert>
+      </Snackbar>
       <Footer />
     </div>
   );
