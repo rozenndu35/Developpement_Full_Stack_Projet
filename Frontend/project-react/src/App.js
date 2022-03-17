@@ -10,14 +10,13 @@ function App() {
 
   const [postingCategory, setPostingCategory] = useState(false);
   const [postingArticle, setPostingArticle] = useState(false);
-  const [allCategory, setAllCategory] = useState(
-    []
-  );
-  const [allArticle, setAllArticle] = useState(
-    []
-  );
-  const [article, setArticle] = useState({});
+  const [allCategory, setAllCategory] = useState([]);
+
+  const [allArticle, setAllArticle] = useState([]);
+  const [article, setArticle] = useState();
   const [category, setCategory] = useState({});
+
+  const [articleChoice, setArticleChoice] = useState(-1); 
 
   const [newCategory, setNewCategory] = useState({
     categoryName: ""
@@ -78,27 +77,20 @@ function App() {
       }
   }
   /*
-  Recupere l'article selectionner 
-  @param id l'id de l'article
+  Recupere l'article selectionner where article = articleChoice
   */
-  const getArticle = (id) => {
-    if(id>=0){
-      /*
-      fetch('http://localhost:9000/api/private/article/' + id)
+  useEffect(() => {
+    if(articleChoice !== -1){
+      fetch('http://localhost:9000/api/private/article/'+articleChoice)
       .then(res => res.json())
       .then(data => {
-        console.log("---------------resultat-----------")
-        console.log(data)
         setArticle(data);
       })
       .catch(e => console.log(e.toString()));
-      */
-
-      let articleCherch = allArticle.find(art => art.id === id);
-      setArticle(articleCherch);
-      
+      setArticleChoice(-1);
     }
-  }
+    
+  }, [articleChoice]);
 
   /*
   Envoie l'ajout de la Category
@@ -299,7 +291,7 @@ function App() {
         newCategory={newCategory} submitCategory={submitCategory} handlerCategory={newCategoryChange}
         newArticle={newArticle} author={authorForNewArticle} submitArticle={submitArticle} handlerArticle={newArticleChange} handlerArticleDate={newArticleDateChange}
         setCategoryChoice={getCategoryInAPI} category={category}
-        setArticleChoice={getArticle} article={article} 
+        setArticleChoice={setArticleChoice} article={article}
         inputInvalid={inputInvalid}
 
       />
