@@ -62,6 +62,10 @@ function App() {
     .catch(e => console.log(e.toString()));
   }, [postingArticle]);
 
+  /*
+  Recupere la categorie selectionner 
+  @param id l'id de la categorie
+  */
   const getCategoryInAPI = (id) => {
       if(id>=0){
         
@@ -71,13 +75,12 @@ function App() {
           setCategory(data);
         })
         .catch(e => console.log(e.toString()));
-      /*
-       let categCherch = allCategory.find(cat => cat.id === id);
-        setCategory(categCherch);
-      */
       }
   }
-
+  /*
+  Recupere l'article selectionner 
+  @param id l'id de l'article
+  */
   const getArticle = (id) => {
     if(id>=0){
       /*
@@ -122,18 +125,6 @@ function App() {
           });
       })
       .catch(e => console.log(e.toString()));
-      /*
-      allCategory.push(newCategory);
-      setPostingCategory(false);
-      setNewCategory(prevState => {
-          initInvalidInput();
-
-          return {...prevState,
-              id: -1,
-              categoryName: ""
-          }
-      });
-          */
     }
   }, [postingCategory]);
 
@@ -198,13 +189,13 @@ function App() {
   }, [postingArticle]);
 
   /*
-  Remet l'input invalide a ca position innitiale false
+    Remet l'input invalide a ca position innitiale false
   */
   function initInvalidInput() {
     setInputInvalid(false);
   }
   /*
-  valide l'envoie de la Category
+    valide l'envoie de la Category
   */
   function submitCategory() {
     setPostingCategory(true);
