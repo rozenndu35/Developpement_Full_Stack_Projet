@@ -54,14 +54,14 @@ export default function  Navigation({categories, afficherPage}) {
           {categoryElements}
         </List>
       </Collapse>
-      <ListItem button onClick={event => afficherPage(event, "AddCategory")} className="navItem">
+      <ListItem button onClick={event => navigate("/category/new/newOrUpdate")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconAjouter />
         </ListItemIcon>
         <ListItemText primary="Ajouter Catégorie" />
       </ListItem>
 
-      <ListItem button onClick={event => afficherPage(event, "AddArticle")} className="navItem">
+      <ListItem button onClick={event => navigate("/article/new/newOrUpdate")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconAjouter />
         </ListItemIcon>
