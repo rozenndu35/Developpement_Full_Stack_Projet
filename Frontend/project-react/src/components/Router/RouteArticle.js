@@ -1,11 +1,16 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
+import GetArticle from "../../helper/getArticle";
 import Article from "../Article/Article";
 import Error from "../Error/Error";
 import Loading from "../Loading/Loading";
+import { useDispatch } from 'react-redux'
+import { openInfoAction } from "../../store/storeSlice/messageSlice";
+import { prepareMessageError } from "../Message/PrepareMessage";
 
-export default function RouteArticle({setMessageInfo, setOpenInfo, setSeverityInfo})
+export default function RouteArticle()
 {
+    const dispatch = useDispatch();
     let params = useParams();
     let id = params.id;
     const [article, setArticle] = useState();
@@ -18,20 +23,15 @@ export default function RouteArticle({setMessageInfo, setOpenInfo, setSeverityIn
   useEffect(() => {
     if(id !== -1){
         setArticleStatus("isLoading");
-      fetch('http://localhost:9000/api/private/article/'+id)
-      .then(res => res.json())
-      .then(data => {
-        setArticle(data);
-        setArticleStatus("end");
-      })
-      .catch(e => {
-        setArticleStatus("error")
-        setOpenInfo(true);
-        setSeverityInfo("error");
-        setMessageInfo("Erreur : " + e.toString());
-
-        
-      });
+        GetArticle(id)
+        .then(data => {
+            setArticle(data);
+            setArticleStatus("end");
+        })
+        .catch(e => {
+            setArticleStatus("error")
+            dispatch(openInfoAction(prepareMessageError(e.toString())))
+        });
     }
     
   }, [id, updateArticle]);
@@ -43,9 +43,7 @@ export default function RouteArticle({setMessageInfo, setOpenInfo, setSeverityIn
             return <Error error="Impossible de récupérer l'article"/>
         else if (articleStatus === "deleted")
             return <Error error="L'article a été détruit"/>
-        return (<Article article={article} setMessageInfo={setMessageInfo} setOpenInfo={setOpenInfo} setSeverityInfo={setSeverityInfo} setArticleStatus={setArticleStatus}/>);
-            
+        return (<Article article={article} setArticleStatus={setArticleStatus}/>);  
      }
-    
         return(verifArticle(article))  
 }

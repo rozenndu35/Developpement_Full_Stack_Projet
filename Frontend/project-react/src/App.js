@@ -1,22 +1,22 @@
 import './App.css';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Header from './components/Header/Header';
-import Body from './components/Body/Body';
-import Footer from './components/Footer/Footer';
 
 import { useEffect, useState } from 'react';
-import { Outlet } from 'react-router-dom';
 import Base from './components/Base/Base';
-import ListArticleInCategory from './components/ListArticleInCategory/ListArticleInCategory';
 import ListCategory from './components/ListCategory/ListCategory';
-import Article from './components/Article/Article';
 import AddCategory from './components/addCategory/AddCategory';
 import AddArticle from './components/addArticle/AddArticle';
 import RouteCategory from './components/Router/RouteCategory';
 import RouteArticle from './components/Router/RouteArticle';
-
+import { useDispatch } from 'react-redux'
+import { update } from './store/storeSlice/allCategoriesSlice';
 function App() {
+  // Initialization du store contenant les catégories
+  const dispatch = useDispatch()
+  useEffect(()=>{
+    dispatch(update())
+  },[])
 
   const [postingCategory, setPostingCategory] = useState(false);
   const [postingArticle, setPostingArticle] = useState(false);
@@ -392,46 +392,24 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Base allCategory={allCategory} openInfo={openInfo} severityInfo={severityInfo} handleCloseInfo={handleCloseInfo} messageInfo={messageInfo}/>}>
-            <Route path="" index element={<div/>}/>       {/*Home*/}
+        <Route path='/' element={<Base/>}>
+            <Route path="" index element={<div/>}/>
             <Route path='category'>
-              <Route path="" element={<ListCategory categories={allCategory}/>}/>             {/*Liste de catégorie*/}
+              <Route path="" element={<ListCategory/>}/>
               <Route path=":id">
-                  <Route path="" element={<RouteCategory setMessageInfo={setMessageInfo} setOpenInfo={setOpenInfo} setSeverityInfo={setSeverityInfo}/>}/>             {/*Liste d'article par catégorie*/}
-                  <Route path="newOrUpdate" element={<AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={newCategoryChange} submitCategory={submitCategory}/>}/>             {/*ajouter une catégorie*/}
+                  <Route path="" element={<RouteCategory/>}/>
+                  <Route path="newOrUpdate" element={<AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={newCategoryChange} submitCategory={submitCategory}/>}/>
               </Route>
             </Route>
             <Route path="article">
               <Route path=":id">
-                <Route path="" element={<RouteArticle setMessageInfo={setMessageInfo} setOpenInfo={setOpenInfo} setSeverityInfo={setSeverityInfo}/>}/>             {/*article*/}
-                <Route path="newOrUpdate" element={<AddArticle newArticle={newArticle} author={authorForNewArticle} categories={allCategory} inputInvalid={inputInvalid} handleChange={newArticleChange} handlerArticleDate={newArticleDateChange} submitArticle={submitArticle}/>}/>             {/*ajouter un auteur*/}
+                <Route path="" element={<RouteArticle/>}/>             {/*article*/}
+                <Route path="newOrUpdate" element={<AddArticle newArticle={newArticle} author={authorForNewArticle} categories={allCategory} inputInvalid={inputInvalid} handleChange={newArticleChange} handlerArticleDate={newArticleDateChange} submitArticle={submitArticle}/>}/>
               </Route>
             </Route>
         </Route>
       </Routes>
     </BrowserRouter>
-
-    /*
-    <div className="App">
-      
-      <Header />
-      <Body 
-        allCategory={allCategory} 
-        allArticle={allArticle} 
-        newCategory={newCategory} submitCategory={submitCategory} handlerCategory={newCategoryChange}
-        newArticle={newArticle} author={authorForNewArticle} submitArticle={submitArticle} handlerArticle={newArticleChange} handlerArticleDate={newArticleDateChange}
-        setCategoryChoice={getCategoryInAPI} category={category}
-        setArticleChoice={setArticleChoice} article={article}
-        inputInvalid={inputInvalid} deleteSubmitArticle={deleteSubmitArticle}
-      />
-      
-      <Snackbar open={openInfo} autoHideDuration={6000} onClose={handleCloseInfo}>
-        <Alert onClose={handleCloseInfo} severity={severityInfo} sx={{ width: '100%' }}>
-          {messageInfo}
-        </Alert>
-      </Snackbar>
-      <Footer />
-  </div>*/
   )
 }
 

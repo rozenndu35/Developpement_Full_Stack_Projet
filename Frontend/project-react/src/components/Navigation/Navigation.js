@@ -12,16 +12,16 @@ import IconExpandLess from '@material-ui/icons/ExpandLess'
 import IconExpandMore from '@material-ui/icons/ExpandMore'
 import IconList from '@material-ui/icons/ListSharp'
 import IconAjouter from '@material-ui/icons/AddCircle'
+import { useSelector} from 'react-redux'
 
 import { useNavigate } from "react-router-dom";
 
-import PropTypes from 'prop-types'
+export default function  Navigation() {
 
-export default function  Navigation({categories, afficherPage}) {
-
+  const {allCategories} = useSelector((state)=> state.allCatgories)
   const [open, setOpen] = React.useState(false)
   let navigate = useNavigate();
-  const categoryElements = categories.map(i => 
+  const categoryElements = allCategories.map(i => 
     <ListItem key={i.id} button onClick={() => navigate("/category/" + i.id)} className="navItem">
     <ListItemText inset primary={i.categoryName} />
     </ListItem>
@@ -69,9 +69,4 @@ export default function  Navigation({categories, afficherPage}) {
       </ListItem>
     </List>
   )
-}
-
-Navigation.propTypes = {
-  categories: PropTypes.array.isRequired,
-  afficherPage: PropTypes.func.isRequired
 }

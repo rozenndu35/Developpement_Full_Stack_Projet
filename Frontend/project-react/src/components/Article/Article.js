@@ -6,32 +6,28 @@ import CardContent from '@mui/material/CardContent';
 import IconDelete from '@material-ui/icons/Delete'
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
-
+import APIDeleteArticle from "../../helper/APIDeleteArticle"
 import * as React from 'react';
+import { prepareMessageError, prepareMessageSuccess } from '../Message/PrepareMessage';
+import { useDispatch } from 'react-redux'
+import { openInfoAction } from "../../store/storeSlice/messageSlice";
 
-export default function Article({article, setMessageInfo, setOpenInfo, setSeverityInfo, setArticleStatus}) {
-    /*
+export default function Article({article, setArticleStatus}) {
+  const dispatch =  useDispatch();
+  /*
     supprime l'article selectionner 
     @param id l'id de la categorie
   */
     function deleteArticle()
     {
-      fetch('http://localhost:9000/api/private/article/' + article.id, {
-        method: "DELETE",
-        headers: {
-          'Content-Type':'application/json',
-        },
-      })
+      APIDeleteArticle(article.id)
       .then(res => {
-        setMessageInfo("Article supprimer");
-        setOpenInfo(true);
-        setSeverityInfo("success");
+        
         setArticleStatus("deleted");
+        dispatch(openInfoAction(prepareMessageSuccess("Article supprimée")))
       })
       .catch(e => {
-        setMessageInfo("Erreur : " + e.toString());
-        setOpenInfo(true);
-        setSeverityInfo("error");
+        dispatch(openInfoAction(prepareMessageError(e.toString())))
       });
     };
 

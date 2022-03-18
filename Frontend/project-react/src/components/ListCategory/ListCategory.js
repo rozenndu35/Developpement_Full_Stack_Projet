@@ -6,11 +6,12 @@ import ListItemText from '@material-ui/core/ListItemText'
 import { useNavigate } from "react-router-dom";
 
 import PropTypes from 'prop-types'
+import { useSelector } from 'react-redux';
 
-export default function ListCategory({categories ,afficherPage}) {
-
+export default function ListCategory() {
+    const {allCategories} = useSelector((state)=> state.allCatgories)
     let navigate = useNavigate();
-    const categoryElements = categories.map(i => 
+    const categoryElements = allCategories.map(i => 
         <ListItem key={i.id}  button className="navItem" onClick={event => navigate("/category/" + i.id)}>
         <ListItemText inset primary={i.categoryName} />
         </ListItem>
@@ -25,7 +26,3 @@ export default function ListCategory({categories ,afficherPage}) {
         </div>
     )
 }
-
-ListCategory.propTypes = {
-    categories: PropTypes.array.isRequired,
-  }

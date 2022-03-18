@@ -3,19 +3,18 @@ import { Alert } from "@mui/material";
 import { render } from "react-dom";
 import Body from "../Body/Body";
 import Header from "../Header/Header";
-
-export default function Base({allCategory, openInfo, severityInfo, handleCloseInfo, messageInfo}){
-
+import { useSelector, useDispatch } from 'react-redux'
+import {handleCloseInfoAction} from "../../store/storeSlice/messageSlice"
+import Message from "../Message/Message";
+export default function Base({allCategory}){
+    const {openInfo,messageInfo ,severityInfo} = useSelector((state)=> state.message)
+    const dispatch = useDispatch()
     return(
         <div className="App">
             <Header/>
             <Body
-                allCategory={allCategory} />
-            <Snackbar open={openInfo} autoHideDuration={6000} onClose={handleCloseInfo}>
-                <Alert onClose={handleCloseInfo} severity={severityInfo} sx={{ width: '100%' }}>
-                    {messageInfo}
-                </Alert>
-            </Snackbar>
+                allCategory={allCategory}/>
+            <Message/>
         </div>
     );
 }

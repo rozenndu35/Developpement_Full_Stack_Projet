@@ -67,17 +67,6 @@ export default function Body({setArticleChoice, setCategoryChoice, allCategory, 
             <div className='App-content'>
                 <Outlet/>
             </div>
-            
-            {/*
-            <section className='App-page'>
-                { page === "ArticleCategory" && <ListArticleInCategory category={category} afficherPage={afficherPage}/>}
-                { page === "ListeCategory" && <ListCategory categories={allCategory}  afficherPage={afficherPage}/>}
-                { page === "AddCategory" && <AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={handlerCategory} submitCategory={submitCategory}/>}
-                { page === "AddArticle" && <AddArticle newArticle={newArticle} author={author} categories={allCategory} inputInvalid={inputInvalid} handleChange={handlerArticle} handlerArticleDate={handlerArticleDate} submitArticle={submitArticle}/>}
-                { giveArticle(article, page)}
-    
-    </section>*/}
-
         </div>
     )
 }
