@@ -66,7 +66,7 @@ export default function AddArticle({ categories, newArticle, author, inputInvali
                 <FormControl variant="standard">
                     <InputLabel id="demo-simple-select-standard-label">Categorie :</InputLabel>
                     <Select label="Categorie" name='category'
-                        value={newArticle.category} onChange={handleChange} >
+                        value={newArticle.category.id} onChange={handleChange} >
                     {categoryElements}
                     </Select>
                 </FormControl>
