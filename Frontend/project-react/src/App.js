@@ -24,9 +24,8 @@ function App() {
     categoryName: ""
   });
   const [newArticle, setNewArticle] = useState({
-      id: -1,
       author:{},
-      datetime: new Date(),
+      publicationDate: new Date(),
       title: "",
       content: "",
       category: {}
@@ -158,79 +157,45 @@ function App() {
   */
   useEffect(() =>{
     if (postingArticle && newArticle.id !== -1) {
-      
-      /*
-      fetch('', {
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(newCategory)
-      })
-      .then(res => res.json())
-      .then(data => {
-        setPostingCategory(false);
-        initInvalidInput();
-        setMessageInfo("Ajout de l'article");
-        setOpenInfo(true);
-        setNewArticle(prevState => {
+    fetch('http://localhost:9000/api/private/article', {
+      method: "POST",
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(newArticle)
+    })
+    .then(res => res.json())
+    .then(data => {
+      setPostingArticle(false);
+      initInvalidInput();
+      setMessageInfo("Ajout de l'article");
+      setOpenInfo(true);
+      setNewArticle(prevState => {
         return {...prevState,
-          id: 0,
           name: "",
           author:"",
-          datetime: new Date(),
+          publicationDate: new Date(),
           title: "",
           content: "",
           category: ""
         }
-
-        });
-        setauthorForNewArticle(prevState => {
-        initInvalidInput();
-        return {...prevState,
-          firstName:"",
-          lastName: ""
-        }
-        
-        });
-      })
-      .catch(e => {
-        setMessageInfo("Erreur : " + e.toString());
-        setOpenInfo(true);
-        setSeverityInfo("error");
-      });
-      */
-      //TODO : recuperer l'id de l'autheur avant de l'ajouter attend que le backend soit pret
-      allArticle.push(newArticle)
-      setPostingArticle(false);
-      setMessageInfo("Ajout de l'article");
-      setOpenInfo(true);
-      setSeverityInfo("success");
-      setNewArticle(prevState => {
-        initInvalidInput();
-        return {...prevState,
-          id: -1,
-          name: "",
-          author:{},
-          datetime: new Date(),
-          title: "",
-          content: "",
-          category: {}
-        }
-        
       });
       setauthorForNewArticle(prevState => {
-        initInvalidInput();
         return {...prevState,
           firstName:"",
           lastName: ""
         }
-        
       });
+    })
+    .catch(e => {
+      setMessageInfo("Erreur : " + e.toString());
+      setOpenInfo(true);
+      setSeverityInfo("error");
+      setPostingArticle(false);
+    });
     }
   }, [postingArticle]);
-
 
   /*
     supprime l'article selectionner 
@@ -251,7 +216,6 @@ function App() {
         setSeverityInfo("success");
       })
       .catch(e => {
-        console.log()
         setMessageInfo("Erreur : " + e.toString());
         setOpenInfo(true);
         setSeverityInfo("error");
@@ -280,7 +244,45 @@ function App() {
     valide l'envoie de l'article
   */
   function submitArticle() {
-      setPostingArticle(true);
+    fetch('http://localhost:9000/api/private/author/?lastName='+authorForNewArticle.lastName+'&firstName='+authorForNewArticle.firstName)
+    .then(res => {
+      
+      if (res.status === 404){
+        fetch('http://localhost:9000/api/private/author', {
+          method: "POST",
+          headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(authorForNewArticle)
+        }).then(res => res.json())
+        .then(data => {
+          setNewArticle(prevState => {
+            return {...prevState,
+              "author": {"id":data.id}
+            }
+          })
+          setPostingArticle(true);
+        });
+
+      }else if(res.status === 200){
+        res.json().then(function(data) {
+          if (data !== undefined){
+            setNewArticle(prevState => {
+              return {...prevState,
+                "author": {"id":data.id}
+              }
+            })
+            setPostingArticle(true);
+          }
+        });
+      }
+    })
+    .catch(e => {
+      setMessageInfo("Erreur : " + e.toString());
+      setOpenInfo(true);
+      setSeverityInfo("error");
+    });
   }
   /*
     valide l'envoie de la supression de l'article
@@ -319,22 +321,21 @@ function App() {
             initInvalidInput();
 
             return {...prevState,
-                id: allArticle.length + 1,
-                [name]: value
+                [name]: {"id":value}
             }
         })
       }else if (type === 'text' ){
         if (isString(value)) setInputInvalid("Vous ne pouvez pas inserer de caractere speciaux") 
         else{
-          if (value.length > 255) setInputInvalid("Le nombre maximum est de 255 caractere")
+          if (value.length > 255 && name !== "content") setInputInvalid("Le nombre maximum est de 255 caractere")
+          else if (value.length > 10000 && name === "content") setInputInvalid("Le nombre maximum est de 10000 caractere por une description")
           else{
             if(name.startsWith("author")){
               setauthorForNewArticle(prevState => {
                 initInvalidInput();
   
                 return {...prevState,
-                    id: allArticle.length + 1,
-                    [name.split(".")[1]]: value
+                    [name.split(".")[1]]: value.toUpperCase()
                 }
               });
             }else{
@@ -342,7 +343,6 @@ function App() {
                 initInvalidInput();
   
                 return {...prevState,
-                    id: allArticle.length + 1,
                     [name]: value
                 }
               });
@@ -359,8 +359,7 @@ function App() {
       initInvalidInput();
 
       return {...prevState,
-          id: allArticle.length + 1,
-          datetime: value
+          publicationDate: value
       }
       })
   }

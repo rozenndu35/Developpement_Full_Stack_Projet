@@ -30,15 +30,15 @@ export default function AddArticle({ categories, newArticle, author, inputInvali
                 />
                 </div>
                 <div className='App-textFieldSimple'>
-                <TextField name="author.firstName" variant="standard" 
+                <TextField name="author.lastName" variant="standard" 
                             label="Nom de l'autheur :" placeholder="Donne un nom..." helperText={inputInvalid}
-                            value={author.firstName} onChange={handleChange} 
+                            value={author.lastName} onChange={handleChange} 
                 />
                 </div>
                 <div className='App-textFieldSimple'>
-                <TextField name="author.lastName" variant="standard" 
+                <TextField name="author.firstName" variant="standard" 
                             label="Prenom de l'autheur :" placeholder="Donne un prenom..." helperText={inputInvalid}
-                            value={author.lastName} onChange={handleChange} 
+                            value={author.firstName} onChange={handleChange} 
                 />
                 </div>
                 <div className='App-textFieldSimple'>
