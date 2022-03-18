@@ -9,9 +9,34 @@ import IconButton from '@mui/material/IconButton';
 
 import * as React from 'react';
 
-export default function Article(props) {
+export default function Article({article, setMessageInfo, setOpenInfo, setSeverityInfo, setArticleStatus}) {
+    /*
+    supprime l'article selectionner 
+    @param id l'id de la categorie
+  */
+    function deleteArticle()
+    {
+      fetch('http://localhost:9000/api/private/article/' + article.id, {
+        method: "DELETE",
+        headers: {
+          'Content-Type':'application/json',
+        },
+      })
+      .then(res => {
+        setMessageInfo("Article supprimer");
+        setOpenInfo(true);
+        setSeverityInfo("success");
+        setArticleStatus("deleted");
+      })
+      .catch(e => {
+        setMessageInfo("Erreur : " + e.toString());
+        setOpenInfo(true);
+        setSeverityInfo("error");
+      });
+    };
+
   function dateinString(){
-    let jour = props.article.publicationDate.split('T')[0]
+    let jour = article.publicationDate.split('T')[0]
     return jour
   }
 
@@ -19,17 +44,17 @@ export default function Article(props) {
         <div className='App-ListArticleInCategory'>
             <Card>
               <CardHeader
-                title={props.article.title}
-                subheader={props.article.author !== null ? props.article.author.firstName + " " +props.article.author.lastName + " - " + dateinString() : dateinString()}
+                title={article.title}
+                subheader={article.author !== null ? article.author.firstName + " " +article.author.lastName + " - " + dateinString() : dateinString()}
               />
               <CardContent>
                 <Typography variant="body2" color="textPrimary">
-                {props.article.content}
+                {article.content}
                 </Typography>
               </CardContent>
               <CardActions disableSpacing>
                 <IconButton aria-label="Delete Article"
-                  onClick={props.deleteSubmitArticle}
+                  onClick={deleteArticle}
                 >
                   <IconDelete />
                 </IconButton>
