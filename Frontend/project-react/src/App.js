@@ -244,45 +244,50 @@ function App() {
     valide l'envoie de l'article
   */
   function submitArticle() {
-    fetch('http://localhost:9000/api/private/author/?lastName='+authorForNewArticle.lastName+'&firstName='+authorForNewArticle.firstName)
-    .then(res => {
-      
-      if (res.status === 404){
-        fetch('http://localhost:9000/api/private/author', {
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(authorForNewArticle)
-        }).then(res => res.json())
-        .then(data => {
-          setNewArticle(prevState => {
-            return {...prevState,
-              "author": {"id":data.id}
-            }
-          })
-          setPostingArticle(true);
-        });
-
-      }else if(res.status === 200){
-        res.json().then(function(data) {
-          if (data !== undefined){
+    if (newArticle.publicationDate !== null && newArticle.title !== "" && newArticle.content !== "" && newArticle.category !== "" && authorForNewArticle.firstName !== "" && authorForNewArticle.lastName !== ""){
+      fetch('http://localhost:9000/api/private/author/?lastName='+authorForNewArticle.lastName+'&firstName='+authorForNewArticle.firstName)
+      .then(res => {
+        
+        if (res.status === 404){
+          fetch('http://localhost:9000/api/private/author', {
+            method: "POST",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(authorForNewArticle)
+          }).then(res => res.json())
+          .then(data => {
             setNewArticle(prevState => {
               return {...prevState,
                 "author": {"id":data.id}
               }
             })
             setPostingArticle(true);
-          }
-        });
-      }
-    })
-    .catch(e => {
-      setMessageInfo("Erreur : " + e.toString());
-      setOpenInfo(true);
-      setSeverityInfo("error");
-    });
+          });
+  
+        }else if(res.status === 200){
+          res.json().then(function(data) {
+            if (data !== undefined){
+              setNewArticle(prevState => {
+                return {...prevState,
+                  "author": {"id":data.id}
+                }
+              })
+              setPostingArticle(true);
+            }
+          });
+        }
+      })
+      .catch(e => {
+        setMessageInfo("Erreur : " + e.toString());
+        setOpenInfo(true);
+        setSeverityInfo("error");
+      });
+  }else{
+    setInputInvalid("Vous devez remplir les champs");
+  }
+
   }
   /*
     valide l'envoie de la supression de l'article
