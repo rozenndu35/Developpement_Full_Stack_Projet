@@ -14,6 +14,7 @@ import Article from './components/Article/Article';
 import AddCategory from './components/addCategory/AddCategory';
 import AddArticle from './components/addArticle/AddArticle';
 import RouteCategory from './components/Router/RouteCategory';
+import RouteArticle from './components/Router/RouteArticle';
 
 function App() {
 
@@ -396,10 +397,12 @@ function App() {
                   <Route path="newOrUpdate" element={<AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={newCategoryChange} submitCategory={submitCategory}/>}/>             {/*ajouter une catégorie*/}
               </Route>
             </Route>
-           
-            <Route path="article/:id" element={<Article article={article} deleteSubmitArticle={dellArticle}/>}/>             {/*article*/}
-            
-            <Route path="newArticle" element={<AddArticle newArticle={newArticle} author={authorForNewArticle} categories={allCategory} inputInvalid={inputInvalid} handleChange={newArticleChange} handlerArticleDate={newArticleDateChange} submitArticle={submitArticle}/>}/>             {/*ajouter un auteur*/}
+            <Route path="article">
+              <Route path=":id">
+                <Route path="" element={<RouteArticle setMessageInfo={setMessageInfo} setOpenInfo={setOpenInfo} setSeverityInfo={setSeverityInfo}/>}/>             {/*article*/}
+                <Route path="newOrUpdate" element={<AddArticle newArticle={newArticle} author={authorForNewArticle} categories={allCategory} inputInvalid={inputInvalid} handleChange={newArticleChange} handlerArticleDate={newArticleDateChange} submitArticle={submitArticle}/>}/>             {/*ajouter un auteur*/}
+              </Route>
+            </Route>
         </Route>
       </Routes>
     </BrowserRouter>

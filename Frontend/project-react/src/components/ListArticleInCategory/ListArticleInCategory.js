@@ -4,15 +4,17 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import Typography from '@material-ui/core/Typography'
 import Divider from '@material-ui/core/Divider'
+import { useNavigate } from "react-router-dom";
 
 import * as React from 'react';
 import PropTypes from 'prop-types'
 
 export default function ListArticleInCategory({afficherPage, category}) {
-    let articleElements = [];
+  let navigate = useNavigate();  
+  let articleElements = [];
     if(category.articles){
       articleElements = category.articles.map(i => 
-        <ListItem  key={i.id}  button className="articleListItem" onClick={event => afficherPage(event, "Article", i.id)}>
+        <ListItem  key={i.id}  button className="articleListItem" onClick={event => navigate("/article/"+ i.id)}>
          <ListItemText
           primary={i.title}
           secondary={

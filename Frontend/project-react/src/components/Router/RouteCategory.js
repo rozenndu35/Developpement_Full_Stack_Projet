@@ -13,7 +13,7 @@ export default function RouteCategory({setMessageInfo, setOpenInfo, setSeverityI
     let params = useParams();
     let id = params.id;
     const [category, setCategory] = useState();
-    const [updateCategory, setUpdateCategory] = useState(true);
+    const [updateCategory, setUpdateCategory] = useState();
   /*
   Recupere la categorie selectionner 
   @param id l'id de la categorie
@@ -21,9 +21,7 @@ export default function RouteCategory({setMessageInfo, setOpenInfo, setSeverityI
  useEffect(()=>{
       if(id>=0){
           if(category ==="error")
-          {
             setCategory(null);
-          }
       fetch('http://localhost:9000/api/private/category/' + id)
       .then(res => res.json())
       .then(data => {
