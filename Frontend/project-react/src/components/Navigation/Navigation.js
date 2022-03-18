@@ -13,13 +13,16 @@ import IconExpandMore from '@material-ui/icons/ExpandMore'
 import IconList from '@material-ui/icons/ListSharp'
 import IconAjouter from '@material-ui/icons/AddCircle'
 
+import { useNavigate } from "react-router-dom";
+
 import PropTypes from 'prop-types'
 
 export default function  Navigation({categories, afficherPage}) {
+
   const [open, setOpen] = React.useState(false)
-  
+  let navigate = useNavigate();
   const categoryElements = categories.map(i => 
-    <ListItem key={i.id} button onClick={event => afficherPage(event, "ArticleCategory", i.id)} className="navItem">
+    <ListItem key={i.id} button onClick={() => navigate("/category/" + i.id)} className="navItem">
     <ListItemText inset primary={i.categoryName} />
     </ListItem>
   )
@@ -33,7 +36,7 @@ export default function  Navigation({categories, afficherPage}) {
 
   return (
     <List component="nav" className="nav" disablePadding>
-      <ListItem button onClick={event => afficherPage(event, "ListeCategory")} className="navItem">
+      <ListItem button onClick={event => navigate("category")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconList />
         </ListItemIcon>

@@ -8,9 +8,12 @@ import Article from '../Article/Article';
 import './body.css'
 import './formulaire.css'
 
+import { Outlet } from 'react-router-dom';
+
 import PropTypes from 'prop-types'
 
 export default function Body({setArticleChoice, setCategoryChoice, allCategory, category, newCategory, handlerCategory, submitCategory, articlesInCategory, article, newArticle, author, handlerArticle,handlerArticleDate, submitArticle, inputInvalid, deleteSubmitArticle}) {
+    
     const [page, setPage] = useState();
     const [pageUpdate, setPageUpdate] = useState({update: false, pageId: -1 });
     
@@ -61,13 +64,19 @@ export default function Body({setArticleChoice, setCategoryChoice, allCategory, 
     return (
         <div className='App-body'>
             <Navigation categories={allCategory} afficherPage={afficherPage}/>
+            <div className='App-content'>
+                <Outlet/>
+            </div>
+            
+            {/*
             <section className='App-page'>
                 { page === "ArticleCategory" && <ListArticleInCategory category={category} afficherPage={afficherPage}/>}
                 { page === "ListeCategory" && <ListCategory categories={allCategory}  afficherPage={afficherPage}/>}
                 { page === "AddCategory" && <AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={handlerCategory} submitCategory={submitCategory}/>}
                 { page === "AddArticle" && <AddArticle newArticle={newArticle} author={author} categories={allCategory} inputInvalid={inputInvalid} handleChange={handlerArticle} handlerArticleDate={handlerArticleDate} submitArticle={submitArticle}/>}
                 { giveArticle(article, page)}
-            </section>
+    
+    </section>*/}
 
         </div>
     )

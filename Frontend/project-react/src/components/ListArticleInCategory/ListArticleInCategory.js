@@ -43,6 +43,5 @@ export default function ListArticleInCategory({afficherPage, category}) {
     )
 }
 ListArticleInCategory.propTypes = {
-  afficherPage: PropTypes.func.isRequired,
   category: PropTypes.object.isRequired
 }
