@@ -4,8 +4,10 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { useEffect, useState } from 'react';
 import Base from './components/Base/Base';
+import InputLog from './route/InputLog';
 import ListCategory from './components/ListCategory/ListCategory';
 import AddCategory from './components/addCategory/AddCategory';
+import Home from'./components/Home/Home';
 import AddArticle from './components/addArticle/AddArticle';
 import RouteCategory from './components/Router/RouteCategory';
 import RouteArticle from './components/Router/RouteArticle';
@@ -394,6 +396,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Base/>}>
+            <Route  index element={<InputLog/>}/>
             <Route path="" index element={<div/>}/>
             <Route path='category'>
               <Route path="" element={<ListCategory/>}/>
@@ -408,6 +411,8 @@ function App() {
                 <Route path="newOrUpdate" element={<AddArticle newArticle={newArticle} author={authorForNewArticle} categories={allCategory} inputInvalid={inputInvalid} handleChange={newArticleChange} handlerArticleDate={newArticleDateChange} submitArticle={submitArticle}/>}/>
               </Route>
             </Route>
+            <Route  path='*' element={<main><p>Nous ne connaissons pas cette page</p></main>} />
+            <Route path="home"  element={<Home/>}/>
         </Route>
       </Routes>
     </BrowserRouter>
