@@ -11,6 +11,7 @@ import RouteArticle from './components/Router/RouteArticle';
 import { useDispatch } from 'react-redux'
 import { update } from './store/storeSlice/allCategoriesSlice';
 import RouteCreateOrModifyCategory from './components/Router/RouteCreateOrModifyCategory';
+import RouteInscription from './components/Router/RouteInscription';
 import RouteCreateOrModifyArticle from './components/Router/RouteCreateOrModifyArticle';
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
       <Routes>
         <Route path='/' element={<Base />}>
             <Route  index element={<InputLog />} />
+            <Route path="inscription" element={<RouteInscription />} />
             <Route  path='*' element={<main><p>Nous ne connaissons pas cette page</p></main>} />
             <Route path="home"  element={<Home/>}/>
             <Route path="" index element={<div />} />
