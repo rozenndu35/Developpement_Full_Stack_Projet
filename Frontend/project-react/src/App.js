@@ -6,6 +6,7 @@ import Base from './components/Base/Base';
 import InputLog from './route/InputLog';
 import ListCategory from './components/ListCategory/ListCategory';
 import Home from'./components/Home/Home';
+import Deconnect from'./components/Deconnect/Deconnect';
 import RouteCategory from './components/Router/RouteCategory';
 import RouteArticle from './components/Router/RouteArticle';
 import { useDispatch } from 'react-redux'
@@ -30,6 +31,7 @@ export default function App() {
             <Route path="inscription" element={<RouteInscription />} />
             <Route  path='*' element={<main><p>Nous ne connaissons pas cette page</p></main>} />
             <Route path="home"  element={<Home/>}/>
+            <Route path="deconnect"  element={<Deconnect/>}/>
             <Route path="" index element={<div />} />
             <Route path='category'>
               <Route path="" element={<ListCategory />} />

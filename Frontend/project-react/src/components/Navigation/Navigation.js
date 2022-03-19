@@ -26,6 +26,7 @@ export default function  Navigation() {
 
   const {allCategories} = useSelector((state)=> state.allCatgories)
   const [open, setOpen] = React.useState(false)
+  const toLoggout = sessionStorage.getItem('token') ?true :false;
   let navigate = useNavigate();
   const dispatch =  useDispatch();
   const categoryElements = allCategories.map(i => 
@@ -47,6 +48,7 @@ export default function  Navigation() {
    function deconnection() {
     sessionStorage.removeItem('token');
     dispatch(openInfoAction(prepareMessageSuccess("Vous ete deconnecter")))
+    navigate("/deconnect")
   }
 
   return (
@@ -82,18 +84,18 @@ export default function  Navigation() {
         </ListItemIcon>
         <ListItemText primary="Ajouter Article" />
       </ListItem>
-      <ListItem button onClick={deconnection} className="navItem">
+      { toLoggout && <ListItem button onClick={deconnection} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconNotAccountcircle />
         </ListItemIcon>
         <ListItemText primary="Deconnection" />
-      </ListItem>
-      <ListItem button onClick={event => navigate("/")} className="navItem">
+      </ListItem>}
+      { !toLoggout && <ListItem button onClick={event => navigate("/")} className="navItem">
         <ListItemIcon className="navItemIcon">
           <IconAccountcircle />
         </ListItemIcon>
         <ListItemText primary="Connection" />
-      </ListItem>
+      </ListItem>}
     </List>
   )
 }
