@@ -23,7 +23,7 @@ function handleChangeMock(event) {
 let submitCategoryResutl = false ;
 function submitCategoryMock() {
     if (newCategoryMock.categoryName !== ""){
-        submitCategoryResutl(true);
+        submitCategoryResutl= true;
     }else{
         inputInvalidMock = "Vous devez remplir les champs";
     }
@@ -80,3 +80,14 @@ it ("should Envoyer mais vide",() => {
     expect(inputInvalidMock).toEqual("Vous devez remplir les champs");
     expect(submitCategoryResutl).toEqual(false);
 });
+
+it ("should Envoyer cas normal",() => {
+    initialiser()
+    render(<AddCategory newCategory={newCategoryMock} inputInvalid={inputInvalidMock} handleChange={handleChangeMock} submitCategory={submitCategoryMock}/>);
+    userEvent.type(screen.getByPlaceholderText("Donne un nom..."), "CategorieTest");
+    expect(newCategoryMock.categoryName).toEqual("CategorieTest")
+    expect(inputInvalidMock).toEqual(false)
+    userEvent.click(screen.getByText("Envoyer"));
+    expect(submitCategoryResutl).toEqual(true);
+});
+
