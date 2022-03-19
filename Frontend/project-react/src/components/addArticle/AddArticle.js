@@ -20,6 +20,8 @@ import { useSelector } from 'react-redux'
 import getAuthorByName from '../../helper/getAuthorByName'
 import APIAddArticle from '../../helper/APIAddArticle'
 import { useEffect } from 'react'
+import { PureDateInput } from '@mui/lab/internal/pickers/PureDateInput'
+import { listItemSecondaryActionClasses } from '@mui/material'
 
 
 export default function AddArticle({ newArticle, author, setAuthor, setArticle, setArticleStatus }) {
@@ -101,37 +103,29 @@ export default function AddArticle({ newArticle, author, setAuthor, setArticle, 
     */
     function submitArticle() {
         if (newArticle.publicationDate !== null && newArticle.title !== "" && newArticle.content !== "" && newArticle.category !== "" && author.firstName !== "" && author.lastName !== "") {
-            let articleToSend= newArticle;
+            let articleToSend = newArticle;
+            let action = articleToSend.id == null ? "POST" : "PUT";
             getAuthorByName(author.lastName, author.firstName)
                 .then(res => {
                     if (res.status === 404) {
-                        articleToSend.author ={
+                        articleToSend.author = {
                             id: null,
                             firstName: author.firstName,
                             lastName: author.lastName
                         }
+                        send(articleToSend, action)
                     } else if (res.status === 200) {
                         res.json().then(function (data) {
                             if (data !== undefined) {
-                                articleToSend.author={
+                                articleToSend.author = {
                                     id: data.id,
                                     firstName: author.firstName,
                                     lastName: author.lastName
                                 }
+                                send(articleToSend, action)
                             }
                         });
                     }
-
-                    APIAddArticle(articleToSend)
-                        .then(data => {
-                            initInvalidInput();
-                            dispatch(openInfoAction(prepareMessageSuccess("Ajout de l'article")))
-                            dispatch(update())
-                            setArticleStatus("added")
-                        })
-                        .catch(e => {
-                            dispatch(openInfoAction(prepareMessageError(e.toString())))
-                        });
                 })
                 .catch(e => {
                     dispatch(openInfoAction(prepareMessageError(e.toString())))
@@ -140,6 +134,19 @@ export default function AddArticle({ newArticle, author, setAuthor, setArticle, 
             setInputInvalid("Vous devez remplir les champs");
         }
 
+    }
+
+    function send(articleToSend, action) {
+        APIAddArticle(articleToSend, action)
+            .then(data => {
+                initInvalidInput();
+                dispatch(openInfoAction(prepareMessageSuccess("Ajout de l'article")))
+                dispatch(update())
+                setArticleStatus("added")
+            })
+            .catch(e => {
+                dispatch(openInfoAction(prepareMessageError(e.toString())))
+            });
     }
 
     return (
