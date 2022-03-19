@@ -37,10 +37,8 @@ public class CustomUserDetailsService implements UserDetailsService {
     }
 
     public void saveUser(InternalUser user) throws UserAlreadyExist {
-        /*
         if(internalUserRepository.count(user.getUsername()) > 0)
             throw new UserAlreadyExist();
-         */
         String hash = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt());
         user.setPassword(hash);
         internalUserRepository.save(user);
