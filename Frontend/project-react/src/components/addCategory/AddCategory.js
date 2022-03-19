@@ -2,7 +2,6 @@ import Button from '@material-ui/core/Button'
 import TextField from '@material-ui/core/TextField'
 import SendIcon from '@material-ui/icons/Send'
 
-
 import PropTypes from 'prop-types'
 import APIAddCategory from '../../helper/APIAddCategory';
 import isString from '../../helper/isString';
@@ -83,5 +82,6 @@ Remet l'input invalide a ca position innitiale false
 }
 AddCategory.propTypes = {
     newCategory: PropTypes.object.isRequired,
-    submitCategory: PropTypes.func.isRequired
+    setCategory: PropTypes.func.isRequired,
+    setCategoryStatus : PropTypes.func.isRequired
 }

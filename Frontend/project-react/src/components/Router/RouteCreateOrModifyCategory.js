@@ -36,7 +36,7 @@ export default function RouteCreateOrModifyCategory(){
     },[id])
 
     function verifCategory(){
-        if(categoryStatus == "isLoading")
+        if(categoryStatus === "isLoading")
             return <Loading/>    
         else if(categoryStatus === "error")
             return <Error error="Impossible de récupérer l'article"/>

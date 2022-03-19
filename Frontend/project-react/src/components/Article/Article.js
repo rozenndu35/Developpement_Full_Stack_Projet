@@ -11,6 +11,7 @@ import * as React from 'react';
 import { prepareMessageError, prepareMessageSuccess } from '../Message/PrepareMessage';
 import { useDispatch } from 'react-redux'
 import { openInfoAction } from "../../store/storeSlice/messageSlice";
+import PropTypes from 'prop-types'
 
 export default function Article({article, setArticleStatus}) {
   const dispatch =  useDispatch();
@@ -58,4 +59,9 @@ export default function Article({article, setArticleStatus}) {
             </Card>
         </div>
     )
+}
+
+Article.propTypes = {
+  article: PropTypes.object.isRequired,
+  setArticleStatus: PropTypes.func.isRequired,
 }

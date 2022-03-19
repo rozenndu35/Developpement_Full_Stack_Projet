@@ -19,9 +19,6 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux'
 import getAuthorByName from '../../helper/getAuthorByName'
 import APIAddArticle from '../../helper/APIAddArticle'
-import { useEffect } from 'react'
-import { PureDateInput } from '@mui/lab/internal/pickers/PureDateInput'
-import { listItemSecondaryActionClasses } from '@mui/material'
 
 
 export default function AddArticle({ newArticle, author, setAuthor, setArticle, setArticleStatus }) {
@@ -209,4 +206,9 @@ export default function AddArticle({ newArticle, author, setAuthor, setArticle, 
 
 AddArticle.propTypes = {
     newArticle: PropTypes.object.isRequired,
+    author: PropTypes.object.isRequired,
+    setAuthor: PropTypes.func.isRequired,
+    setArticle: PropTypes.func.isRequired,
+    setArticleStatus: PropTypes.func.isRequired,
+
 }
