@@ -11,7 +11,7 @@ export const messageSlice = createSlice({
         openInfoAction: (state, action) =>{
             state.openInfo = action.payload.openInfo;
             state.messageInfo = action.payload.messageInfo;
-            state.severityInfo = action.severityInfo;
+            state.severityInfo = action.payload.severityInfo;
         },
         handleCloseInfoAction: (state) =>{
             state.openInfo = false;
