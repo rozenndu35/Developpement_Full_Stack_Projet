@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { openInfoAction } from "../store/storeSlice/messageSlice";
 import { prepareMessageError, prepareMessageSuccess } from '../components/Message/PrepareMessage';
+import APILogin from '../helper/APILogin'
 
 export default function InputLog(){
 
@@ -49,14 +50,7 @@ export default function InputLog(){
             sessionStorage.setItem('token', "dumbvalue");
             navigate("/home");
             // 401 mauvais identifiant
-            /*fetch('',{
-                method:"POST",
-                headers:{
-                    'Accept': 'application/json',
-                    'Content-json':'application/json'
-                },
-                body:JSON.stringify(connectionValue)
-            })
+            /*APILogin(connectionValue)
             .then(res => {
                 if(res.status === 200){
                     sessionStorage.setItem('token', "dumbvalue");

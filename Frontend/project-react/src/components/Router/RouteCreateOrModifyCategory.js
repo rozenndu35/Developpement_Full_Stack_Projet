@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import getCategory from "../../helper/getCategory";
 import AddCategory from "../addCategory/AddCategory";
+import PopupAuthent from "../PopupAuthent/PopupAuthent";
 import Error from "../Error/Error";
 import Loading from "../Loading/Loading";
 
@@ -14,7 +15,10 @@ export default function RouteCreateOrModifyCategory(){
     const [category, setCategory] = useState()
 
     useEffect(()=>{
-        if(id === "new"){
+        if(!sessionStorage.getItem('token')){
+            setCategoryStatus("redirect");
+        }
+        else if(id === "new"){
             setCategory({
                 id: null,
                 categoryName: "",
@@ -36,7 +40,9 @@ export default function RouteCreateOrModifyCategory(){
     },[id])
 
     function verifCategory(){
-        if(categoryStatus === "isLoading")
+        if(categoryStatus === "redirect")
+            return <PopupAuthent/> 
+        else if(categoryStatus === "isLoading")
             return <Loading/>    
         else if(categoryStatus === "error")
             return <Error error="Impossible de récupérer l'article"/>

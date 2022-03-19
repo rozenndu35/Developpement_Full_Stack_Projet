@@ -14,6 +14,7 @@ import { update } from './store/storeSlice/allCategoriesSlice';
 import RouteCreateOrModifyCategory from './components/Router/RouteCreateOrModifyCategory';
 import RouteInscription from './components/Router/RouteInscription';
 import RouteCreateOrModifyArticle from './components/Router/RouteCreateOrModifyArticle';
+import PopupAuthent from './components/PopupAuthent/PopupAuthent'
 
 export default function App() {
 
@@ -33,6 +34,7 @@ export default function App() {
             <Route path="home"  element={<Home/>}/>
             <Route path="deconnect"  element={<Deconnect/>}/>
             <Route path="" index element={<div />} />
+            <Route path='test' element={<PopupAuthent />} />
             <Route path='category'>
               <Route path="" element={<ListCategory />} />
               <Route path=":id">
