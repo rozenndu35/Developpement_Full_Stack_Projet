@@ -11,6 +11,7 @@ import RouteCategory from './components/Router/RouteCategory';
 import RouteArticle from './components/Router/RouteArticle';
 import { useDispatch } from 'react-redux'
 import { update } from './store/storeSlice/allCategoriesSlice';
+import RouteCreateOrModifyCategory from './components/Router/RouteCreateOrModifyCategory';
 function App() {
   // Initialization du store contenant les catégories
   const dispatch = useDispatch()
@@ -398,7 +399,7 @@ function App() {
               <Route path="" element={<ListCategory/>}/>
               <Route path=":id">
                   <Route path="" element={<RouteCategory/>}/>
-                  <Route path="newOrUpdate" element={<AddCategory newCategory={newCategory} inputInvalid={inputInvalid} handleChange={newCategoryChange} submitCategory={submitCategory}/>}/>
+                  <Route path="newOrUpdate" element={<RouteCreateOrModifyCategory />}/>
               </Route>
             </Route>
             <Route path="article">
