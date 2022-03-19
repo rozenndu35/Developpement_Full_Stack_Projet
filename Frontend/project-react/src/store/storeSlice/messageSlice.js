@@ -16,7 +16,6 @@ export const messageSlice = createSlice({
         handleCloseInfoAction: (state) =>{
             state.openInfo = false;
             state.messageInfo = "";
-            state.severityInfo = "success";
         }
     }
 })
