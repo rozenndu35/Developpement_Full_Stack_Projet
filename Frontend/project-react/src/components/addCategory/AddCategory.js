@@ -22,8 +22,9 @@ export default function AddCategory({ newCategory, setCategory, setCategoryStatu
     Ajoute la catégorie
   */
     function submitCategory() {
+        let action = newCategory.id == null ? "POST" : "PATCH";
         if (newCategory.categoryName !== ""){
-            APIAddCategory(newCategory)
+            APIAddCategory(newCategory, action)
             .then(data => {
               dispatch(openInfoAction(prepareMessageSuccess("Ajout de la categorie")))
               dispatch(update())
