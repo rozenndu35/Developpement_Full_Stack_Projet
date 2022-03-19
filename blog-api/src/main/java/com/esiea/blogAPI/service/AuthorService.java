@@ -32,6 +32,13 @@ public class AuthorService {
 			throw new NotFoundException();
 	}
 
+	public Author getAuhtorByName(String lastName, String firstname) throws NotFoundException {
+		Optional<Author> result = authorRepository.findByLastNameAndFirstName(lastName, firstname);
+		if(result.isPresent())
+			return result.get();
+		throw new NotFoundException();
+	}
+
 	public Author save(Author author) throws NotAllowedException {
 		if(author.getId() == null)
 			return authorRepository.save(author);
