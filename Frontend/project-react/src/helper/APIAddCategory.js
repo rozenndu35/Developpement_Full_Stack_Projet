@@ -1,8 +1,8 @@
 import ApiConfig from "../config/ApiConfig";
 
-export default function APIAddCategory(newCategory){
+export default function APIAddCategory(newCategory, action){
     return fetch(ApiConfig.adress + 'private/category',{
-        method: "POST",
+        method: action,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'

@@ -26,7 +26,10 @@ export default function RouteCreateOrModifyCategory(){
             setCategoryStatus("isLoading");
             getCategory(id)
             .then(data =>{
-                setCategory(data);
+                setCategory({
+                    id : data.id,
+                    categoryName: data.categoryName
+                });
                 setCategoryStatus("end")
             })
         }
