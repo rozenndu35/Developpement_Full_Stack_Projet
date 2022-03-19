@@ -14,12 +14,13 @@ import RouteArticle from './components/Router/RouteArticle';
 import { useDispatch } from 'react-redux'
 import { update } from './store/storeSlice/allCategoriesSlice';
 import RouteCreateOrModifyCategory from './components/Router/RouteCreateOrModifyCategory';
+import RouteCreateOrModifyArticle from './components/Router/RouteCreateOrModifyArticle';
 function App() {
   // Initialization du store contenant les catégories
   const dispatch = useDispatch()
-  useEffect(()=>{
+  useEffect(() => {
     dispatch(update())
-  },[])
+  }, [])
 
   const [postingCategory, setPostingCategory] = useState(false);
   const [postingArticle, setPostingArticle] = useState(false);
@@ -30,21 +31,21 @@ function App() {
   const [article, setArticle] = useState();
   const [category, setCategory] = useState({});
 
-  const [articleChoice, setArticleChoice] = useState(-1); 
+  const [articleChoice, setArticleChoice] = useState(-1);
 
   const [newCategory, setNewCategory] = useState({
     categoryName: ""
   });
   const [newArticle, setNewArticle] = useState({
-      author:{},
-      publicationDate: new Date(),
-      title: "",
-      content: "",
-      category: {}
+    author: {},
+    publicationDate: new Date(),
+    title: "",
+    content: "",
+    category: {}
 
   });
   let [authorForNewArticle, setauthorForNewArticle] = useState({
-    firstName: "", 
+    firstName: "",
     lastName: ""
   });
 
@@ -53,7 +54,7 @@ function App() {
   const [openInfo, setOpenInfo] = useState(false);
   const [severityInfo, setSeverityInfo] = useState("success");
 
-  function handleCloseInfo(){
+  function handleCloseInfo() {
     setOpenInfo(false);
     setMessageInfo("");
     setSeverityInfo("success");
@@ -63,15 +64,15 @@ function App() {
   */
   useEffect(() => {
     fetch('http://localhost:9000/api/private/category')
-    .then(res => res.json())
-    .then(data => {
-      setAllCategory(data);
-    })
-    .catch(e => {
-      setMessageInfo("Erreur : " + e.toString());
-      setOpenInfo(true);
-      setSeverityInfo("error");
-    });
+      .then(res => res.json())
+      .then(data => {
+        setAllCategory(data);
+      })
+      .catch(e => {
+        setMessageInfo("Erreur : " + e.toString());
+        setOpenInfo(true);
+        setSeverityInfo("error");
+      });
   }, [postingCategory]);
 
   /*
@@ -79,15 +80,15 @@ function App() {
   */
   useEffect(() => {
     fetch('http://localhost:9000/api/private/article')
-    .then(res => res.json())
-    .then(data => {
-      setAllArticle(data);
-    })
-    .catch(e => {
-      setMessageInfo("Erreur : " + e.toString());
-      setOpenInfo(true);
-      setSeverityInfo("error");
-    });
+      .then(res => res.json())
+      .then(data => {
+        setAllArticle(data);
+      })
+      .catch(e => {
+        setMessageInfo("Erreur : " + e.toString());
+        setOpenInfo(true);
+        setSeverityInfo("error");
+      });
   }, [postingArticle]);
 
   /*
@@ -95,9 +96,9 @@ function App() {
   @param id l'id de la categorie
   */
   const getCategoryInAPI = (id) => {
-      if(id>=0){
-        
-        fetch('http://localhost:9000/api/private/category/' + id)
+    if (id >= 0) {
+
+      fetch('http://localhost:9000/api/private/category/' + id)
         .then(res => res.json())
         .then(data => {
           setCategory(data);
@@ -107,105 +108,108 @@ function App() {
           setOpenInfo(true);
           setSeverityInfo("error");
         });
-      }
+    }
   }
   /*
   Recupere l'article selectionner where article = articleChoice
   */
   useEffect(() => {
-    if(articleChoice !== -1){
-      fetch('http://localhost:9000/api/private/article/'+articleChoice)
-      .then(res => res.json())
-      .then(data => {
-        setArticle(data);
-      })
-      .catch(e => {
-        setMessageInfo("Erreur : " + e.toString());
-        setOpenInfo(true);
-        setSeverityInfo("error");
-      });
+    if (articleChoice !== -1) {
+      fetch('http://localhost:9000/api/private/article/' + articleChoice)
+        .then(res => res.json())
+        .then(data => {
+          setArticle(data);
+        })
+        .catch(e => {
+          setMessageInfo("Erreur : " + e.toString());
+          setOpenInfo(true);
+          setSeverityInfo("error");
+        });
       setArticleChoice(-1);
     }
-    
+
   }, [articleChoice]);
 
   /*
   Envoie l'ajout de la Category
   */
-  useEffect(() =>{
-    if (postingCategory ) {
+  useEffect(() => {
+    if (postingCategory) {
       fetch('http://localhost:9000/api/private/category', {
-          method: "POST",
-          headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-          },          
-          body: JSON.stringify(newCategory)
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newCategory)
       })
-      .then(res => res.json())
-      .then(data => {
-        setPostingCategory(false);
-        setMessageInfo("Ajout de la categorie");
-        setOpenInfo(true);
-        setSeverityInfo("success");
-        setNewCategory(prevState => {
-          initInvalidInput();
+        .then(res => res.json())
+        .then(data => {
+          setPostingCategory(false);
+          setMessageInfo("Ajout de la categorie");
+          setOpenInfo(true);
+          setSeverityInfo("success");
+          setNewCategory(prevState => {
+            initInvalidInput();
 
-          return {...prevState,
+            return {
+              ...prevState,
               categoryName: ""
-          }
+            }
           });
-      })
-      .catch(e => {
-        setMessageInfo("Erreur : " + e.toString());
-        setOpenInfo(true);
-        setSeverityInfo("error");
-      });
+        })
+        .catch(e => {
+          setMessageInfo("Erreur : " + e.toString());
+          setOpenInfo(true);
+          setSeverityInfo("error");
+        });
     }
   }, [postingCategory]);
 
   /*
   Envoie l'ajout de l'article
   */
-  useEffect(() =>{
+  useEffect(() => {
     if (postingArticle && newArticle.id !== -1) {
-    fetch('http://localhost:9000/api/private/article', {
-      method: "POST",
-      headers: {
-        'Accept': 'application/json',
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(newArticle)
-    })
-    .then(res => res.json())
-    .then(data => {
-      setPostingArticle(false);
-      initInvalidInput();
-      setMessageInfo("Ajout de l'article");
-      setOpenInfo(true);
-      setNewArticle(prevState => {
-        return {...prevState,
-          name: "",
-          author:"",
-          publicationDate: new Date(),
-          title: "",
-          content: "",
-          category: ""
-        }
-      });
-      setauthorForNewArticle(prevState => {
-        return {...prevState,
-          firstName:"",
-          lastName: ""
-        }
-      });
-    })
-    .catch(e => {
-      setMessageInfo("Erreur : " + e.toString());
-      setOpenInfo(true);
-      setSeverityInfo("error");
-      setPostingArticle(false);
-    });
+      fetch('http://localhost:9000/api/private/article', {
+        method: "POST",
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newArticle)
+      })
+        .then(res => res.json())
+        .then(data => {
+          setPostingArticle(false);
+          initInvalidInput();
+          setMessageInfo("Ajout de l'article");
+          setOpenInfo(true);
+          setNewArticle(prevState => {
+            return {
+              ...prevState,
+              name: "",
+              author: "",
+              publicationDate: new Date(),
+              title: "",
+              content: "",
+              category: ""
+            }
+          });
+          setauthorForNewArticle(prevState => {
+            return {
+              ...prevState,
+              firstName: "",
+              lastName: ""
+            }
+          });
+        })
+        .catch(e => {
+          setMessageInfo("Erreur : " + e.toString());
+          setOpenInfo(true);
+          setSeverityInfo("error");
+          setPostingArticle(false);
+        });
     }
   }, [postingArticle]);
 
@@ -213,28 +217,28 @@ function App() {
     supprime l'article selectionner 
     @param id l'id de la categorie
   */
-  useEffect(() =>{
-    if(deleteArticle){
+  useEffect(() => {
+    if (deleteArticle) {
       fetch('http://localhost:9000/api/private/article/' + article.id, {
         method: "DELETE",
         headers: {
-          'Content-Type':'application/json',
+          'Content-Type': 'application/json',
         },
       })
-      .then(res => {
-        setDeleteArticle(false);
-        setMessageInfo("Article supprimer");
-        setOpenInfo(true);
-        setSeverityInfo("success");
-      })
-      .catch(e => {
-        setMessageInfo("Erreur : " + e.toString());
-        setOpenInfo(true);
-        setSeverityInfo("error");
-      });
+        .then(res => {
+          setDeleteArticle(false);
+          setMessageInfo("Article supprimer");
+          setOpenInfo(true);
+          setSeverityInfo("success");
+        })
+        .catch(e => {
+          setMessageInfo("Erreur : " + e.toString());
+          setOpenInfo(true);
+          setSeverityInfo("error");
+        });
     }
   }, [deleteArticle]);
-  
+
 
   /*
     Remet l'input invalide a ca position innitiale false
@@ -246,59 +250,60 @@ function App() {
     valide l'envoie de la Category
   */
   function submitCategory() {
-    if (newCategory.categoryName !== ""){
+    if (newCategory.categoryName !== "") {
       setPostingCategory(true);
-    }else{
+    } else {
       setInputInvalid("Vous devez remplir les champs");
-  }
+    }
   }
   /*
     valide l'envoie de l'article
   */
   function submitArticle() {
-    if (newArticle.publicationDate !== null && newArticle.title !== "" && newArticle.content !== "" && newArticle.category !== "" && authorForNewArticle.firstName !== "" && authorForNewArticle.lastName !== ""){
-      fetch('http://localhost:9000/api/private/author/?lastName='+authorForNewArticle.lastName+'&firstName='+authorForNewArticle.firstName)
-      .then(res => {
-        
-        if (res.status === 404){
-          fetch('http://localhost:9000/api/private/author', {
-            method: "POST",
-            headers: {
-              'Accept': 'application/json',
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(authorForNewArticle)
-          }).then(res => res.json())
-          .then(data => {
-            setNewArticle(prevState => {
-              return {...prevState,
-                "author": {"id":data.id}
+    if (newArticle.publicationDate !== null && newArticle.title !== "" && newArticle.content !== "" && newArticle.category !== "" && authorForNewArticle.firstName !== "" && authorForNewArticle.lastName !== "") {
+      fetch('http://localhost:9000/api/private/author/?lastName=' + authorForNewArticle.lastName + '&firstName=' + authorForNewArticle.firstName)
+        .then(res => {
+          if (res.status === 404) {
+            fetch('http://localhost:9000/api/private/author', {
+              method: "POST",
+              headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+              },
+              body: JSON.stringify(authorForNewArticle)
+            }).then(res => res.json())
+              .then(data => {
+                setNewArticle(prevState => {
+                  return {
+                    ...prevState,
+                    "author": { "id": data.id }
+                  }
+                })
+                setPostingArticle(true);
+              });
+
+          } else if (res.status === 200) {
+            res.json().then(function (data) {
+              if (data !== undefined) {
+                setNewArticle(prevState => {
+                  return {
+                    ...prevState,
+                    "author": { "id": data.id }
+                  }
+                })
+                setPostingArticle(true);
               }
-            })
-            setPostingArticle(true);
-          });
-  
-        }else if(res.status === 200){
-          res.json().then(function(data) {
-            if (data !== undefined){
-              setNewArticle(prevState => {
-                return {...prevState,
-                  "author": {"id":data.id}
-                }
-              })
-              setPostingArticle(true);
-            }
-          });
-        }
-      })
-      .catch(e => {
-        setMessageInfo("Erreur : " + e.toString());
-        setOpenInfo(true);
-        setSeverityInfo("error");
-      });
-  }else{
-    setInputInvalid("Vous devez remplir les champs");
-  }
+            });
+          }
+        })
+        .catch(e => {
+          setMessageInfo("Erreur : " + e.toString());
+          setOpenInfo(true);
+          setSeverityInfo("error");
+        });
+    } else {
+      setInputInvalid("Vous devez remplir les champs");
+    }
 
   }
   /*
@@ -312,108 +317,55 @@ function App() {
     Modifie la nouvelle Category
   */
   function newCategoryChange(event) {
-    const {name, value} = event.target;
+    const { name, value } = event.target;
     isString(value) ?
-        setInputInvalid("Vous ne pouvez pas inserer de caractere speciaux") 
+      setInputInvalid("Vous ne pouvez pas inserer de caractere speciaux")
+      :
+      value.length > 255 ?
+        setInputInvalid("Le nombre maximum est de 255 caractere")
         :
-        value.length > 255 ?
-            setInputInvalid("Le nombre maximum est de 255 caractere")
-            :
-            setNewCategory(prevState => {
-              initInvalidInput();
+        setNewCategory(prevState => {
+          initInvalidInput();
 
-              return {...prevState,
-                  [name]: value
-              }
-            });
-  }
-
-  /*
-    Modifie le nouvelle article
-  */
-  function newArticleChange(event) {
-    const {type, name, value} = event.target;
-    if(name === 'category'){
-        setNewArticle(prevState => {
-            initInvalidInput();
-
-            return {...prevState,
-                [name]: {"id":value}
-            }
-        })
-      }else if (type === 'text' ){
-        if (isString(value)) setInputInvalid("Vous ne pouvez pas inserer de caractere speciaux") 
-        else{
-          if (value.length > 255 && name !== "content") setInputInvalid("Le nombre maximum est de 255 caractere")
-          else if (value.length > 10000 && name === "content") setInputInvalid("Le nombre maximum est de 10000 caractere por une description")
-          else{
-            if(name.startsWith("author")){
-              setauthorForNewArticle(prevState => {
-                initInvalidInput();
-  
-                return {...prevState,
-                    [name.split(".")[1]]: value.toUpperCase()
-                }
-              });
-            }else{
-              setNewArticle(prevState => {
-                initInvalidInput();
-  
-                return {...prevState,
-                    [name]: value
-                }
-              });
-            }
+          return {
+            ...prevState,
+            [name]: value
           }
-        }
-      }
-    }
-  /*
-    Modifie la date du nouvelle article
-  */
-  function newArticleDateChange(value){
-    setNewArticle(prevState => {
-      initInvalidInput();
-
-      return {...prevState,
-          publicationDate: value
-      }
-      })
+        });
   }
 
-  function dellArticle(){
-    deleteSubmitArticle();
-}
+ 
 
   /*
     Verifie si c'est un string et non pas caractere correspondant un du code potentiel
   */
-  function isString( value){
+  function isString(value) {
     return value.match(/^.*[<>/\\].*$/);
-}
+  }
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={<Base/>}>
-            <Route  index element={<InputLog/>}/>
-            <Route path="" index element={<div/>}/>
+        <Route path='/' element={<Base />}>
+            <Route  index element={<InputLog />} />
+            <Route  path='*' element={<main><p>Nous ne connaissons pas cette page</p></main>} />
+            <Route path="home"  element={<Home/>}/>
+            <Route path="" index element={<div />} />
             <Route path='category'>
-              <Route path="" element={<ListCategory/>}/>
+              <Route path="" element={<ListCategory />} />
               <Route path=":id">
-                  <Route path="" element={<RouteCategory/>}/>
-                  <Route path="newOrUpdate" element={<RouteCreateOrModifyCategory />}/>
+                  <Route path="" element={<RouteCategory />} />
+                  <Route path="newOrUpdate" element={<RouteCreateOrModifyCategory />} />
               </Route>
             </Route>
             <Route path="article">
-              <Route path=":id">
-                <Route path="" element={<RouteArticle/>}/>             {/*article*/}
-                <Route path="newOrUpdate" element={<AddArticle newArticle={newArticle} author={authorForNewArticle} categories={allCategory} inputInvalid={inputInvalid} handleChange={newArticleChange} handlerArticleDate={newArticleDateChange} submitArticle={submitArticle}/>}/>
-              </Route>
+            <Route path=":id">
+              <Route path="" element={<RouteArticle />} />             {/*article*/}
+              <Route path="newOrUpdate" element={<RouteCreateOrModifyArticle/>} />
             </Route>
-            <Route  path='*' element={<main><p>Nous ne connaissons pas cette page</p></main>} />
-            <Route path="home"  element={<Home/>}/>
-        </Route>
+          </Route>
+          
+        </Route>  
       </Routes>
     </BrowserRouter>
   )

@@ -26,13 +26,16 @@ export default function RouteCreateOrModifyCategory(){
             setCategoryStatus("isLoading");
             getCategory(id)
             .then(data =>{
-                setCategory(data);
+                setCategory({
+                    id : data.id,
+                    categoryName: data.categoryName
+                });
                 setCategoryStatus("end")
             })
         }
     },[id])
 
-    function verifCategory(category){
+    function verifCategory(){
         if(categoryStatus == "isLoading")
             return <Loading/>    
         else if(categoryStatus === "error")
@@ -46,5 +49,5 @@ export default function RouteCreateOrModifyCategory(){
         return (<AddCategory newCategory={category} setCategory={setCategory} setCategoryStatus={setCategoryStatus}/>);
     }
 
-    return(verifCategory(category))
+    return(verifCategory())
 }
