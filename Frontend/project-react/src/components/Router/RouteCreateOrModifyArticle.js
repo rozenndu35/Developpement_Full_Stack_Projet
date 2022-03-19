@@ -75,7 +75,7 @@ export default function RouteCreateOrModifyArticle(){
     },[id])
 
     function verifArticle(){
-        if(articleStatus == "isLoading")
+        if(articleStatus === "isLoading")
             return <Loading/>    
         else if(articleStatus === "error")
             return <Error error="Impossible de récupérer l'article"/>

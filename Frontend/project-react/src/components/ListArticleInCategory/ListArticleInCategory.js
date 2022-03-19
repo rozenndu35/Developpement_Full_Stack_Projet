@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import * as React from 'react';
 import PropTypes from 'prop-types'
 
-export default function ListArticleInCategory({afficherPage, category}) {
+export default function ListArticleInCategory({category}) {
   let navigate = useNavigate();  
   let articleElements = [];
     if(category.articles){

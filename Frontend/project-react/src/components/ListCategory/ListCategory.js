@@ -5,7 +5,6 @@ import ListItem from '@material-ui/core/ListItem'
 import ListItemText from '@material-ui/core/ListItemText'
 import { useNavigate } from "react-router-dom";
 
-import PropTypes from 'prop-types'
 import { useSelector } from 'react-redux';
 
 export default function ListCategory() {
