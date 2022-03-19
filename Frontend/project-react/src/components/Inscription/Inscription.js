@@ -24,15 +24,14 @@ export default function Inscription({setInscriptionStatus}) {
     function submitInscription() {
         if (newInscription.username !=="" && newInscription.password !== ""){
             APIAddInscription(newInscription, "POST")
-            /*.then(data => {
-                console.log(data)
+            .then(data => {
                 dispatch(openInfoAction(prepareMessageSuccess("Inscription effectuer")))
                 dispatch(update())
                 setInscriptionStatus("added")
             })
             .catch(e => {
               dispatch(openInfoAction(prepareMessageError(e.toString())))
-            });*/
+            });
             dispatch(openInfoAction(prepareMessageSuccess("Inscription effectuer")))
             dispatch(update())
             setInscriptionStatus("added")

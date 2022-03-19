@@ -1,13 +1,12 @@
 import ApiConfig from "../config/ApiConfig";
 
 export default function APIAddInscription(newInscription, action){
-    console.log(newInscription)
-    /*return fetch(ApiConfig.adress + 'public/registration',{
+    return fetch(ApiConfig.adress + 'public/registration',{
         method: action,
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
     body: JSON.stringify(newInscription)
-    }).then(res => res.json())*/
+    }).then(res => res.json())
 }
