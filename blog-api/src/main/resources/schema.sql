@@ -18,3 +18,9 @@ CREATE TABLE article (
   id_author BIGINT NOT NULL,
   id_category BIGINT NOT NULL
 );
+
+CREATE TABLE users(
+  id BIGINT AUTO_INCREMENT PRIMARY KEY,
+  username VARCHAR(250),
+  password VARCHAR(250)
+);

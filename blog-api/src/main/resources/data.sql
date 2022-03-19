@@ -10,3 +10,6 @@ INSERT INTO category (category_name) VALUES
   ('title1', '2022-01-01', 'article1' , '1', '1'),
   ('title2', '2022-02-02', 'article2', '2', '2'),
   ('title3', '2022-03-03', 'article3', '3', '3');
+
+  INSERT INTO users (username, password) VALUES
+      ('user', '$2y$10$g3o9pkK/h62GIeX/FvkoL.SAoxa0uN9pQohNC71SimcKIYc4KrbNq');

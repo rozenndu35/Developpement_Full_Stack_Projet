@@ -1,48 +1,22 @@
-package com.esiea.blogAPI.controller;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+package com.esiea.blogAPI.controller.category;
 
 import com.esiea.blogAPI.exception.CantModifyItem;
 import com.esiea.blogAPI.exception.NotAllowedException;
 import com.esiea.blogAPI.exception.NotFoundException;
 import com.esiea.blogAPI.model.Category;
 import com.esiea.blogAPI.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*", allowedHeaders = "*")
 @RestController
 @RequestMapping("api/private/category")
-public class CategoryController {
+public class PrivateCategoryController {
 	@Autowired
 	private CategoryService categoryService;
-	
-	@GetMapping("")
-	public Iterable <Category> getCategories(){
-		return categoryService.getCategories();
-	}
-	
-	@GetMapping("{id}")
-	public ResponseEntity<Category> getCategory(@PathVariable("id") long id)
-	{
-		try {
-			Category result = categoryService.getCategory(id);
-			return new  ResponseEntity<Category>(result, HttpStatus.OK);
-		} catch (NotFoundException e) {
-			return new  ResponseEntity<>(HttpStatus.NOT_FOUND);
-		}
-	}
-	
+
 	@PostMapping("")
 	public ResponseEntity<Category> createCategory(@RequestBody Category Category) {
 		try {
