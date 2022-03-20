@@ -23,12 +23,19 @@ export default function Article({article, setArticleStatus}) {
     {
       APIDeleteArticle(article.id)
       .then(res => {
-        
-        setArticleStatus("deleted");
-        dispatch(openInfoAction(prepareMessageSuccess("Article supprimée")))
+        if(res.status === 403){
+          dispatch(openInfoAction(prepareMessageError("Vous devez etre authentifié")))
+        }else{
+          setArticleStatus("deleted");
+          dispatch(openInfoAction(prepareMessageSuccess("Article supprimée")))
+        }
       })
       .catch(e => {
-        dispatch(openInfoAction(prepareMessageError(e.toString())))
+        if(!sessionStorage.getItem('token')){
+          dispatch(openInfoAction(prepareMessageError("Vous devez etre authentifié")))
+        }else{
+          dispatch(openInfoAction(prepareMessageError(e.toString())))
+        }
       });
     };
 
@@ -49,13 +56,13 @@ export default function Article({article, setArticleStatus}) {
                 {article.content}
                 </Typography>
               </CardContent>
-              <CardActions disableSpacing>
+              { sessionStorage.getItem('token') && <CardActions disableSpacing>
                 <IconButton aria-label="Delete Article"
                   onClick={deleteArticle}
                 >
                   <IconDelete />
                 </IconButton>
-              </CardActions>
+              </CardActions>}
             </Card>
         </div>
     )
