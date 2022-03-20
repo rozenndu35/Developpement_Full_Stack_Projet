@@ -59,7 +59,7 @@ export default function InputLog(){
                     dispatch(openInfoAction(prepareMessageError("Vous vous ête trompé dans vos identifiant"))) 
                 }else{
                     sessionStorage.removeItem('token');
-                    dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le serveur"+ data.status))) 
+                    dispatch(openInfoAction(prepareMessageError("Nous avons rencontré une erreur avec le serveur"+ data.status))) 
                 }
             })
             .catch(e => {
