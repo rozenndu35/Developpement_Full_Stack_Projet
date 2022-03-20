@@ -1,0 +1,30 @@
+.App-Formulaire{
+    margin: 5px;
+}
+
+.App-titte-Formulaire{
+
+}
+
+.App-champ-formulaire{
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+}
+
+.App-textFieldSimple{
+    padding-bottom: 20px;
+    position: relative;
+    text-align: left;
+}
+
+.App-submitButton{
+
+}
+
+.App-FormControl{
+    padding-bottom: 20px;
+    position: relative;
+    text-align: left;
+}

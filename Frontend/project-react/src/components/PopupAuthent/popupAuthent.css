@@ -1,0 +1,14 @@
+.popup_notAuthent {
+    width: 40%;
+    min-width: 400px;
+    min-height: 200px;
+    background-color: #9196a0;
+    border: 2px black solid;
+    padding: 5px;
+    text-align: center;
+    margin: auto;
+    margin-top: 200px;
+}
+.app_popup_notAuthent{
+    text-align: center;
+}
