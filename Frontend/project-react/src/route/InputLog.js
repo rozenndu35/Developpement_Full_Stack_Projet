@@ -50,7 +50,7 @@ export default function InputLog(){
             APILogin(connectionValue)
             .then(data => {
                 if(data.token !== undefined){
-                    sessionStorage.setItem('token', "dumbvalue");
+                    sessionStorage.setItem('token', data.token);
                     setConnectionValue({username:'', password:''});
                     dispatch(openInfoAction(prepareMessageSuccess("Connecter")))
                     navigate("/home");

@@ -2,7 +2,7 @@ import ApiConfig from "../config/ApiConfig";
 
 export default function APIAddArticle(article, action){
     const t = sessionStorage.getItem('token') || "";
-    return fetch(ApiConfig.adress + "private/articleTest",{
+    return fetch(ApiConfig.adress + "private/article",{
         method: action,
         headers: {
             'Authorization': t,
