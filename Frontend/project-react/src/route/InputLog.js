@@ -56,7 +56,7 @@ export default function InputLog(){
                     navigate("/home");
                 }else if (data.status === 401){
                     sessionStorage.removeItem('token');
-                    dispatch(openInfoAction(prepareMessageError("Vous vous ete tromper dans vos identifiant"))) 
+                    dispatch(openInfoAction(prepareMessageError("Vous vous ête trompé dans vos identifiant"))) 
                 }else{
                     sessionStorage.removeItem('token');
                     dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le serveur"+ data.status))) 
