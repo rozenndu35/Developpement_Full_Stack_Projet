@@ -19,6 +19,7 @@ import { useState } from 'react';
 import { useSelector } from 'react-redux'
 import getAuthorByName from '../../helper/getAuthorByName'
 import APIAddArticle from '../../helper/APIAddArticle'
+import "./addArticle.css"
 
 
 export default function AddArticle({ newArticle, author, setAuthor, setArticle, setArticleStatus }) {
@@ -85,6 +86,20 @@ export default function AddArticle({ newArticle, author, setAuthor, setArticle, 
                     }
                 }
             }
+        }
+        else if(name === "content"){
+            if (value.length > 10000)
+                setInputInvalid("Le nombre maximum est de 10000 caractere por une description")
+            else
+                setArticle(prevState => {
+                    initInvalidInput();
+
+                    return {
+                        ...prevState,
+                        [name]: value
+                    }
+                });
+
         }
     }
 
@@ -187,12 +202,6 @@ export default function AddArticle({ newArticle, author, setAuthor, setArticle, 
 
                 </div>
 
-                <div className='App-textFieldSimple'>
-                    <TextField name="content" variant="standard"
-                        label="Description :" placeholder="Donne une description..." helperText={inputInvalid}
-                        value={newArticle.content} onChange={newArticleChange}
-                    />
-                </div>
                 <div className='App-FormControl'>
                     <FormControl variant="standard">
                         <InputLabel id="demo-simple-select-standard-label">Categorie :</InputLabel>
@@ -202,6 +211,17 @@ export default function AddArticle({ newArticle, author, setAuthor, setArticle, 
                         </Select>
                     </FormControl>
                 </div>
+
+                <div className='App-FormControl'>
+                    <TextField name="content" variant="standard"
+                        label="Contenu :" placeholder="Contenu de l'article..." helperText={inputInvalid}
+                        value={newArticle.content} onChange={newArticleChange}
+                        multiline={true}
+                        style={{width: "100%"}}
+                        minRows="3"
+                    />
+                </div>
+
                 <Button className='App-submitButton add-button' variant="contained" onClick={submitArticle} endIcon={<SendIcon />}> Envoyer </Button>
             </div>
         </div>
