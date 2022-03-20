@@ -6,6 +6,6 @@ export default function APIDeleteArticle(id){
         method: "DELETE",
         headers: {
           'Content-Type':'application/json',
-          'Authorization': `Bearer ${t}`,
+          'Authorization': t
     },})
 }

@@ -5,7 +5,7 @@ export default function APIAddCategory(newCategory, action){
     return fetch(ApiConfig.adress + 'private/category',{
         method: action,
         headers: {
-            'Authorization': `Bearer ${t}`,
+            'Authorization': t,
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
