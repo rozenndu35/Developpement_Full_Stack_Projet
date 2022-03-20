@@ -44,7 +44,7 @@ public class LoginController {
 
             ResponseEntity<String> response = ResponseEntity.ok()
                     .header(HttpHeaders.AUTHORIZATION, token)
-                    .body("{ token : " +token + " }");
+                    .body("{ \"token\" : \"" +token + "\" }");
             return response;
         }catch (AuthenticationException e){
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
