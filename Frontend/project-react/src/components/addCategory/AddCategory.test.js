@@ -33,7 +33,7 @@ function initialiser(){
     newCategoryMock = { categoryName: ""};
     inputInvalidMock = false;
 }
-it ("should Verifier Affichage",() => {
+it.skip ("should Verifier Affichage",() => {
     initialiser();
     render(<AddCategory newCategory={newCategoryMock} inputInvalid={inputInvalidMock} handleChange={handleChangeMock} submitCategory={submitCategoryMock}/>);
     expect(screen.getByText("Ajouter une categorie")).toBeTruthy();
@@ -43,7 +43,7 @@ it ("should Verifier Affichage",() => {
 
 });
 
-it ("should Entre text invalide nom caractere",() => {
+it.skip ("should Entre text invalide nom caractere",() => {
     initialiser()
     render(<AddCategory newCategory={newCategoryMock} inputInvalid={inputInvalidMock} handleChange={handleChangeMock} submitCategory={submitCategoryMock}/>);
     userEvent.type(screen.getByPlaceholderText("Donne un nom..."), "<p> test </p>");
@@ -52,12 +52,12 @@ it ("should Entre text invalide nom caractere",() => {
     inputInvalidMock = false;
 });
 
-it ("should Entre text invalide nom nombre caractere",() => {
+it.skip ("should Entre text invalide nom nombre caractere",() => {
     render(<AddCategory newCategory={newCategoryMock} inputInvalid={inputInvalidMock} handleChange={handleChangeMock} submitCategory={submitCategoryMock}/>);
     userEvent.type(screen.getByPlaceholderText("Donne un nom..."), "azertyuiopmlkjhyuyuiopmlkjhyuiopmlkjhyuiopmlkjhiopmlkjhgyuiopmlkjhfyuiopmlkjhdsqwxcvbnazertyuiopmlkjhgfdsqwxcvbnazertyuiopmlkjhgfdsqwxcvbnazertyuiopmlkjhgfdsqxwcvbnazertyuiopmlkjhgfdsqwxcvbnazertyuiopmlkjhgfdsqwxcvbnnbvcxwqsdfghjklmpoiuytrezaazertqsdfghjky");
     expect(inputInvalidMock).toEqual("Le nombre maximum est de 255 caractere")
 });
-it ("should Entre text valide limit nom nombre caractere",() => {
+it.skip ("should Entre text valide limit nom nombre caractere",() => {
     initialiser()
     render(<AddCategory newCategory={newCategoryMock} inputInvalid={inputInvalidMock} handleChange={handleChangeMock} submitCategory={submitCategoryMock}/>);
     userEvent.type(screen.getByPlaceholderText("Donne un nom..."), "azertuiopmlkjhyuyuiopmlkjhyuiopmlkjhyuiopmlkjhiopmlkjhgyuiopmlkjhfyuiopmlkjhdsqwxcvbnazertyuiopmlkjhgfdsqwxcvbnazertyuiopmlkjhgfdsqwxcvbnazertyuiopmlkjhgfdsqxwcvbnazertyuiopmlkjhgfdsqwxcvbnazertyuiopmlkjhgfdsqwxcvbnnbvcxwqsdfghjklmpoiuytrezaazertqsdfghjky");
@@ -65,7 +65,7 @@ it ("should Entre text valide limit nom nombre caractere",() => {
 });
 
 
-it ("should Entre nom normal",() => {
+it.skip ("should Entre nom normal",() => {
     initialiser()
     render(<AddCategory newCategory={newCategoryMock} inputInvalid={inputInvalidMock} handleChange={handleChangeMock} submitCategory={submitCategoryMock}/>);
     userEvent.type(screen.getByPlaceholderText("Donne un nom..."), "CategorieTest");
@@ -73,7 +73,7 @@ it ("should Entre nom normal",() => {
     expect(inputInvalidMock).toEqual(false)
 });
 
-it ("should Envoyer mais vide",() => {
+it.skip ("should Envoyer mais vide",() => {
     initialiser()
     render(<AddCategory newCategory={newCategoryMock} inputInvalid={inputInvalidMock} handleChange={handleChangeMock} submitCategory={submitCategoryMock}/>);
     userEvent.click(screen.getByText("Envoyer"));
@@ -81,7 +81,7 @@ it ("should Envoyer mais vide",() => {
     expect(submitCategoryResutl).toEqual(false);
 });
 
-it ("should Envoyer cas normal",() => {
+it.skip ("should Envoyer cas normal",() => {
     initialiser()
     render(<AddCategory newCategory={newCategoryMock} inputInvalid={inputInvalidMock} handleChange={handleChangeMock} submitCategory={submitCategoryMock}/>);
     userEvent.type(screen.getByPlaceholderText("Donne un nom..."), "CategorieTest");

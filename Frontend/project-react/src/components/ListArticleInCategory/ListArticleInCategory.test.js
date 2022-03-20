@@ -46,7 +46,7 @@ function afficherPage(event, id, categoryOrArticle) {
     
 }
 
-it ("should Affichage de la liste",() => {
+it.skip ("should Affichage de la liste",() => {
     render(<ListArticleInCategory category={categorieMockedData} afficherPage={afficherPage} />);
     expect(screen.getByText("category : patchcategoryName")).toBeTruthy();
     expect(screen.getAllByText("patchcategoryName")).toBeTruthy();
@@ -55,14 +55,14 @@ it ("should Affichage de la liste",() => {
     expect(screen.getByText("article3")).toBeTruthy();
 });
 
-it ("should ouvrir page premiere article",() => {
+it.skip ("should ouvrir page premiere article",() => {
     render(<ListArticleInCategory category={categorieMockedData} afficherPage={afficherPage} />);
     fireEvent.click(screen.getByText("article2"));
     expect(page).toEqual("Article")
     expect(article).toEqual(2)
 });
 
-it ("should ouvrir page deuxieme article",() => {
+it.skip ("should ouvrir page deuxieme article",() => {
     render(<ListArticleInCategory category={categorieMockedData} afficherPage={afficherPage} />);
     fireEvent.click(screen.getByText("article3"));
     expect(page).toEqual("Article")
