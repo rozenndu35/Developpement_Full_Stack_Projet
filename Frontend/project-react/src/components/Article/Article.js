@@ -3,7 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import IconDelete from '@material-ui/icons/Delete'
+import IconDelete from '@material-ui/icons/Delete';
+import IconModify from '@material-ui/icons/Edit';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import APIDeleteArticle from "../../helper/APIDeleteArticle"
@@ -23,14 +24,25 @@ export default function Article({article, setArticleStatus}) {
     {
       APIDeleteArticle(article.id)
       .then(res => {
-        
-        setArticleStatus("deleted");
-        dispatch(openInfoAction(prepareMessageSuccess("Article supprimée")))
+        if(res.status === 403){
+          dispatch(openInfoAction(prepareMessageError("Vous devez etre authentifié")))
+        }else{
+          setArticleStatus("deleted");
+          dispatch(openInfoAction(prepareMessageSuccess("Article supprimée")))
+        }
       })
       .catch(e => {
-        dispatch(openInfoAction(prepareMessageError(e.toString())))
+        if(!sessionStorage.getItem('token')){
+          dispatch(openInfoAction(prepareMessageError("Vous devez etre authentifié")))
+        }else{
+          dispatch(openInfoAction(prepareMessageError(e.toString())))
+        }
       });
     };
+
+    function modifyArticle(){
+      dispatch(openInfoAction(prepareMessageError("Pas encore disponible")))
+    }
 
   function dateinString(){
     let jour = article.publicationDate.split('T')[0]
@@ -49,13 +61,18 @@ export default function Article({article, setArticleStatus}) {
                 {article.content}
                 </Typography>
               </CardContent>
-              <CardActions disableSpacing>
+              { sessionStorage.getItem('token') && <CardActions disableSpacing>
+                <IconButton aria-label="Update Article"
+                  onClick={modifyArticle}
+                >
+                  <IconModify />
+                </IconButton>
                 <IconButton aria-label="Delete Article"
                   onClick={deleteArticle}
                 >
                   <IconDelete />
                 </IconButton>
-              </CardActions>
+              </CardActions>}
             </Card>
         </div>
     )

@@ -12,15 +12,23 @@ import IconExpandLess from '@material-ui/icons/ExpandLess'
 import IconExpandMore from '@material-ui/icons/ExpandMore'
 import IconList from '@material-ui/icons/ListSharp'
 import IconAjouter from '@material-ui/icons/AddCircle'
+import IconNotAccountcircle from '@material-ui/icons/AccountCircleOutlined'
+import IconAccountcircle from '@material-ui/icons/AccountCircleRounded'
 import { useSelector} from 'react-redux'
 
 import { useNavigate } from "react-router-dom";
+
+import { useDispatch } from 'react-redux';
+import { openInfoAction } from "../../store/storeSlice/messageSlice";
+import { prepareMessageSuccess } from '../Message/PrepareMessage';
 
 export default function  Navigation() {
 
   const {allCategories} = useSelector((state)=> state.allCatgories)
   const [open, setOpen] = React.useState(false)
+  const toLoggout = sessionStorage.getItem('token') ?true :false;
   let navigate = useNavigate();
+  const dispatch =  useDispatch();
   const categoryElements = allCategories.map(i => 
     <ListItem key={i.id} button onClick={() => navigate("/category/" + i.id)} className="navItem">
     <ListItemText inset primary={i.categoryName} />
@@ -32,6 +40,15 @@ export default function  Navigation() {
   */
   function handleClick() {
     setOpen(!open)
+  }
+
+  /*
+   Deconnecte l'utilisateur
+  */
+   function deconnection() {
+    sessionStorage.removeItem('token');
+    dispatch(openInfoAction(prepareMessageSuccess("Vous ete deconnecter")))
+    navigate("/deconnect")
   }
 
   return (
@@ -67,6 +84,18 @@ export default function  Navigation() {
         </ListItemIcon>
         <ListItemText primary="Ajouter Article" />
       </ListItem>
+      { toLoggout && <ListItem button onClick={deconnection} className="navItem">
+        <ListItemIcon className="navItemIcon">
+          <IconNotAccountcircle />
+        </ListItemIcon>
+        <ListItemText primary="Deconnection" />
+      </ListItem>}
+      { !toLoggout && <ListItem button onClick={event => navigate("/")} className="navItem">
+        <ListItemIcon className="navItemIcon">
+          <IconAccountcircle />
+        </ListItemIcon>
+        <ListItemText primary="Connection" />
+      </ListItem>}
     </List>
   )
 }

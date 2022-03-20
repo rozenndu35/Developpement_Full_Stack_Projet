@@ -4,17 +4,16 @@ import { useParams } from "react-router-dom";
 import getArticle from "../../helper/getArticle";
 import Error from "../Error/Error";
 import Loading from "../Loading/Loading";
+import PopupAuthent from "../PopupAuthent/PopupAuthent";
 import { prepareMessageError} from '../Message/PrepareMessage';
 import { useDispatch } from 'react-redux'
 import { openInfoAction } from "../../store/storeSlice/messageSlice";
 import AddArticle from "../addArticle/AddArticle";
-import { useSelector} from 'react-redux'
 
 export default function RouteCreateOrModifyArticle(){
     let params = useParams()
     let id = params.id;
     const dispatch = useDispatch();
-    const {allCategories} = useSelector((state)=> state.allCatgories)
 
     const [articleStatus, setArticleStatus] = useState("isLoading");
     const [article, setArticle] = useState()
@@ -24,7 +23,10 @@ export default function RouteCreateOrModifyArticle(){
     });
 
     useEffect(()=>{
-        if(id === "new"){
+        if(!sessionStorage.getItem('token')){
+            setArticleStatus("redirect");
+        }
+        else if(id === "new"){
             setArticle({
                 id: null,
                 author: {
@@ -75,7 +77,9 @@ export default function RouteCreateOrModifyArticle(){
     },[id])
 
     function verifArticle(){
-        if(articleStatus === "isLoading")
+        if(articleStatus === "redirect")
+            return <PopupAuthent/> 
+        else if(articleStatus === "isLoading")
             return <Loading/>    
         else if(articleStatus === "error")
             return <Error error="Impossible de récupérer l'article"/>
