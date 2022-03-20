@@ -1,6 +1,12 @@
 import ApiConfig from "../config/ApiConfig";
 
-export default function getAllCategory(){
-    return fetch(ApiConfig.adress + 'public/category')
-      .then(res => res.json())
+export default async function  getAllCategory (){
+    let reponse = await fetch(ApiConfig.adress + 'public/category')
+    if(reponse.status === 200){
+      let result = await reponse.json();
+      return {status: reponse.status, result: result};
+   }else{
+       return {status: reponse.status};
+   } 
+        
 }

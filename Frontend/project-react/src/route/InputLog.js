@@ -49,17 +49,17 @@ export default function InputLog(){
             // 401 mauvais identifiant
             APILogin(connectionValue)
             .then(data => {
-                if(data.token !== undefined){
-                    sessionStorage.setItem('token', data.token);
+                if(data.status === 200){
+                    sessionStorage.setItem('token', data.result.token);
                     setConnectionValue({username:'', password:''});
                     dispatch(openInfoAction(prepareMessageSuccess("Connecter")))
                     navigate("/home");
-                }else if (data === 401){
+                }else if (data.status === 401){
                     sessionStorage.removeItem('token');
                     dispatch(openInfoAction(prepareMessageError("Vous vous ete tromper dans vos identifiant"))) 
                 }else{
                     sessionStorage.removeItem('token');
-                    dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le serveur"))) 
+                    dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le serveur"+ data.status))) 
                 }
             })
             .catch(e => {

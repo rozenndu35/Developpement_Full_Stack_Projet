@@ -50,24 +50,30 @@ export default function RouteCreateOrModifyArticle(){
             setArticleStatus("isLoading");
             getArticle(id)
             .then(data =>{ 
-                setArticle({
-                    id: data.id,
-                    author: {
-                        id: null    //La gestion de l'auteur sera gérée par le state author
-                    },   
-                    publicationDate: data.publicationDate,
-                    title: data.title,
-                    content: data.content,
-                    category:{
-                        id : data.category.id
-                    }
-                })
-                setAuthor({
-                    firstName: data.author.firstName,
-                    lastName: data.author.lastName,
-                    id: null,   // Mis à null, puisque il sera récupéré plus tard lors de l'ajout de l'article
-                })
-                setArticleStatus("end")
+                if(data.status === 200){
+                    let dataArticle = data.result;
+                    setArticle({
+                        id: dataArticle.id,
+                        author: {
+                            id: null    //La gestion de l'auteur sera gérée par le state author
+                        },   
+                        publicationDate: dataArticle.publicationDate,
+                        title: dataArticle.title,
+                        content: dataArticle.content,
+                        category:{
+                            id : dataArticle.category.id
+                        }
+                    })
+                    setAuthor({
+                        firstName: dataArticle.author.firstName,
+                        lastName: dataArticle.author.lastName,
+                        id: null,   // Mis à null, puisque il sera récupéré plus tard lors de l'ajout de l'article
+                    })
+                    setArticleStatus("end")
+                  }else{
+                    dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le server : "+ data.status)))
+                  }
+                
             })
             .catch(e=>{
                 dispatch(openInfoAction(prepareMessageError(e.toString())))

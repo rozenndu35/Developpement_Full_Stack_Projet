@@ -136,10 +136,14 @@ export default function AddArticle({ newArticle, author, setAuthor, setArticle, 
     function send(articleToSend, action) {
         APIAddArticle(articleToSend, action)
             .then(data => {
-                initInvalidInput();
-                dispatch(openInfoAction(prepareMessageSuccess("Ajout de l'article")))
-                dispatch(update())
-                setArticleStatus("added")
+                if(data.status === 200){
+                    initInvalidInput();
+                    dispatch(openInfoAction(prepareMessageSuccess("Ajout de l'article")))
+                    dispatch(update())
+                    setArticleStatus("added")
+                }else{
+                    dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le server : "+ data.status)))
+                }
             })
             .catch(e => {
                 dispatch(openInfoAction(prepareMessageError(e.toString())))

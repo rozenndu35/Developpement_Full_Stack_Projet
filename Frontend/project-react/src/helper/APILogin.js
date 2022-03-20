@@ -1,7 +1,7 @@
 import ApiConfig from "../config/ApiConfig";
 
-export default function getLogin(user){
-    return fetch(ApiConfig.adress + "public/login",{
+export default async function getLogin(user){
+    let reponse = await fetch(ApiConfig.adress + "public/login",{
         method: 'POST',
         headers: {
             'Accept': 'text/plain',
@@ -9,10 +9,10 @@ export default function getLogin(user){
         },
         body: JSON.stringify(user)})
 
-        .then(res =>{
-            if(res.status === 200){
-               return res.json()
-            }else{
-                return res.status;
-            } })
+        if(reponse.status === 200){
+            let result = await reponse.json();
+            return {status: reponse.status, result: result};
+         }else{
+             return {status: reponse.status};
+         } 
 }

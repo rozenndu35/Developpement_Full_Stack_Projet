@@ -5,11 +5,16 @@ import AddCategory from "../addCategory/AddCategory";
 import PopupAuthent from "../PopupAuthent/PopupAuthent";
 import Error from "../Error/Error";
 import Loading from "../Loading/Loading";
+import { prepareMessageError } from '../Message/PrepareMessage';
+import { openInfoAction } from "../../store/storeSlice/messageSlice";
+import { useDispatch } from 'react-redux'
 
 
 export default function RouteCreateOrModifyCategory(){
     let params = useParams()
     let id = params.id;
+
+    const dispatch =  useDispatch();
 
     const [categoryStatus, setCategoryStatus] = useState("isLoading");
     const [category, setCategory] = useState()
@@ -30,11 +35,16 @@ export default function RouteCreateOrModifyCategory(){
             setCategoryStatus("isLoading");
             getCategory(id)
             .then(data =>{
-                setCategory({
-                    id : data.id,
-                    categoryName: data.categoryName
-                });
-                setCategoryStatus("end")
+                if(data.status === 200){
+                    setCategory({
+                        id : data.result.id,
+                        categoryName: data.result.categoryName
+                    });
+                    setCategoryStatus("end")
+                }else{
+                    dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le server : "+ data.status)))
+                }
+                
             })
         }
     },[id])

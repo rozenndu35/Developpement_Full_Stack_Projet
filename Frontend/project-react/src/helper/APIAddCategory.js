@@ -1,8 +1,8 @@
 import ApiConfig from "../config/ApiConfig";
 
-export default function APIAddCategory(newCategory, action){
+export default async function APIAddCategory(newCategory, action){
     const t = sessionStorage.getItem('token') || "";
-    return fetch(ApiConfig.adress + 'private/category',{
+    let reponse = await fetch(ApiConfig.adress + 'private/category',{
         method: action,
         headers: {
             'Authorization': t,
@@ -10,5 +10,11 @@ export default function APIAddCategory(newCategory, action){
             'Content-Type': 'application/json'
         },
     body: JSON.stringify(newCategory)
-    }).then(res => res.json())
+    })
+    if(reponse.status === 200){
+        let result = await reponse.json();
+        return {status: reponse.status, result: result};
+     }else{
+         return {status: reponse.status};
+     } 
 }

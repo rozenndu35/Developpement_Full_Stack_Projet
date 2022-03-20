@@ -25,8 +25,12 @@ export default function RouteArticle()
         setArticleStatus("isLoading");
         GetArticle(id)
         .then(data => {
-            setArticle(data);
-            setArticleStatus("end");
+            if(data.status === 200){
+                setArticle(data.result);
+                setArticleStatus("end");
+              }else{
+                dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le server : "+ data.status)))
+              }
         })
         .catch(e => {
             setArticleStatus("error")

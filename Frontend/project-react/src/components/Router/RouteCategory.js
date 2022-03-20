@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import Error from "../Error/Error";
 import ListArticleInCategory from "../ListArticleInCategory/ListArticleInCategory";
 import Loading from "../Loading/Loading";
-import { useDispatch } from 'react-redux'
+import { useDispatch } from 'react-redux';
 import { openInfoAction } from "../../store/storeSlice/messageSlice";
 import { prepareMessageError } from "../Message/PrepareMessage";
 import getCategory from "../../helper/getCategory";
@@ -30,7 +30,11 @@ export default function RouteCategory(){
                 setCategory(null);
             getCategory(id)
             .then(data => {
-                setCategory(data);
+                if(data.status === 200){
+                    setCategory(data.result);
+                  }else{
+                    dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le server : "+ data.status)))
+                  }
             })
             .catch(e => {
                 dispatch(openInfoAction(prepareMessageError(e.toString())));

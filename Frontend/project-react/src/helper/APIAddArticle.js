@@ -1,8 +1,8 @@
 import ApiConfig from "../config/ApiConfig";
 
-export default function APIAddArticle(article, action){
+export default async function APIAddArticle(article, action){
     const t = sessionStorage.getItem('token') || "";
-    return fetch(ApiConfig.adress + "private/article",{
+    let reponse = await fetch(ApiConfig.adress + "private/article",{
         method: action,
         headers: {
             'Authorization': t,
@@ -10,5 +10,10 @@ export default function APIAddArticle(article, action){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(article)})
-        .then(res => res.json())
+        if(reponse.status === 200){
+            let result = await reponse.json();
+            return {status: reponse.status, result: result};
+         }else{
+             return {status: reponse.status};
+         } 
 }

@@ -25,9 +25,13 @@ export default function AddCategory({ newCategory, setCategory, setCategoryStatu
         if (newCategory.categoryName !== ""){
             APIAddCategory(newCategory, action)
             .then(data => {
-              dispatch(openInfoAction(prepareMessageSuccess("Ajout de la categorie")))
-              dispatch(update())
-              setCategoryStatus("added")
+              if(data.status === 200){
+                dispatch(openInfoAction(prepareMessageSuccess("Ajout de la categorie")))
+                dispatch(update())
+                setCategoryStatus("added")
+              }else{
+                dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le server : "+ data.status)))
+              }
             })
             .catch(e => {
               dispatch(openInfoAction(prepareMessageError(e.toString())))

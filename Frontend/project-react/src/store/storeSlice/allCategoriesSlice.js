@@ -18,7 +18,12 @@ export const allCategoriesSlice = createSlice({
 export const update = () =>(dispatch)=>{
     getAllCategory()
     .then(data =>{
-        dispatch(setAllCategories(data))
+        if(data.status === 200){
+            dispatch(setAllCategories(data.result))
+          }else{
+            dispatch(setAllCategories([]))
+            dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le server : "+ data.status)))
+          }
     })
     .catch(e =>{
         dispatch(openInfoAction(prepareMessageError(e.toString())))
