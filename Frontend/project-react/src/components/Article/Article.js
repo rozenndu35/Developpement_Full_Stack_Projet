@@ -13,8 +13,11 @@ import { prepareMessageError, prepareMessageSuccess } from '../Message/PrepareMe
 import { useDispatch } from 'react-redux'
 import { openInfoAction } from "../../store/storeSlice/messageSlice";
 import PropTypes from 'prop-types'
+import { useNavigate } from 'react-router-dom';
+
 
 export default function Article({article, setArticleStatus}) {
+  let navigate = useNavigate();
   const dispatch =  useDispatch();
   /*
     supprime l'article selectionner 
@@ -41,7 +44,7 @@ export default function Article({article, setArticleStatus}) {
     };
 
     function modifyArticle(){
-      dispatch(openInfoAction(prepareMessageError("Pas encore disponible")))
+      navigate("/article/" + article.id + "/newOrUpdate")
     }
 
   function dateinString(){
