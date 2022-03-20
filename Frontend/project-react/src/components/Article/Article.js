@@ -3,7 +3,8 @@ import Typography from '@material-ui/core/Typography';
 import Card from '@mui/material/Card';
 import CardHeader from '@mui/material/CardHeader';
 import CardContent from '@mui/material/CardContent';
-import IconDelete from '@material-ui/icons/Delete'
+import IconDelete from '@material-ui/icons/Delete';
+import IconModify from '@material-ui/icons/Edit';
 import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import APIDeleteArticle from "../../helper/APIDeleteArticle"
@@ -39,6 +40,10 @@ export default function Article({article, setArticleStatus}) {
       });
     };
 
+    function modifyArticle(){
+      dispatch(openInfoAction(prepareMessageError("Pas encore disponible")))
+    }
+
   function dateinString(){
     let jour = article.publicationDate.split('T')[0]
     return jour
@@ -57,6 +62,11 @@ export default function Article({article, setArticleStatus}) {
                 </Typography>
               </CardContent>
               { sessionStorage.getItem('token') && <CardActions disableSpacing>
+                <IconButton aria-label="Update Article"
+                  onClick={modifyArticle}
+                >
+                  <IconModify />
+                </IconButton>
                 <IconButton aria-label="Delete Article"
                   onClick={deleteArticle}
                 >
