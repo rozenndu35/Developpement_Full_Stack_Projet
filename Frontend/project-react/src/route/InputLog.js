@@ -46,8 +46,6 @@ export default function InputLog(){
   */
     function submitConnection() {
         if (connectionValue.username !== '' && connectionValue.password !== ""){
-            console.log(connectionValue)
-            
             // 401 mauvais identifiant
             APILogin(connectionValue)
             .then(data => {
