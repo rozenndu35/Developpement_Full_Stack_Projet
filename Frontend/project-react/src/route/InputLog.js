@@ -47,12 +47,16 @@ export default function InputLog(){
     function submitConnection() {
         if (connectionValue.username !== '' && connectionValue.password !== ""){
             console.log(connectionValue)
-            sessionStorage.setItem('token', "dumbvalue");
-            navigate("/home");
+            
             // 401 mauvais identifiant
-            /*APILogin(connectionValue)
+            APILogin(connectionValue)
             .then(res => {
+                console.log(res.headers.get('authorization'))
+                for (let [key, value] of res.headers) {
+                    console.log(`${key} = ${value}`);
+                  }
                 if(res.status === 200){
+                    
                     sessionStorage.setItem('token', "dumbvalue");
                     setConnectionValue({username:'', password:''});
                     dispatch(openInfoAction(prepareMessageSuccess("Connecter")))
@@ -64,7 +68,7 @@ export default function InputLog(){
             })
             .catch(e => {
                 dispatch(openInfoAction(prepareMessageError(e.toString())))
-            });*/
+            });
         }else{
           setInputInvalid("Vous devez remplir les champs");
           sessionStorage.removeItem('token');
@@ -96,12 +100,12 @@ export default function InputLog(){
             </div>
             <p className='App-information'>
                 Vous n'avez pas de compte se n'est pas grave ! 
-                <ul>
-                    <li> Vous pouvez acceder a nos contenu sans etre connecter</li>
-                    <li> Vous voulez participer a la création de notre blog et ecrire avec nous inscrivez vous</li>
-                    <Button className='App-inscriptionButton' variant="contained" onClick={goInscription} endIcon={<SendIcon />}> Inscription </Button>
-                </ul>
             </p>
+            <ul>
+                <li> Vous pouvez acceder a nos contenu sans etre connecter</li>
+                <li> Vous voulez participer a la création de notre blog et ecrire avec nous inscrivez vous</li>
+                <Button className='App-inscriptionButton' variant="contained" onClick={goInscription} endIcon={<SendIcon />}> Inscription </Button>
+            </ul>
 
         </div>
     );
