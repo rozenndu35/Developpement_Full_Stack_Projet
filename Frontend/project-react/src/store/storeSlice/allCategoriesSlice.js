@@ -1,5 +1,4 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { useDispatch } from 'react-redux'
 import { prepareMessageError } from '../../components/Message/PrepareMessage';
 import getAllCategory from '../../helper/getAllCategories';
 import { openInfoAction } from "../../store/storeSlice/messageSlice";
