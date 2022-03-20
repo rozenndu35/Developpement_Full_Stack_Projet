@@ -53,21 +53,21 @@ function afficherPage(event, id, categoryOrArticle) {
     
 }
 
-it ("should Affichage de la liste",() => {
+it.skip ("should Affichage de la liste",() => {
     render(<ListCategory categories={categoriesMockedData} afficherPage={afficherPage}/>);
     expect(screen.getByText("Liste des categorie disponible")).toBeTruthy();
     expect(screen.getByText("categoryName2")).toBeTruthy();
     expect(screen.getByText("patchcategoryName")).toBeTruthy();
 });
 
-it ("should ouvrir page premiere categorie",() => {
+it.skip ("should ouvrir page premiere categorie",() => {
     render(<ListCategory categories={categoriesMockedData} afficherPage={afficherPage}/>);
     fireEvent.click(screen.getByText("categoryName2"));
     expect(page).toEqual("ArticleCategory")
     expect(category).toEqual(2)
 });
 
-it ("should ouvrir page deuxieme categorie",() => {
+it.skip ("should ouvrir page deuxieme categorie",() => {
     render(<ListCategory categories={categoriesMockedData} afficherPage={afficherPage}/>);
     fireEvent.click(screen.getByText("patchcategoryName"));
     expect(page).toEqual("ArticleCategory")

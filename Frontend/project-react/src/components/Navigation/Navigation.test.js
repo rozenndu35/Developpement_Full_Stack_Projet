@@ -53,12 +53,12 @@ function afficherPage(event, id, categoryOrArticle) {
     
 }
 
-it('should Ouvrir liste catégorie', () => {
+it.skip('should Ouvrir liste catégorie', () => {
     render(<Navigation categories={categoriesMockedData} afficherPage={afficherPage}/>);
     fireEvent.click(screen.getByText("Liste Catégorie"));
     expect(page).toEqual("ListeCategory")
   })
-it('should Ouvrir le liste de categorie', () => {
+it.skip('should Ouvrir le liste de categorie', () => {
     render(<Navigation categories={categoriesMockedData} afficherPage={afficherPage}/>);
     expect(() => screen.getByText(/categoryName2/)).toThrow();
     fireEvent.click(screen.getByText("Liste par Catégorie"));
@@ -67,7 +67,7 @@ it('should Ouvrir le liste de categorie', () => {
 
 // TODO test fermer liste categorie
 
-it('should Ouvrir une category', () => {
+it.skip('should Ouvrir une category', () => {
     render(<Navigation categories={categoriesMockedData} afficherPage={afficherPage}/>);
     fireEvent.click(screen.getByText("Liste par Catégorie"));
     fireEvent.click(screen.getByText("categoryName2"));
@@ -76,13 +76,13 @@ it('should Ouvrir une category', () => {
     expect(category).toEqual(2)
   })
 
-it('should Ouvrir ajouter article', () => {
+it.skip('should Ouvrir ajouter article', () => {
     render(<Navigation categories={categoriesMockedData} afficherPage={afficherPage}/>);
     fireEvent.click(screen.getByText("Ajouter Article"));
     expect(page).toEqual("AddArticle")
   })
   
-it('should Ouvrir ajouter categorie', () => {
+it.skip('should Ouvrir ajouter categorie', () => {
     render(<Navigation categories={categoriesMockedData} afficherPage={afficherPage}/>);
     fireEvent.click(screen.getByText("Ajouter Catégorie"));
     expect(page).toEqual("AddCategory")
