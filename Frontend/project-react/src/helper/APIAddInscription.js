@@ -10,8 +10,7 @@ export default async function APIAddInscription(newInscription, action){
     body: JSON.stringify(newInscription)
     });
     if(reponse.status === 200){
-        let result = await reponse.json();
-        return {status: reponse.status, result: result};
+        return {status: reponse.status, result: reponse};
      }else{
          return {status: reponse.status};
      } 
