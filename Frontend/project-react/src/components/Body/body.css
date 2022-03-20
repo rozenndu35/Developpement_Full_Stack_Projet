@@ -1,0 +1,12 @@
+.App-body{
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    width: 100%;
+}
+.App-page{
+    flex: 1;
+}
+.App-content{
+    flex:1
+}
