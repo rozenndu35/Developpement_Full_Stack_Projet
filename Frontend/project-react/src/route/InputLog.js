@@ -50,20 +50,18 @@ export default function InputLog(){
             
             // 401 mauvais identifiant
             APILogin(connectionValue)
-            .then(res => {
-                console.log(res.headers.get('authorization'))
-                for (let [key, value] of res.headers) {
-                    console.log(`${key} = ${value}`);
-                  }
-                if(res.status === 200){
-                    
+            .then(data => {
+                if(data.token !== undefined){
                     sessionStorage.setItem('token', "dumbvalue");
                     setConnectionValue({username:'', password:''});
                     dispatch(openInfoAction(prepareMessageSuccess("Connecter")))
                     navigate("/home");
-                }else{
+                }else if (data === 401){
                     sessionStorage.removeItem('token');
                     dispatch(openInfoAction(prepareMessageError("Vous vous ete tromper dans vos identifiant"))) 
+                }else{
+                    sessionStorage.removeItem('token');
+                    dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le serveur"))) 
                 }
             })
             .catch(e => {

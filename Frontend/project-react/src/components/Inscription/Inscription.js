@@ -25,16 +25,20 @@ export default function Inscription({setInscriptionStatus}) {
         if (newInscription.username !=="" && newInscription.password !== ""){
             APIAddInscription(newInscription, "POST")
             .then(data => {
+              if(data === 200){
                 dispatch(openInfoAction(prepareMessageSuccess("Inscription effectuer")))
                 dispatch(update())
                 setInscriptionStatus("added")
+              }else if (data === 409){
+                  dispatch(openInfoAction(prepareMessageError("Cette utilisateur existe déjà"))) 
+              }else{
+                  dispatch(openInfoAction(prepareMessageError("Nous avons rencontrer une erreur avec le serveur"))) 
+              }
+                
             })
             .catch(e => {
               dispatch(openInfoAction(prepareMessageError(e.toString())))
             });
-            dispatch(openInfoAction(prepareMessageSuccess("Inscription effectuer")))
-            dispatch(update())
-            setInscriptionStatus("added")
         }else{
           setInputInvalid("Vous devez remplir les champs");
       }

@@ -8,5 +8,5 @@ export default function APIAddInscription(newInscription, action){
             'Content-Type': 'application/json'
         },
     body: JSON.stringify(newInscription)
-    }).then()
+    }).then(res =>{return res.status})
 }
